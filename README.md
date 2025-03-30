@@ -28,7 +28,7 @@ For detailed updates and progress tracking, please visit our [Notion page](https
 ├─ /client                  # Frontend code for the website
 │   ├─ /assets              # Static files like CSS, Fonts, and JavaScript
 │   │    ├─ /css
-│   │    │    └─ /images    # Images used in Bootstrap, CSS, Animation
+│   │    │   └─ /images     # Images used in Bootstrap, CSS, Animation
 │   │    ├─ /fonts
 │   │    └─ /js
 │   ├─ /images              # Images used accross the Website
