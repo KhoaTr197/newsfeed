@@ -19,7 +19,7 @@ The Newsfeed Website is a full-stack website using **Bootstrap** for the fronten
 
 ## Progress
 
-For detailed updates and progress tracking, please visit our [Notion page]([https://www.notion.so/](https://wind-chauffeur-826.notion.site/Newsfeed-Web-Fullstack-1c4ee58faa7880a684bfcf2ca0c85a58)).
+For detailed updates and progress tracking, please visit our [Notion page](https://wind-chauffeur-826.notion.site/Newsfeed-Web-Fullstack-1c4ee58faa7880a684bfcf2ca0c85a58).
 
 ## Folder Structure
 
