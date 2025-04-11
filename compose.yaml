@@ -9,25 +9,57 @@
 # https://github.com/docker/awesome-compose
 services:
   server:
+    container_name: web-server
+    restart: unless-stopped
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      db:
+        condition: service_healthy
     build:
       context: .
     environment:
-      NODE_ENV: development  
+      - NODE_ENV=development
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_NAME=newsfeed
+      - DB_PORT=3306
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
     ports:
       - 3080:3080
-  db-mysql:
+    networks:
+      - nodejss
+    stdin_open: true
+    tty: true
+  db:
+    container_name: mysql-server
+    restart: unless-stopped
     image: mysql:latest
-    restart: always
     environment:
       - MYSQL_DATABASE=newsfeed
       - MYSQL_ROOT_PASSWORD=root
     volumes:
       - mysql_newsfeed_data:/var/lib/mysql
+      - ./server/db/test_script.sql:/docker-entrypoint-initdb.d/test_script.sql
     ports:
-      - 3090:3306
+      - 3306:3306
+    networks:
+      - nodejss
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+      
 volumes:
   mysql_newsfeed_data:
 
+networks:
+  nodejss:
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
 # start the database before your application. The `db-data` volume persists the
@@ -54,7 +86,6 @@ volumes:
 #       test: [ "CMD", "pg_isready" ]
 #       interval: 10s
 #       timeout: 5s
-#       retries: 5
 # volumes:
 #   db-data:
 # secrets:
