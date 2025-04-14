@@ -1,3 +1,6 @@
+const morgan = require('morgan');
+// ----------------------------
+
 class Logger {
   constructor() {
     //Store ANSI colors code 
@@ -9,6 +12,7 @@ class Logger {
       WARNING: '\x1b[33m',
       ERROR: '\x1b[31m', 
     };
+    this.morganFormat = '[:date[web]][SERVER]: :method :url :status :response-time ms';
   }
   //Get the current time
   getTime() {
@@ -20,6 +24,24 @@ class Logger {
     const loggerMsg = `[${timestamp}][SERVER]: ${msg}`
 
     console.log(`${this.colors.INFO}${loggerMsg}${this.colors.WHITE}`);
+  }
+  activity() {
+    return morgan(this.morganFormat, {
+      stream: {
+        write: (message) => {
+          // Extract status code from the message (assuming it's in the format)
+          const statusMatch = message.match(/\b(\d{3})\b(?!\d)/);
+          let color = this.colors.WHITE;
+          if (statusMatch) {
+            const status = parseInt(statusMatch[1], 10);
+            if (status >= 200 && status < 300) color = this.colors.SUCCESS;
+            else if (status >= 300 && status < 400) color = this.colors.WARNING;
+            else if (status >= 400) color = this.colors.ERROR;
+          }
+          console.log(`${color}${message.trim()}${this.colors.WHITE}`);
+        }
+      }
+    });
   }
 }
 

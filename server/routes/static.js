@@ -27,7 +27,4 @@ const staticConfig = {
   }
 };
 
-// Serve static files
-router.use('/public', express.static("public", staticConfig));
-
 module.exports = router; 
