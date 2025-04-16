@@ -1,0 +1,133 @@
+/* Login Page Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.login-container,
+.signup-container {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.login-header h2,
+.signup-header h2 {
+  color: #d083cf;
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #333;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #d083cf;
+  box-shadow: 0 0 5px rgba(208, 131, 207, 0.3);
+}
+
+.login-btn,
+.signup-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #d083cf;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  text-transform: uppercase;
+}
+
+.login-btn:hover,
+.login-btn:focus,
+.signup-btn:hover,
+.signup-btn:focus {
+  background-color: #c076bc;
+  transform: translateY(-2px);
+}
+
+.login-options {
+  margin-top: 25px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.signup-options {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+}
+
+.login-options a,
+.signup-options a {
+  color: #777;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s;
+}
+
+.login-options a:hover,
+.signup-options a:hover {
+  color: #d083cf;
+  text-decoration: underline;
+}
+
+.back-home {
+  margin-top: 20px;
+}
+
+.back-home a {
+  color: #d083cf;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.back-home a i {
+  margin-right: 5px;
+}
+
+label.error {
+  font-size: 12px;
+  font-weight: 400;
+  color: #ff0000;
+  margin-top: 4px
+}

@@ -43,11 +43,6 @@ const log = logger()
 
 setupApp();
 
-// START - TEST
-const services = require("./server/services/test")
-services.getData()
-// END - TEST
-
 async function setupApp() {
   //use activity logger to listen req, res
   app.use(log.activity());

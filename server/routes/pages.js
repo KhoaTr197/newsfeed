@@ -5,8 +5,8 @@ router.get(["/", "/index", "/homepage"], (req, res) => {
   res.render("index");
 })
 
-router.get("/me", (req, res) => {
-  res.sendFile(path.join(__dirname, "../views", "index.html"))
+router.get("/admin", (req, res) => {
+  res.render("admin");
 })
 
 module.exports = router;
