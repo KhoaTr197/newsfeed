@@ -1,0 +1,207 @@
+html,
+body {
+  height: 100%;
+  background-color: #f8f9fa;
+  font-family: "Open Sans", sans-serif;
+}
+
+.container-fluid,
+.row {
+  min-height: 100%;
+}
+
+.author-sidebar {
+  background-color: #343a40;
+  color: #fff;
+  min-height: 100vh;
+  padding: 0;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.author-sidebar .logo {
+  padding: 20px 15px;
+  background-color: #212529;
+  text-align: center;
+}
+
+.author-sidebar .nav-link {
+  color: rgba(255, 255, 255, 0.75);
+  padding: 12px 20px;
+  border-left: 3px solid transparent;
+}
+
+.author-sidebar .nav-link:hover,
+.author-sidebar .nav-link.active {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-left-color: #28a745;
+}
+
+.author-sidebar .nav-link i {
+  margin-right: 10px;
+  width: 20px;
+  text-align: center;
+}
+
+.author-content {
+  padding: 20px;
+}
+
+/* Main content positioning */
+.col-md-9.col-lg-10.ml-sm-auto {
+  margin-left: 25% !important;
+}
+
+@media (min-width: 992px) {
+  .col-md-9.col-lg-10.ml-sm-auto {
+    margin-left: 16.666667% !important;
+  }
+}
+
+.author-header {
+  background-color: #fff;
+  border-bottom: 1px solid #dee2e6;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.author-card {
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+.author-card-header {
+  padding: 15px 20px;
+  border-bottom: 1px solid #f1f1f1;
+  font-weight: 600;
+}
+
+.author-card-body {
+  padding: 20px;
+}
+
+.table-actions .btn {
+  padding: 3px 8px;
+  margin-right: 5px;
+}
+
+.status-badge {
+  padding: 5px 10px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-published {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-draft {
+  background-color: #fff8e1;
+  color: #ff8f00;
+}
+
+.author-footer {
+  text-align: center;
+  padding: 15px;
+  color: #6c757d;
+  font-size: 13px;
+  margin-top: 30px;
+}
+
+.editor-toolbar {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-bottom: none;
+  padding: 10px;
+  border-radius: 4px 4px 0 0;
+}
+
+.editor-toolbar .btn {
+  margin-right: 5px;
+}
+
+.editor-content {
+  border: 1px solid #ddd;
+  border-radius: 0 0 4px 4px;
+  min-height: 400px;
+  padding: 15px;
+  overflow-y: auto;
+}
+
+.article-preview {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 20px;
+  margin-top: 20px;
+  height: 500px;
+  /* Fixed height to ensure scrollbar appears */
+  overflow-y: scroll;
+  /* Always show scrollbar */
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Custom scrollbar styling */
+.article-preview::-webkit-scrollbar {
+  width: 8px;
+}
+
+.article-preview::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.article-preview::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.article-preview::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+.article-preview img {
+  max-width: 100%;
+  height: auto;
+}
+
+.article-preview h1 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.article-meta {
+  color: #6c757d;
+  margin-bottom: 20px;
+}
+
+.article-content {
+  line-height: 1.6;
+}
+
+.tab-content {
+  padding-top: 20px;
+}
+
+/* Hide dashboard panel when other links are active */
+.nav-link:not([href="#dashboard"]).active ~ .tab-content #dashboard {
+  display: none;
+}
+
+/* Styles for the two-panel layout */
+@media (min-width: 992px) {
+  .write-panel-sticky {
+    position: sticky;
+    top: 20px;
+  }
+}

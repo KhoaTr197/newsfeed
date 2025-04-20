@@ -11,6 +11,7 @@
 
 - **Huỳnh Khắc Huy** - MSSV: 0306231291
 - **Trần Hoàng Minh Khoa** - MSSV: 0306231298
+- **Nguyễn Nhất Tâm** - MSSV: 0306231334
 - **Lê Trung Tín** - MSSV: 0306231339
 
 ## About
@@ -43,7 +44,7 @@ For detailed updates and progress tracking, please visit our [Notion page](https
 
 ```
 ├─ /node_modules            # Contains all the dependencies
-├─ /client                  # Frontend code for the website
+├─ /client                  # Frontend code for the website (reference files to know client's code structure)
 │   ├─ /assets              # Static files like CSS, Fonts, and JavaScript
 │   │    ├─ /css
 │   │    │   └─ /images     # Images used in Bootstrap, CSS, Animation

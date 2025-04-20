@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>NewsFeed - Author Dashboard</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/font.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/author.css">
+  <script src="assets/js/html5shiv.min.js"></script>
+  <script src="assets/js/respond.min.js"></script>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-3 col-lg-2 author-sidebar">
+        <div class="logo">
+          <h4>Author Dashboard</h4>
+        </div>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="#dashboard" data-toggle="tab">
+              <i class="fa fa-dashboard"></i> Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#write" data-toggle="tab">
+              <i class="fa fa-pencil"></i> Write Article
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#articles" data-toggle="tab">
+              <i class="fa fa-newspaper-o"></i> My Articles
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#profile" data-toggle="tab">
+              <i class="fa fa-user"></i> Profile
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/">
+              <i class="fa fa-globe"></i> View Site
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="fa fa-sign-out"></i> Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Main Content -->
+      <div class="col-md-9 col-lg-10 ml-sm-auto">
+        <div class="author-header d-flex justify-content-between align-items-center">
+          <h4 class="mb-0">Author Dashboard</h4>
+          <div class="user-info">
+            <span class="mr-2"><!-- TODO: Display author name --></span>
+          </div>
+        </div>
+
+        <div class="tab-content">
+          <!-- Dashboard Tab -->
+          <div class="tab-pane fade show active" id="dashboard">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="author-card">
+                  <div class="author-card-body text-center">
+                    <i class="fa fa-newspaper-o fa-3x text-success mb-3"></i>
+                    <h5>Published Articles</h5>
+                    <h2><!-- TODO: Display published articles count --></h2>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="author-card">
+                  <div class="author-card-body text-center">
+                    <i class="fa fa-edit fa-3x text-warning mb-3"></i>
+                    <h5>Draft Articles</h5>
+                    <h2><!-- TODO: Display draft articles count --></h2>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="author-card">
+                  <div class="author-card-body text-center">
+                    <i class="fa fa-eye fa-3x text-primary mb-3"></i>
+                    <h5>Total Views</h5>
+                    <h2><!-- TODO: Display total views count --></h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="author-card mt-4">
+              <div class="author-card-header">
+                Recent Articles
+              </div>
+              <div class="author-card-body">
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Views</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- TODO: Loop through recent articles -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Write Article Tab -->
+          <div class="tab-pane fade" id="write">
+            <div class="author-card">
+              <div class="author-card-header">
+                Write New Article
+              </div>
+              <div class="author-card-body">
+                <form id="articleForm">
+                  <div class="form-group">
+                    <label for="articleTitle">Title</label>
+                    <input type="text" class="form-control" id="articleTitle" placeholder="Enter article title">
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="articleCategory">Category</label>
+                        <select class="form-control" id="articleCategory">
+                          <!-- TODO: Loop through categories -->
+                          <option value="1">Sports</option>
+                          <option value="2">Fashion</option>
+                          <option value="3">Business</option>
+                          <option value="4">Technology</option>
+                          <option value="5">Games</option>
+                          <option value="6">Life & Style</option>
+                          <option value="7">Photography</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="articleThumbnail">Thumbnail URL</label>
+                        <input type="text" class="form-control" id="articleThumbnail" placeholder="Enter thumbnail URL">
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Two-panel layout for editor and preview -->
+                  <div class="row">
+                    <!-- Left panel: Editor -->
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="articleContent">Content</label>
+                        <div class="editor-toolbar">
+                          <button type="button" class="btn btn-sm btn-light" title="Bold"><i
+                              class="fa fa-bold"></i></button>
+                          <button type="button" class="btn btn-sm btn-light" title="Italic"><i
+                              class="fa fa-italic"></i></button>
+                          <button type="button" class="btn btn-sm btn-light" title="Underline"><i
+                              class="fa fa-underline"></i></button>
+                          <button type="button" class="btn btn-sm btn-light" title="Heading"><i
+                              class="fa fa-header"></i></button>
+                          <button type="button" class="btn btn-sm btn-light" title="List"><i
+                              class="fa fa-list-ul"></i></button>
+                          <button type="button" class="btn btn-sm btn-light" title="Numbered List"><i
+                              class="fa fa-list-ol"></i></button>
+                          <button type="button" class="btn btn-sm btn-light" title="Link"><i
+                              class="fa fa-link"></i></button>
+                          <button type="button" class="btn btn-sm btn-light" title="Image"><i
+                              class="fa fa-image"></i></button>
+                        </div>
+                        <div class="editor-content" contenteditable="true" id="articleContent">
+                          <!-- Content will be edited here -->
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="articleTags">Tags (comma separated)</label>
+                        <input type="text" class="form-control" id="articleTags" placeholder="Enter tags">
+                      </div>
+
+                      <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" id="articleFeatured">
+                          <label class="custom-control-label" for="articleFeatured">Feature this article</label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Right panel: Preview -->
+                    <div class="col-md-6 write-panel-sticky">
+                      <div class="article-preview" style="margin-top: 24px; height: 500px; overflow-y: scroll;">
+                        <h5 class="mb-3">Preview</h5>
+                        <div id="previewContent">
+                          <h1 id="previewTitle">Your Article Title</h1>
+                          <div class="article-meta">
+                            <span id="previewCategory">Category</span> | <span id="previewDate">Today's Date</span>
+                          </div>
+                          <div class="article-content" id="previewBody">
+                            <p>Your article content will appear here as you type...</p>
+                            <p>Start writing in the editor to see your content appear here in real-time.</p>
+                            <p>This preview panel has a scrollbar to allow you to see how your article will look when
+                              published.</p>
+                            <p>You can add images, format text, create lists, and more using the toolbar above the
+                              editor.</p>
+                            <h2>Section Example</h2>
+                            <p>This is an example of how sections will appear in your article.</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus
+                              hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend
+                              nibh porttitor.</p>
+                            <h3>Subsection Example</h3>
+                            <p>This is an example of a subsection in your article.</p>
+                            <p>Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet,
+                              consectetur adipiscing elit. Aenean ut gravida lorem.</p>
+                            <ul>
+                              <li>List item example</li>
+                              <li>Another list item</li>
+                              <li>Third list item</li>
+                            </ul>
+                            <p>Ut turpis felis, pulvinar a semper sed, adipiscing id dolor. Pellentesque auctor nisi id
+                              magna consequat sagittis. Curabitur dapibus enim sit amet elit pharetra tincidunt feugiat
+                              nisl imperdiet.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group text-right mt-3">
+                    <button type="button" class="btn btn-secondary mr-2" id="saveDraft">Save as Draft</button>
+                    <button type="button" class="btn btn-primary" id="publishArticle">Publish Article</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- My Articles Tab -->
+          <div class="tab-pane fade" id="articles">
+            <div class="author-card">
+              <div class="author-card-header d-flex justify-content-between align-items-center">
+                <span>My Articles</span>
+                <button class="btn btn-success btn-sm" id="newArticleBtn">
+                  <i class="fa fa-plus"></i> New Article
+                </button>
+              </div>
+              <div class="author-card-body">
+                <ul class="nav nav-tabs" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#allArticles">All</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#publishedArticles">Published</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#draftArticles">Drafts</a>
+                  </li>
+                </ul>
+
+                <div class="tab-content">
+                  <div class="tab-pane fade show active" id="allArticles">
+                    <div class="table-responsive">
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Views</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <!-- TODO: Loop through all articles -->
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div class="tab-pane fade" id="publishedArticles">
+                    <div class="table-responsive">
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Date</th>
+                            <th>Views</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <!-- TODO: Loop through published articles -->
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div class="tab-pane fade" id="draftArticles">
+                    <div class="table-responsive">
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Last Updated</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <!-- TODO: Loop through draft articles -->
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile Tab -->
+          <div class="tab-pane fade" id="profile">
+            <div class="author-card">
+              <div class="author-card-header">
+                My Profile
+              </div>
+              <div class="author-card-body">
+                <form id="profileForm">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="profileUsername">Username</label>
+                        <input type="text" class="form-control" id="profileUsername" placeholder="Username"
+                          value="<!-- TODO: Display username -->">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="profileEmail">Email</label>
+                        <input type="email" class="form-control" id="profileEmail" placeholder="Email"
+                          value="<!-- TODO: Display email -->">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="profileBio">Bio</label>
+                    <textarea class="form-control" id="profileBio" rows="4"
+                      placeholder="Tell readers about yourself"><!-- TODO: Display bio --></textarea>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="profilePassword">New Password</label>
+                        <input type="password" class="form-control" id="profilePassword"
+                          placeholder="Leave blank to keep current password">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="profileConfirmPassword">Confirm New Password</label>
+                        <input type="password" class="form-control" id="profileConfirmPassword"
+                          placeholder="Confirm new password">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group text-right">
+                    <button type="button" class="btn btn-primary" id="updateProfile">Update Profile</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="author-footer">
+          <p>Copyright &copy; 2045 NewsFeed Author Dashboard</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/bootstrap.min.js"></script>
+  <script src="assets/js/author.js"></script>
+</body>
+
+</html>
