@@ -17,7 +17,7 @@
     <div class="login-header">
       <h2>Login</h2>
     </div>
-    <form id="login-form" method="post" action="">
+    <form id="login-form" method="post" action="/api/auth/login">
       <div class="form-group">
         <label for="username">Username</label>
         <input type="text" id="username" name="username" placeholder="Enter your username" required>
@@ -34,13 +34,14 @@
         <a href="/signup">Create Account</a>
       </div>
       <div class="back-home">
-        <a href="../index.html"><i class="fa fa-arrow-left"></i> Back to Home</a>
+        <a href="../"><i class="fa fa-arrow-left"></i> Back to Home</a>
       </div>
     </form>
   </div>
 
   <script src="../assets/js/jquery.min.js"></script>
   <script src="../assets/js/bootstrap.min.js"></script>
+  <script src="../assets/js/validator.js"></script>
   <script src="../assets/js/auth.js"></script>
 </body>
 </html>
