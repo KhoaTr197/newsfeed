@@ -12,14 +12,13 @@ const getContacts = async (req, res) => {
 
 const addContact = async (req, res) => {
   try {
-    console.log(req.body);
-    // const { name, status } = req.body;
-    // const success = await contactService.addContact(name, status);
-    // if (success) {
-    //   res.json({ message: "Contact added successfully" });
-    // } else {
-    //   res.status(404).json({ error: "Failed to add contact" });
-    // }
+    const { name, email, message } = req.body;
+    const success = await contactService.addContact(name, email, message);
+    if (success) {
+      res.json({ message: "Contact added successfully" });
+    } else {
+      res.status(404).json({ error: "Failed to add contact" });
+    }
   } catch (err) {
     console.error(err);
   }

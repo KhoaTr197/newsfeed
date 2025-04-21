@@ -218,12 +218,14 @@
                     type="text"
                     placeholder="Name*"
                     id="name"
+                    required
                   />
                   <input
                     class="form-control"
                     type="email"
                     placeholder="Email*"
                     id="email"
+                    required
                   />
                   <textarea
                     class="form-control"
@@ -231,6 +233,7 @@
                     rows="10"
                     placeholder="Message*"
                     id="message"
+                    required
                   ></textarea>
                   <input type="submit" value="Send Message" />
                 </form>
@@ -351,31 +354,6 @@
     <script src="../assets/js/jquery.newsTicker.min.js"></script>
     <script src="../assets/js/jquery.fancybox.pack.js"></script>
     <script src="../assets/js/custom.js"></script>
-    <script>
-      $("#contact_form").on("submit", (e) => {
-        const name = $("#name").val();
-        const email = $("#email").val();
-        const message = $("#message").val();
-
-        e.preventDefault();
-        $.ajax({
-          url: "api/contact",
-          method: "POST",
-          data: JSON.stringify({
-            name,
-            email,
-            message,
-          }),
-          success: (response) => {
-            alert("Contact added successfully");
-            location.reload();
-          },
-          error: function (xhr, status, error) {
-            console.error("Error adding contact:", xhr.responseText);
-            alert("Failed to add contact: " + xhr.responseText);
-          },
-        });
-      });
-    </script>
+    <script src="/assets/js/contact.js"></script>
   </body>
 </html>
