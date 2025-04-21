@@ -1,393 +1,659 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>NewsFeed - Admin Panel</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="assets/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="assets/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" type="text/css" href="assets/css/font.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/admin.css" />
+    <script src="assets/js/html5shiv.min.js"></script>
+    <script src="assets/js/respond.min.js"></script>
+  </head>
 
-<head>
-  <title>NewsFeed - Admin Panel</title>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
-  <link rel="stylesheet" type="text/css" href="assets/css/font.css">
-  <link rel="stylesheet" type="text/css" href="assets/css/admin.css">
-  <script src="assets/js/html5shiv.min.js"></script>
-  <script src="assets/js/respond.min.js"></script>
-</head>
-
-<body>
-  <div class="container-fluid">
-    <div class="row">
-      <!-- Sidebar -->
-      <div class="col-md-3 col-lg-2 admin-sidebar">
-        <div class="logo">
-          <h4>NewsFeed Admin</h4>
-        </div>
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link active" href="#dashboard" data-toggle="tab">
-              <i class="fa fa-dashboard"></i> Dashboard
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#authors" data-toggle="tab">
-              <i class="fa fa-users"></i> Authors
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#articles" data-toggle="tab">
-              <i class="fa fa-newspaper-o"></i> Articles
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#categories" data-toggle="tab">
-              <i class="fa fa-tags"></i> Categories
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/">
-              <i class="fa fa-globe"></i> View Site
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="fa fa-sign-out"></i> Logout
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Main Content -->
-      <div class="col-md-9 col-lg-10 ml-sm-auto">
-        <div class="admin-header d-flex justify-content-between align-items-center">
-          <h4 class="mb-0">Admin Dashboard</h4>
-          <div class="user-info">
-            <span class="mr-2">Welcome, Admin</span>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 col-lg-2 admin-sidebar">
+          <div class="logo">
+            <h4>NewsFeed Admin</h4>
           </div>
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link active" href="#dashboard" data-toggle="tab">
+                <i class="fa fa-dashboard"></i> Dashboard
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#authors" data-toggle="tab">
+                <i class="fa fa-users"></i> Authors
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#articles" data-toggle="tab">
+                <i class="fa fa-newspaper-o"></i> Articles
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#categories" data-toggle="tab">
+                <i class="fa fa-tags"></i> Categories
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="fa fa-globe"></i> View Site
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="fa fa-sign-out"></i> Logout
+              </a>
+            </li>
+          </ul>
         </div>
 
-        <div class="tab-content">
-          <!-- Dashboard Tab -->
-          <div class="tab-pane fade show active" id="dashboard">
-            <div class="row">
-              <div class="col-md-4">
-                <div class="admin-card">
-                  <div class="admin-card-body text-center">
-                    <i class="fa fa-users fa-3x text-primary mb-3"></i>
-                    <h5>Total Authors</h5>
-                    <h2><!-- TODO: Display total authors count --></h2>
+        <!-- Main Content -->
+        <div class="col-md-9 col-lg-10 ml-sm-auto">
+          <div
+            class="admin-header d-flex justify-content-between align-items-center"
+          >
+            <h4 class="mb-0">Admin Dashboard</h4>
+            <div class="user-info">
+              <span class="mr-2">Welcome, Admin</span>
+            </div>
+          </div>
+
+          <div class="tab-content">
+            <!-- Dashboard Tab -->
+            <div class="tab-pane fade show active" id="dashboard">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="admin-card">
+                    <div class="admin-card-body text-center">
+                      <i class="fa fa-users fa-3x text-primary mb-3"></i>
+                      <h5>Total Authors</h5>
+                      <h2><!-- TODO: Display total authors count --></h2>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="admin-card">
+                    <div class="admin-card-body text-center">
+                      <i class="fa fa-newspaper-o fa-3x text-success mb-3"></i>
+                      <h5>Total Articles</h5>
+                      <h2><!-- TODO: Display total articles count --></h2>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="admin-card">
+                    <div class="admin-card-body text-center">
+                      <i class="fa fa-tags fa-3x text-warning mb-3"></i>
+                      <h5>Total Categories</h5>
+                      <h2><!-- TODO: Display total categories count --></h2>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="col-md-4">
-                <div class="admin-card">
-                  <div class="admin-card-body text-center">
-                    <i class="fa fa-newspaper-o fa-3x text-success mb-3"></i>
-                    <h5>Total Articles</h5>
-                    <h2><!-- TODO: Display total articles count --></h2>
+
+              <div class="admin-card mt-4">
+                <div class="admin-card-header">Recent Articles</div>
+                <div class="admin-card-body">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Title</th>
+                          <th>Author</th>
+                          <th>Category</th>
+                          <th>Date</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- TODO: Loop through recent articles -->
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
-              <div class="col-md-4">
-                <div class="admin-card">
-                  <div class="admin-card-body text-center">
-                    <i class="fa fa-tags fa-3x text-warning mb-3"></i>
-                    <h5>Total Categories</h5>
-                    <h2><!-- TODO: Display total categories count --></h2>
+            </div>
+
+            <!-- Authors Tab -->
+            <div class="tab-pane fade" id="authors">
+              <div class="admin-card">
+                <div
+                  class="admin-card-header d-flex justify-content-between align-items-center"
+                >
+                  <span>Manage Authors</span>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    data-toggle="modal"
+                    data-target="#addAuthorModal"
+                  >
+                    <i class="fa fa-plus"></i> Add New Author
+                  </button>
+                </div>
+                <div class="admin-card-body">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Username</th>
+                          <th>Email</th>
+                          <th>Role</th>
+                          <th>Status</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- TODO: Loop through authors data -->
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="admin-card mt-4">
-              <div class="admin-card-header">
-                Recent Articles
+            <!-- Articles Tab -->
+            <div class="tab-pane fade" id="articles">
+              <div class="admin-card">
+                <div
+                  class="admin-card-header d-flex justify-content-between align-items-center"
+                >
+                  <span>Manage Articles</span>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    data-toggle="modal"
+                    data-target="#addArticleModal"
+                  >
+                    <i class="fa fa-plus"></i> Add New Article
+                  </button>
+                </div>
+                <div class="admin-card-body">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Title</th>
+                          <th>Category</th>
+                          <th>Author</th>
+                          <th>Published Date</th>
+                          <th>Status</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- TODO: Loop through articles data -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
-              <div class="admin-card-body">
-                <div class="table-responsive">
-                  <table class="table table-hover">
-                    <thead>
-                      <tr>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Category</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <!-- TODO: Loop through recent articles -->
-                    </tbody>
-                  </table>
+            </div>
+
+            <!-- Categories Tab -->
+            <div class="tab-pane fade" id="categories">
+              <div class="admin-card">
+                <div
+                  class="admin-card-header d-flex justify-content-between align-items-center"
+                >
+                  <span>Manage Categories</span>
+                  <button
+                    class="btn btn-primary btn-sm"
+                    data-toggle="modal"
+                    data-target="#addCategoryModal"
+                  >
+                    <i class="fa fa-plus"></i> Add New Category
+                  </button>
+                </div>
+                <div class="admin-card-body">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Category Name</th>
+                          <th>Status</th>
+                          <th colspan="2">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody id="categoryTableBody">
+                        <!-- TODO: Loop through categories data -->
+                        <% categories.forEach(category => { %>
+                        <tr>
+                          <td><%= category.id %></td>
+                          <td><%= category.cateName %></td>
+                          <td>
+                            <%= category.status == 1 ? 'Active' : 'Inactive' %>
+                          </td>
+                          <td>
+                            <button
+                              class="btn btn-sm btn-primary edit-btn edit-btn-category"
+                              data-id="<%= category.id %>"
+                              data-name="<%= category.cateName %>"
+                              data-status="<%= category.status %>"
+                            >
+                              Edit
+                            </button>
+                          </td>
+                        </tr>
+                        <% }); %>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Authors Tab -->
-          <div class="tab-pane fade" id="authors">
-            <div class="admin-card">
-              <div class="admin-card-header d-flex justify-content-between align-items-center">
-                <span>Manage Authors</span>
-                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addAuthorModal">
-                  <i class="fa fa-plus"></i> Add New Author
-                </button>
-              </div>
-              <div class="admin-card-body">
-                <div class="table-responsive">
-                  <table class="table table-hover">
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <!-- TODO: Loop through authors data -->
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Articles Tab -->
-          <div class="tab-pane fade" id="articles">
-            <div class="admin-card">
-              <div class="admin-card-header d-flex justify-content-between align-items-center">
-                <span>Manage Articles</span>
-                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addArticleModal">
-                  <i class="fa fa-plus"></i> Add New Article
-                </button>
-              </div>
-              <div class="admin-card-body">
-                <div class="table-responsive">
-                  <table class="table table-hover">
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Category</th>
-                        <th>Author</th>
-                        <th>Published Date</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <!-- TODO: Loop through articles data -->
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Categories Tab -->
-          <div class="tab-pane fade" id="categories">
-            <div class="admin-card">
-              <div class="admin-card-header d-flex justify-content-between align-items-center">
-                <span>Manage Categories</span>
-                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addCategoryModal">
-                  <i class="fa fa-plus"></i> Add New Category
-                </button>
-              </div>
-              <div class="admin-card-body">
-                <div class="table-responsive">
-                  <table class="table table-hover">
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Category Name</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <!-- TODO: Loop through categories data -->
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
+          <div class="admin-footer">
+            <p>Copyright &copy; 2045 NewsFeed Admin Panel</p>
           </div>
         </div>
+      </div>
+    </div>
 
-        <div class="admin-footer">
-          <p>Copyright &copy; 2045 NewsFeed Admin Panel</p>
+    <!-- Add Author Modal -->
+    <div
+      class="modal fade"
+      id="addAuthorModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="addAuthorModalLabel"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addAuthorModalLabel">Add New Author</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="addAuthorForm">
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="username"
+                  placeholder="Enter username"
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  placeholder="Enter email"
+                />
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  placeholder="Enter password"
+                />
+              </div>
+              <div class="form-group">
+                <label for="role">Role</label>
+                <select class="form-control" id="role">
+                  <option value="0">Author</option>
+                  <option value="1">Admin</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="status">Status</label>
+                <select class="form-control" id="status">
+                  <option value="1">Active</option>
+                  <option value="0">Inactive</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Save Author</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Add Author Modal -->
-  <div class="modal fade" id="addAuthorModal" tabindex="-1" role="dialog" aria-labelledby="addAuthorModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addAuthorModalLabel">Add New Author</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form id="addAuthorForm">
-            <div class="form-group">
-              <label for="username">Username</label>
-              <input type="text" class="form-control" id="username" placeholder="Enter username">
-            </div>
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" class="form-control" id="email" placeholder="Enter email">
-            </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input type="password" class="form-control" id="password" placeholder="Enter password">
-            </div>
-            <div class="form-group">
-              <label for="role">Role</label>
-              <select class="form-control" id="role">
-                <option value="0">Author</option>
-                <option value="1">Admin</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="status">Status</label>
-              <select class="form-control" id="status">
-                <option value="1">Active</option>
-                <option value="0">Inactive</option>
-              </select>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save Author</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Add Article Modal -->
-  <div class="modal fade" id="addArticleModal" tabindex="-1" role="dialog" aria-labelledby="addArticleModalLabel">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addArticleModalLabel">Add New Article</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form id="addArticleForm">
-            <div class="form-group">
-              <label for="title">Title</label>
-              <input type="text" class="form-control" id="title" placeholder="Enter article title">
-            </div>
-            <div class="form-group">
-              <label for="content">Content</label>
-              <textarea class="form-control" id="content" rows="10" placeholder="Enter article content"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="thumbnail">Thumbnail URL</label>
-              <input type="text" class="form-control" id="thumbnail" placeholder="Enter thumbnail URL">
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="category">Category</label>
-                  <select class="form-control" id="category">
-                    <!-- TODO: Loop through categories -->
-                    <option value="1">Sports</option>
-                    <option value="2">Fashion</option>
-                    <option value="3">Business</option>
-                    <option value="4">Technology</option>
-                  </select>
+    <!-- Add Article Modal -->
+    <div
+      class="modal fade"
+      id="addArticleModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="addArticleModalLabel"
+    >
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addArticleModalLabel">
+              Add New Article
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="addArticleForm">
+              <div class="form-group">
+                <label for="title">Title</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="title"
+                  placeholder="Enter article title"
+                />
+              </div>
+              <div class="form-group">
+                <label for="content">Content</label>
+                <textarea
+                  class="form-control"
+                  id="content"
+                  rows="10"
+                  placeholder="Enter article content"
+                ></textarea>
+              </div>
+              <div class="form-group">
+                <label for="thumbnail">Thumbnail URL</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="thumbnail"
+                  placeholder="Enter thumbnail URL"
+                />
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="category">Category</label>
+                    <select class="form-control" id="category">
+                      <!-- TODO: Loop through categories -->
+                      <option value="1">Sports</option>
+                      <option value="2">Fashion</option>
+                      <option value="3">Business</option>
+                      <option value="4">Technology</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="author">Author</label>
+                    <select class="form-control" id="author">
+                      <!-- TODO: Loop through authors -->
+                      <option value="1">Admin</option>
+                      <option value="2">Author 1</option>
+                    </select>
+                  </div>
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="author">Author</label>
-                  <select class="form-control" id="author">
-                    <!-- TODO: Loop through authors -->
-                    <option value="1">Admin</option>
-                    <option value="2">Author 1</option>
-                  </select>
-                </div>
+              <div class="form-group">
+                <label for="status">Status</label>
+                <select class="form-control" id="status">
+                  <option value="1">Published</option>
+                  <option value="0">Draft</option>
+                </select>
               </div>
-            </div>
-            <div class="form-group">
-              <label for="status">Status</label>
-              <select class="form-control" id="status">
-                <option value="1">Published</option>
-                <option value="0">Draft</option>
-              </select>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save Article</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Add Category Modal -->
-  <div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addCategoryModalLabel">Add New Category</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form id="addCategoryForm">
-            <div class="form-group">
-              <label for="categoryName">Category Name</label>
-              <input type="text" class="form-control" id="categoryName" placeholder="Enter category name">
-            </div>
-            <div class="form-group">
-              <label for="categoryStatus">Status</label>
-              <select class="form-control" id="categoryStatus">
-                <option value="1">Active</option>
-                <option value="0">Inactive</option>
-              </select>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save Category</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Save Article</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <script src="assets/js/jquery.min.js"></script>
-  <script src="assets/js/bootstrap.min.js"></script>
-  <script>
-    $(document).ready(function () {
-      // Handle tab navigation
-      $('.admin-sidebar .nav-link').on('click', function () {
-        $('.admin-sidebar .nav-link').removeClass('active');
-        $(this).addClass('active');
+    <!-- Add Category Modal -->
+    <div
+      class="modal fade"
+      id="addCategoryModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="addCategoryModalLabel"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addCategoryModalLabel">
+              Add New Category
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="addCategoryForm">
+              <div class="form-group">
+                <label for="categoryName">Category Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="categoryName"
+                  placeholder="Enter category name"
+                />
+              </div>
+              <div class="form-group">
+                <label for="categoryStatus">Status</label>
+                <select class="form-control" id="categoryStatus">
+                  <option value="1" selected="true">Active</option>
+                  <option value="0">Inactive</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary" id="addCategoryBtn">
+              Save Category
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        // Hide dashboard panel when other links are active
-        var targetTab = $(this).attr('href');
-        if (targetTab !== '#dashboard') {
-          $('#dashboard').removeClass('show active');
-        } else {
-          $('#dashboard').addClass('show active');
-        }
+    <div
+      class="modal fade"
+      id="editCategoryModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="editCategoryModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editCategoryModalLabel">
+              Edit Category
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="editCategoryForm">
+              <input type="hidden" id="editCategoryId" />
+              <div class="form-group">
+                <label for="editCategoryName">Category Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="editCategoryName"
+                  placeholder="Enter category name"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="editCategoryStatus">Status</label>
+                <select class="form-control" id="editCategoryStatus" required>
+                  <option value="1">Active</option>
+                  <option value="0">Inactive</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="saveChangesCategoryBtn"
+            >
+              Save Category
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        // Handle tab navigation
+        $(".admin-sidebar .nav-link").on("click", function () {
+          $(".admin-sidebar .nav-link").removeClass("active");
+          $(this).addClass("active");
+
+          // Hide dashboard panel when other links are active
+          var targetTab = $(this).attr("href");
+          if (targetTab !== "#dashboard") {
+            $("#dashboard").removeClass("show active");
+          } else {
+            $("#dashboard").addClass("show active");
+          }
+        });
+
+        $(".edit-btn-category").on("click", function () {
+          //
+          const categoryId = $(this).data("id");
+          const categoryName = $(this).data("name");
+          const categoryStatus = $(this).data("status");
+          $("#editCategoryId").val(categoryId);
+          $("#editCategoryName").val(categoryName);
+          $("#editCategoryStatus").val(categoryStatus);
+          $("#editCategoryModal").modal("show");
+        });
+
+        $("#saveChangesCategoryBtn").on("click", function () {
+          const categoryId = $("#editCategoryId").val();
+          const categoryName = $("#editCategoryName").val();
+          const categoryStatus = $("#editCategoryStatus").val();
+          if (!categoryName) {
+            alert("Category name is required");
+            return;
+          }
+          $.ajax({
+            url: "admin/category/" + categoryId,
+            method: "PUT",
+            contentType: "application/json",
+            data: JSON.stringify({
+              name: categoryName,
+              status: categoryStatus,
+            }),
+            success: function (response) {
+              $("#editCategoryModal").modal("hide");
+              alert("Category updated successfully");
+              location.reload();
+            },
+            error: function (xhr, status, error) {
+              console.error("Error updating category:", xhr.responseText);
+              alert("Failed to update category: " + xhr.responseText);
+            },
+          });
+        });
+
+        $("#addCategoryBtn").on("click", function () {
+          const categoryName = $("#categoryName").val();
+          const categoryStatus = $("#categoryStatus").val();
+          if (!categoryName) {
+            alert("Category name is required");
+            return;
+          }
+          $.ajax({
+            url: "admin/category/add",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({
+              name: categoryName,
+              status: categoryStatus,
+            }),
+            success: function (response) {
+              $("#addCategoryModal").modal("hide");
+              alert("Category added successfully");
+              location.reload();
+            },
+            error: function (xhr, status, error) {
+              console.error("Error adding category:", xhr.responseText);
+              alert("Failed to add category: " + xhr.responseText);
+            },
+          });
+        });
       });
-    });
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>
