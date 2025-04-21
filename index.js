@@ -1,5 +1,7 @@
 const express = require("express");
 const logger = require("./server/middlewares/logger");
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const path = require('path');
 const routes = require("./server/routes");
 require('dotenv').config({
@@ -38,12 +40,19 @@ const config = {
   }
 };
 
-const app = express()
-const log = logger()
+const app = express();
+const log = logger();
 
 setupApp();
 
 async function setupApp() {
+  //use body parser
+  app.use(bodyParser.urlencoded())
+  app.use(bodyParser.json())
+
+  //use cookie parser
+  app.use(cookieParser());
+
   //use activity logger to listen req, res
   app.use(log.activity());
 

@@ -30,7 +30,7 @@ class Logger {
       stream: {
         write: (message) => {
           // Extract status code from the message (assuming it's in the format)
-          const statusMatch = message.match(/\b(\d{3})\b(?!\d)/);
+          const statusMatch = message.match(/\b(\d{3})\b(?=\s+\d+\.\d+\s+ms)/);
           let color = this.colors.WHITE;
           if (statusMatch) {
             const status = parseInt(statusMatch[1], 10);

@@ -29,6 +29,17 @@ body {
   text-transform: uppercase;
 }
 
+.form-error {
+  display: none;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 8px 0;
+  padding: 8px 16px;
+  background: #fff3f3;
+  border: 1px solid #ec4949;
+  border-radius: 4px;
+}
+
 .form-group {
   margin-bottom: 20px;
   text-align: left;
