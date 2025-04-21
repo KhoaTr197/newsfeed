@@ -17,7 +17,7 @@ CREATE TABLE `categories` (
 
 CREATE TABLE `users` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `username` varchar(50),
+  `username` varchar(50) UNIQUE,
   `password` varchar(32),
   `email` varchar(100) UNIQUE,
   `role` bit,

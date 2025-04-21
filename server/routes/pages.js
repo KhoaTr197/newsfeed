@@ -10,6 +10,10 @@ router.get("/login", (req, res) => {
   res.render("login");
 })
 
+router.get("/signup", (req, res) => {
+  res.render("signup");
+})
+
 //protected routes (route need to be authenticated, role checked before access)
 router.get("/admin", auth.verifyToken("/login"), auth.checkRole(['admin']), (req, res) => {
   res.render("admin");

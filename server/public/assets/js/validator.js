@@ -7,6 +7,9 @@ class FormValidator {
         allowedChars: /^[a-zA-Z0-9_]+$/, // Letters, numbers, underscores only
         noSpaces: true,
       },
+      email: {
+        regex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+      },
       password: {
         minLength: 8,
         maxLength: 30,
@@ -51,10 +54,28 @@ class FormValidator {
 
     return result;
   }
+  email(value) {
+    const config = this.config.email;
+    const result = {
+      isValid: true,
+      message: ""
+    };
+    value = String(value);
+
+    if (!value) {
+      result.message = "Email can't be empty"
+    }
+    else if (!config.regex.test(value)) {
+      result.message = "Invalid email"
+    }
+
+    return result;
+  }
+
   password(value) {
     const config = this.config.password;
     const result = {
-      isValid: false,
+      isValid: true,
       message: ""
     };
     value = String(value);
@@ -74,9 +95,6 @@ class FormValidator {
     else if (!config.mustContain.lowercase.test(value)) {
       result.message = "Password must contain at least one lowercase letter"
     }
-    else if (!config.mustContain.lowercase.test(value)) {
-      result.message = "Password must contain at least one lowercase letter"
-    }
     else if (!config.mustContain.uppercase.test(value)) {
       result.message = "Password must contain at least one uppercase letter"
     }
@@ -85,8 +103,6 @@ class FormValidator {
     }
     else if (!config.mustContain.specialChar.test(value)) {
       result.message = "Password must contain at least one special character (!@#$%)"
-    } else {
-      result.isValid = true
     }
 
     return result;

@@ -1,11 +1,14 @@
 class FormValidator {
-  constructor() {
-    this.config = {
+  constructor(config) {
+    this.config = config || {
       username: {
         minLength: 3,
         maxLength: 20,
         allowedChars: /^[a-zA-Z0-9_]+$/, // Letters, numbers, underscores only
         noSpaces: true,
+      },
+      email: {
+        regex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
       },
       password: {
         minLength: 8,
@@ -51,10 +54,27 @@ class FormValidator {
 
     return result;
   }
+  email(value) {
+    const config = this.config.email;
+    const result = {
+      isValid: true,
+      message: ""
+    };
+    value = String(value);
+
+    if (!value) {
+      result.message = "Email can't be empty"
+    }
+    else if (!config.regex.test(value)) {
+      result.message = "Invalid email"
+    }
+
+    return result;
+  }
   password(value) {
     const config = this.config.password;
     const result = {
-      isValid: false,
+      isValid: true,
       message: ""
     };
     value = String(value);
@@ -71,30 +91,25 @@ class FormValidator {
     else if (config.noSpaces && /\s/.test(value)) {
       result.message = "Password must not contain spaces"
     }
-    else if (!config.mustContain.lowercase.test(value)) {
+    else if (config.mustContain && config.mustContain.lowercase && !config.mustContain.lowercase.test(value)) {
       result.message = "Password must contain at least one lowercase letter"
     }
-    else if (!config.mustContain.lowercase.test(value)) {
-      result.message = "Password must contain at least one lowercase letter"
-    }
-    else if (!config.mustContain.uppercase.test(value)) {
+    else if (config.mustContain && config.mustContain.uppercase && !config.mustContain.uppercase.test(value)) {
       result.message = "Password must contain at least one uppercase letter"
     }
-    else if (!config.mustContain.number.test(value)) {
+    else if (config.mustContain && config.mustContain.number && !config.mustContain.number.test(value)) {
       result.message = "Password must contain at least one number"
     }
-    else if (!config.mustContain.specialChar.test(value)) {
+    else if (config.mustContain && config.mustContain.specialChar && !config.mustContain.specialChar.test(value)) {
       result.message = "Password must contain at least one special character (!@#$%)"
-    } else {
-      result.isValid = true
     }
 
     return result;
   }
 }
 
-const formValidator = () => {
-  return new FormValidator();
+const formValidator = (config) => {
+  return new FormValidator(config);
 }
 
 module.exports = formValidator;
