@@ -1,8 +1,8 @@
-const categoriesService = require("../services/categoriesService");
+const categoryService = require("../services/categoryService");
 
-const getCategories = async () => {
+const getCategories = async (req, res) => {
   try {
-    const categories = await categoriesService.getCategories();
+    const categories = await categoryService.getCategories();
     return categories;
   } catch (err) {
     console.error(err);
@@ -14,7 +14,7 @@ const updateCategory = async (req, res) => {
   try {
     const id = req.params.id;
     const { name, status } = req.body;
-    const success = await categoriesService.updateCategory(id, name, status);
+    const success = await categoryService.updateCategory(id, name, status);
     if (success) {
       res.json({ message: "Category updated successfully" });
     } else {
@@ -29,7 +29,7 @@ const addCategory = async (req, res) => {
   try {
     //console.log(req.body);
     const { name, status } = req.body;
-    const success = await categoriesService.addCategory(name, status);
+    const success = await categoryService.addCategory(name, status);
     if (success) {
       res.json({ message: "Category added successfully" });
     } else {

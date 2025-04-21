@@ -67,6 +67,8 @@ async function setupApp() {
   //set the views directory - updated path
   app.set("views", path.join(__dirname, "server", "views"));
 
+  require("./server/services/test").getData();
+
   app.get("*", (req, res) => {
     res.status(404).send();
   });
