@@ -61,6 +61,7 @@ const addArticle = async (title, content, thumbnail, publishedDate, userId, cate
   try {
     const queryStr = "INSERT INTO articles (title, content, thumbnail, publishedDate, userId, cateId, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
     await connection.query(queryStr, [title, content, thumbnail, publishedDate, userId, cateId, status]);
+    return true;
   } catch (err) {
     throw err;
   }

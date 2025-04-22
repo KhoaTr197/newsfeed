@@ -55,7 +55,7 @@ const login = async (req, res) => {
   res.cookie('token', token, {
     httpOnly: true, // Prevents JavaScript access
     sameSite: 'strict', // Prevents cross-site cookie
-    maxAge: 3600000 // 1 hour in milliseconds
+    maxAge: 3600000 * 24 // 1 hour in milliseconds
   });
 
   res.json({

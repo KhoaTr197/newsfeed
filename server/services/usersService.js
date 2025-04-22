@@ -3,9 +3,21 @@ const connection = require('../db/database');
 
 // User-related database functions
 // get all users
-const getUsers = async () => {
+const getAllUsers = async () => {
   try {
     const queryStr = "SELECT * FROM users";
+    const [data] = await connection.query(queryStr);
+    console.log(data)
+    return data;
+
+  } catch (err) {
+    throw err;
+  }
+};
+// get all authors
+const getAllAuthors = async () => {
+  try {
+    const queryStr = "SELECT * FROM users WHERE role = 0";
     const [data] = await connection.query(queryStr);
     return data;
   } catch (err) {
@@ -31,6 +43,7 @@ const addUser = async (username, password, email, role, status) => {
         throw new Error("This account already exists. Please try to login.");
       }
     }
+    console.log(err)
 
     throw new Error("An error occurred while creating your account. Please try again later.");
   }
@@ -93,7 +106,8 @@ const checkAdmin = async (username, password) => {
 };
 
 module.exports = {
-  getUsers,
+  getAllAuthors,
+  getAllUsers,
   checkAuthor,
   checkAdmin,
   addUser,
