@@ -1,3 +1,7 @@
+SET NAMES utf8mb4;
+SET CHARACTER SET utf8mb4;
+SET COLLATION_CONNECTION = 'utf8mb4_unicode_ci';
+
 CREATE TABLE `articles` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `title` nvarchar(100),
@@ -17,7 +21,7 @@ CREATE TABLE `categories` (
 
 CREATE TABLE `users` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `username` varchar(50) UNIQUE,
+  `username` varchar(50),
   `password` varchar(32),
   `email` varchar(100) UNIQUE,
   `role` bit,

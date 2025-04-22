@@ -15,7 +15,7 @@ const formValidator = require('../utils/FormValidator')({
   }
 });
 const auth = require('../middlewares/authMiddleware');
-const userService = require('../services/userService');
+const userService = require('../services/usersService');
 const logger = require('../middlewares/logger');
 // --------------------------------------------
 
@@ -24,7 +24,7 @@ const log = logger();
 // Login controller
 const login = async (req, res) => {
   const { username, password } = req.body;
-  const [ usernameCheckRes, passwordCheckRes ] = [
+  const [usernameCheckRes, passwordCheckRes] = [
     formValidator.username(username),
     formValidator.password(password)
   ];
@@ -71,7 +71,7 @@ const signup = async (req, res) => {
   const { username, password, email } = req.body;
 
   // Validate credential
-  const [ usernameCheckRes, emailCheckRes, passwordCheckRes ] = [
+  const [usernameCheckRes, emailCheckRes, passwordCheckRes] = [
     formValidator.username(username),
     formValidator.email(email),
     formValidator.password(password)
@@ -94,8 +94,8 @@ const signup = async (req, res) => {
       success: true,
       message: "User created successfully!"
     });
-  
-    log.master(`User ${username} has been signed up!`);  
+
+    log.master(`User ${username} has been signed up!`);
   } catch (err) {
     return res.status(401).json({
       success: false,

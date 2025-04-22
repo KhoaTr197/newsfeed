@@ -179,6 +179,7 @@
                     </thead>
                     <tbody>
                       <!-- TODO: Loop through articles data -->
+
                     </tbody>
                   </table>
                 </div>
@@ -364,6 +365,72 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary">Save Category</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Article Modal -->
+  <div class="modal fade" id="editArticleModal" tabindex="-1" role="dialog" aria-labelledby="editArticleModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editArticleModalLabel">Edit Article</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="editArticleForm">
+            <input type="hidden" id="editArticleId">
+            <div class="form-group">
+              <label for="editTitle">Title</label>
+              <input type="text" class="form-control" id="editTitle" placeholder="Enter article title">
+            </div>
+            <div class="form-group">
+              <label for="editContent">Content</label>
+              <textarea class="form-control" id="editContent" rows="10" placeholder="Enter article content"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="editThumbnail">Thumbnail URL</label>
+              <input type="text" class="form-control" id="editThumbnail" placeholder="Enter thumbnail URL">
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="editCategory">Category</label>
+                  <select class="form-control" id="editCategory">
+                    <!-- TODO: Loop through categories -->
+                    <option value="1">Sports</option>
+                    <option value="2">Fashion</option>
+                    <option value="3">Business</option>
+                    <option value="4">Technology</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="editAuthor">Author</label>
+                  <select class="form-control" id="editAuthor">
+                    <!-- TODO: Loop through authors -->
+                    <option value="1">Admin</option>
+                    <option value="2">Author 1</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="editStatus">Status</label>
+              <select class="form-control" id="editStatus">
+                <option value="1">Published</option>
+                <option value="0">Draft</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="saveEditArticle">Save Changes</button>
         </div>
       </div>
     </div>

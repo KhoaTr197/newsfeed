@@ -1,12 +1,27 @@
+html,
 body {
+  height: 100%;
+  margin: 0;
   background-color: #f8f9fa;
   font-family: "Open Sans", sans-serif;
+}
+
+.container-fluid,
+.row {
+  height: 100%;
 }
 .admin-sidebar {
   background-color: #343a40;
   color: #fff;
   min-height: 100vh;
+  height: 100%;
   padding: 0;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+  z-index: 1000;
 }
 .admin-sidebar .logo {
   padding: 20px 15px;
@@ -35,6 +50,39 @@ body {
 }
 .admin-content {
   padding: 20px;
+}
+
+.col-md-9.col-lg-10.ml-sm-auto {
+  margin-left: 25% !important;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+@media (min-width: 992px) {
+  .col-md-9.col-lg-10.ml-sm-auto {
+    margin-left: 16.666667% !important;
+  }
+  .admin-sidebar {
+    width: 16.666667%;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .admin-sidebar {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .admin-sidebar {
+    width: 100%;
+    position: relative;
+    height: auto;
+    min-height: auto;
+  }
+  .col-md-9.col-lg-10.ml-sm-auto {
+    margin-left: 0 !important;
+  }
 }
 .admin-header {
   background-color: #fff;
@@ -105,4 +153,47 @@ body {
   border-left-color: #007bff;
   text-decoration: none;
   outline: none;
+}
+
+/* Modal styles */
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1rem;
+  position: relative;
+}
+
+.modal-header .close {
+  background-color: transparent;
+  border: 0;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: 0.5;
+  cursor: pointer;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
+
+.modal-header .close:hover {
+  opacity: 0.75;
+  color: #dc3545;
+}
+
+.modal-header .close:focus {
+  outline: none;
+}
+
+.modal-header .close span {
+  display: block;
+  line-height: 1;
+}
+
+.modal-title {
+  margin-bottom: 0;
+  line-height: 1.5;
 }

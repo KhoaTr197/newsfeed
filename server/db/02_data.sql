@@ -1,3 +1,7 @@
+SET NAMES utf8mb4;
+SET CHARACTER SET utf8mb4;
+SET COLLATION_CONNECTION = 'utf8mb4_unicode_ci';
+
 INSERT INTO `categories` (`cateName`, `status`) VALUES
 ('sports', 1),
 ('fashion', 1),

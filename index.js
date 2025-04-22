@@ -47,8 +47,14 @@ setupApp();
 
 async function setupApp() {
   //use body parser
-  app.use(bodyParser.urlencoded())
+  app.use(bodyParser.urlencoded({ extended: true, charset: 'utf-8' }))
   app.use(bodyParser.json())
+
+  // Set default charset
+  app.use((req, res, next) => {
+    res.charset = 'utf-8';
+    next();
+  })
 
   //use cookie parser
   app.use(cookieParser());
