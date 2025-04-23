@@ -40,15 +40,22 @@ const login = async (req, res) => {
     });
   }
 
-  const isAdmin = await userService.checkAdmin(username, password);
-  const isAuthor = await userService.checkAuthor(username, password);
+  const user = await userService.checkUserExist(username, password);
 
-  if (!isAdmin && !isAuthor) {
+  if (user === null) {
     return res.status(401).json({
       success: false,
       message: "Wrong username or password!",
     });
   }
+  if (!user.status) {
+    return res.status(401).json({
+      success: false,
+      message: "Your account is not active!",
+    });
+  }
+
+  const isAdmin = user.role === 1;
 
   const token = auth.generateToken({ username, password, role: isAdmin ? "admin" : "author" });
 
@@ -60,6 +67,8 @@ const login = async (req, res) => {
 
   res.json({
     success: true,
+    id: user.id,
+    redirect: isAdmin ? "/admin" : "/author",
     token
   });
 

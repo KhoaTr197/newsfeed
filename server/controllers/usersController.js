@@ -21,23 +21,23 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-// check user is author
-const checkAuthor = async (req, res) => {
+// get user by id
+const getUserById = async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const isAuthor = await userService.checkAuthor(username, password);
-    res.json({ isAuthor });
+    const { id } = req.params;
+    const user = await userService.getUserById(id);
+    res.json(user);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
-// check user is admin
-const checkAdmin = async (req, res) => {
+// check user exist
+const checkUserExist = async (req, res) => {
   try {
     const { username, password } = req.body;
-    const isAdmin = await userService.checkAdmin(username, password);
-    res.json({ isAdmin });
+    const user = await userService.checkUserExist(username, password);
+    res.json(user);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -87,11 +87,22 @@ const updateUser = async (req, res) => {
   }
 };
 
+// update password
+const updatePassword = async (req, res) => {
+  try {
+    const { username, password, newPassword } = req.body;
+    await userService.updatePassword(username, password, newPassword);
+    res.json({ message: 'Password updated successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 // reset password
 const resetPassword = async (req, res) => {
   try {
-    const { username, newPassword } = req.body;
-    await userService.resetPassword(username, newPassword);
+    const { username } = req.body;
+    await userService.resetPassword(username);
     res.json({ message: 'Password reset successfully' });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -101,11 +112,12 @@ const resetPassword = async (req, res) => {
 module.exports = {
   getAllAuthors,
   getAllUsers,
-  checkAuthor,
-  checkAdmin,
+  getUserById,
+  checkUserExist,
   addAuthor,
   updateAuthor,
   addUser,
   updateUser,
+  updatePassword,
   resetPassword
 };

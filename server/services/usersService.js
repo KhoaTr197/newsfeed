@@ -2,6 +2,18 @@ const connection = require('../db/database');
 // ---------------------------------------------
 
 // User-related database functions
+// get all authors
+const getAllAuthors = async () => {
+  try {
+    const queryStr = "SELECT * FROM users WHERE role = 0";
+    const [data] = await connection.query(queryStr);
+    return data;
+
+  } catch (err) {
+    throw err;
+  }
+};
+
 // get all users
 const getAllUsers = async () => {
   try {
@@ -13,12 +25,13 @@ const getAllUsers = async () => {
     throw err;
   }
 };
-// get all authors
-const getAllAuthors = async () => {
+
+// get user by id
+const getUserById = async (id) => {
   try {
-    const queryStr = "SELECT * FROM users WHERE role = 0";
-    const [data] = await connection.query(queryStr);
-    return data;
+    const queryStr = "SELECT * FROM users WHERE id = ?";
+    const [data] = await connection.query(queryStr, [id]);
+    return data[0];
   } catch (err) {
     throw err;
   }
@@ -42,7 +55,6 @@ const addUser = async (username, password, email, role, status) => {
         throw new Error("This account already exists. Please try to login.");
       }
     }
-    console.log(err)
 
     throw new Error("An error occurred while creating your account. Please try again later.");
   }
@@ -51,7 +63,7 @@ const addUser = async (username, password, email, role, status) => {
 // update user
 const updateUser = async (username, password, email, role, status) => {
   try {
-    const queryStr = "UPDATE users SET password = ?, email = ?, role = ?, status = ? WHERE username = ?";
+    const queryStr = "UPDATE users SET password = MD5(?), email = ?, role = ?, status = ? WHERE username = ?";
     await connection.query(queryStr, [password, email, role, status, username]);
 
     return true;
@@ -71,34 +83,38 @@ const updateUser = async (username, password, email, role, status) => {
   }
 };
 
-// reset password
-const resetPassword = async (username, newPassword) => {
+//update password
+const updatePassword = async (username, password, newPassword) => {
   try {
-    const queryStr = "UPDATE users SET password = ? WHERE username = ?";
-    await connection.query(queryStr, [newPassword, username]);
+    const checkQueryStr = "SELECT * FROM users WHERE username = ? AND password = MD5(?)";
+    const [data] = await connection.query(checkQueryStr, [username, password]);
+    if (data.length === 0) {
+      throw new Error("Current password is incorrect.");
+    }
+    const queryStr = "UPDATE users SET password = MD5(?) WHERE username = ? AND password = MD5(?)";
+    await connection.query(queryStr, [newPassword, username, password]);
+  } catch (err) {
+    throw err;
+  }
+};
+
+// reset password
+const resetPassword = async (username) => {
+  try {
+    const queryStr = "UPDATE users SET password = MD5(?) WHERE username = ?";
+    await connection.query(queryStr, [username, username]);
   } catch (err) {
     throw err;
   }
 };
 
 // Authentication-related database functions
-// check user is author
-const checkAuthor = async (username, password) => {
+// check user exist
+const checkUserExist = async (username, password) => {
   try {
-    const queryStr = "SELECT * FROM users WHERE username = ? AND password = MD5(?) AND role = 0";
+    const queryStr = "SELECT * FROM users WHERE username = ? AND password = MD5(?)";
     const [data] = await connection.query(queryStr, [username, password]);
-    return data.length > 0;
-  } catch (err) {
-    throw err;
-  }
-};
-
-// check user is admin
-const checkAdmin = async (username, password) => {
-  try {
-    const queryStr = "SELECT * FROM users WHERE username = ? AND password = MD5(?) AND role = 1";
-    const [data] = await connection.query(queryStr, [username, password]);
-    return data.length > 0;
+    return data.length > 0 ? data[0] : null;
   } catch (err) {
     throw err;
   }
@@ -107,9 +123,10 @@ const checkAdmin = async (username, password) => {
 module.exports = {
   getAllAuthors,
   getAllUsers,
-  checkAuthor,
-  checkAdmin,
+  getUserById,
+  checkUserExist,
   addUser,
   updateUser,
+  updatePassword,
   resetPassword
 };

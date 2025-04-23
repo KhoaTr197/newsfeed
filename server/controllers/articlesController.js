@@ -20,7 +20,7 @@ const getArticleById = async (req, res) => {
     const article = await articleService.getArticleById(id);
     res
       .set('Content-Type', 'application/json; charset=utf-8')
-      .json(articles);
+      .json(article);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  // Global array to store all articles
+  // Global arrays to store all categories, articles, users, and contacts
   let allArticles = [];
   let allCategories = [];
   let allUsers = [];
@@ -12,18 +12,27 @@ $(document).ready(function () {
     return date.toLocaleDateString('vi-VN', { year: 'numeric', month: 'short', day: 'numeric' });
   }
 
-  // Function to load categories
-  function loadCategories() {
+  // Function to get categories
+  function getCategories() {
     $.ajax({
       url: '/api/categories',
       type: 'GET',
       success: function (categories) {
         allCategories = categories;
-        const categoryTableBody = $('#categoryTableBody');
-        categoryTableBody.empty();
+        $('#categoryCount').text(allCategories.length);
+      },
+      error: function (xhr, status, error) {
+        console.error('Error loading categories:', error);
+      }
+    });
+  }
+  // Function to load categories
+  function loadCategories() {
+    const categoryTableBody = $('#categoryTableBody');
+    categoryTableBody.empty();
 
-        allCategories.forEach(category => {
-          categoryTableBody.append(`
+    allCategories.forEach(category => {
+      categoryTableBody.append(`
             <tr>
               <td>${category.id}</td>
               <td>${category.cateName}</td>
@@ -33,31 +42,29 @@ $(document).ready(function () {
               </button></td>
             </tr>
           `);
-        });
-      },
-      error: function (_, __, error) {
-        console.error('Error loading categories:', error);
-      }
     });
   }
-
-  // Function to load users
-  function loadUsers() {
+  // Function to get users
+  function getUsers() {
     $.ajax({
       url: '/api/users',
       type: 'GET',
       success: function (users) {
         allUsers = users;
-        const authorTableBody = $('#authorTableBody');
-        authorTableBody.empty();
+        $('#userCount').text(allUsers.length);
+      },
+      error: function (xhr, status, error) {
+        console.error('Error loading users:', error);
+      }
+    });
+  }
+  // Function to load users
+  function loadUsers() {
+    const authorTableBody = $('#authorTableBody');
+    authorTableBody.empty();
 
-        if (users.length === 0) {
-          authorTableBody.append('<tr><td colspan="6" class="text-center">No users found</td></tr>');
-          return;
-        }
-
-        allUsers.forEach(author => {
-          authorTableBody.append(`
+    allUsers.forEach(author => {
+      authorTableBody.append(`
             <tr>
               <td>${author.id}</td>
               <td>${author.username}</td>
@@ -71,27 +78,28 @@ $(document).ready(function () {
               </td>
             </tr>
           `);
-        });
-      },
-      error: function (_, __, error) {
-        console.error('Error loading users:', error);
-        $('#authorTableBody').html('<tr><td colspan="6" class="text-center text-danger">Error loading users</td></tr>');
-      }
     });
   }
-
-  // Function to load contacts
-  function loadContacts() {
+  // Function to get contacts
+  function getContacts() {
     $.ajax({
       url: '/api/contacts',
       type: 'GET',
       success: function (contacts) {
         allContacts = contacts;
-        const contactTableBody = $('#contactTableBody');
-        contactTableBody.empty();
+      },
+      error: function (xhr, status, error) {
+        console.error('Error loading contacts:', error);
+      }
+    });
+  }
+  // Function to load contacts
+  function loadContacts() {
+    const contactTableBody = $('#contactTableBody');
+    contactTableBody.empty();
 
-        allContacts.forEach(contact => {
-          contactTableBody.append(`
+    allContacts.forEach(contact => {
+      contactTableBody.append(`
             <tr>
               <td>${contact.id}</td>
               <td>${contact.name}</td>
@@ -99,27 +107,29 @@ $(document).ready(function () {
               <td>${contact.message}</td>
             </tr>
           `);
-        });
-      },
-      error: function (_, __, error) {
-        console.error('Error loading contacts:', error);
-      }
     });
   }
-
-  // Function to load articles
-  function loadArticles() {
-    const articleTableBody = $('#articleTableBody');
-
+  // Function to get articles
+  function getArticles() {
     $.ajax({
       url: '/api/articles',
       type: 'GET',
       success: function (articles) {
         allArticles = articles;
-        articleTableBody.empty();
+        $('#articleCount').text(allArticles.length);
+      },
+      error: function (xhr, status, error) {
+        console.error('Error loading articles:', error);
+      }
+    });
+  }
+  // Function to load articles
+  function loadArticles() {
+    const articleTableBody = $('#articleTableBody');
+    articleTableBody.empty();
 
-        articles.forEach(article => {
-          articleTableBody.append(`
+    allArticles.forEach(article => {
+      articleTableBody.append(`
             <tr>
               <td>${article.id}</td>
               <td>${article.title}</td>
@@ -128,9 +138,9 @@ $(document).ready(function () {
               <td>${formatDate(article.publishedDate)}</td>
               <td>
                 ${article.status ?
-              '<span class="badge badge-success">Published</span>' :
-              '<span class="badge badge-warning">Draft</span>'
-            }
+          '<span class="badge status-published">Published</span>' :
+          '<span class="badge status-pending">Pending</span>'
+        }
               </td>
               <td>
                 <button class="btn btn-sm btn-info edit-article" data-id="${article.id}">
@@ -139,14 +149,20 @@ $(document).ready(function () {
               </td>
             </tr>
           `);
-        });
-      },
-      error: function (xhr, status, error) {
-        console.error('Error loading articles:', error);
-        articleTableBody.html('<tr><td colspan="7" class="text-center text-danger">Error loading articles</td></tr>');
-      }
     });
   }
+  // -----------------------------------------
+  // Get Categories
+  getCategories();
+  // Get articles
+  getArticles();
+  // Get users
+  getUsers();
+  // Get contacts
+  getContacts();
+  // Ensure dashboard tab is active on page load
+  $('#dashboard').addClass('show active in');
+  $('.admin-sidebar .nav-link[href="#dashboard"]').addClass('active');
   // ARTICLES
   // Handle add article modal when showing
   $('#addArticleModal').on('shown.bs.modal', function () {
@@ -211,46 +227,47 @@ $(document).ready(function () {
   });
   // Handle save add article button
   $('#addArticleBtn').on('click', function () {
-      const title = $('#title').val();
-      const content = $('#content').val();
-      const thumbnail = $('#thumbnail').val();
-      const cateId = $('#addCategory').val();
-      const userId = $('#addAuthor').val();
-      const status = $('#status').val();
-      const publishedDate = $('#publishedDate').val();
-  
-      // Validate form
-      if (!title || !content) {
-        alert('Please fill in all required fields');
-        return;
+    const title = $('#title').val();
+    const content = $('#content').val();
+    const thumbnail = $('#thumbnail').val();
+    const cateId = $('#addCategory').val();
+    const userId = $('#addAuthor').val();
+    const status = $('#status').val();
+    const publishedDate = $('#publishedDate').val();
+
+    // Validate form
+    if (!title || !content) {
+      alert('Please fill in all required fields');
+      return;
+    }
+
+    if (!cateId) {
+      alert('Please select a category');
+      return;
+    }
+
+    if (!userId) {
+      alert('Please select an author');
+      return;
+    }
+
+    // Add article
+    $.ajax({
+      url: '/api/articles',
+      type: 'POST',
+      data: JSON.stringify({ title, content, thumbnail, cateId, userId, status, publishedDate }),
+      contentType: 'application/json',
+      success: function (response) {
+        $('#addArticleModal').modal('hide');
+        getArticles();
+        loadArticles();
+        alert('Article added successfully!');
+      },
+      error: function (xhr, status, error) {
+        console.error('Error adding article:', error);
+        alert('Error adding article. Please try again.');
       }
-  
-      if (!cateId) {
-        alert('Please select a category');
-        return;
-      }
-  
-      if (!userId) {
-        alert('Please select an author');
-        return;
-      }
-  
-      // Add article
-      $.ajax({
-        url: '/api/articles',
-        type: 'POST',
-        data: JSON.stringify({ title, content, thumbnail, cateId, userId, status, publishedDate }),
-        contentType: 'application/json',
-        success: function (response) {
-          $('#addArticleModal').modal('hide');
-          loadArticles();
-          alert('Article added successfully!');
-        },
-        error: function (xhr, status, error) {
-          console.error('Error adding article:', error);
-          alert('Error adding article. Please try again.');
-        }
-      });
+    });
   });
   // Handle save edit article button
   $('#editArticleBtn').on('click', function () {
@@ -279,6 +296,7 @@ $(document).ready(function () {
       contentType: 'application/json',
       success: function (response) {
         $('#editArticleModal').modal('hide');
+        getArticles();
         loadArticles(); // Reload articles to show updated data
         alert('Article updated successfully!');
       },
@@ -341,6 +359,7 @@ $(document).ready(function () {
       contentType: 'application/json',
       success: function (response) {
         $('#addUserModal').modal('hide');
+        getUsers();
         loadUsers();
         alert('Author added successfully!');
       },
@@ -352,28 +371,44 @@ $(document).ready(function () {
   });
   // Handle save edit user button
   $('#editUserBtn').on('click', function () {
-      const id = $('#editUserId').val();
-      const username = $('#editUsername').val();
-      const email = $('#editEmail').val();
-      const role = $('#editRole').val();
-      const status = $('#editStatus').val();
-  
-      // Update users
-      $.ajax({
-        url: '/api/users',
-        type: 'PUT',
-        data: JSON.stringify({ id, username, email, role, status }),
-        contentType: 'application/json',
-        success: function (response) {
-          $('#editUserModal').modal('hide');
-          loadUsers();
-          alert('Author updated successfully!');
-        },
-        error: function (error) {
-          console.error('Error updating author:', error);
-          alert('Error updating author. Please try again.');
-        }
-      });
+    const id = $('#editUserId').val();
+    const username = $('#editUsername').val();
+    const email = $('#editEmail').val();
+    const role = $('#editRole').val();
+    const status = $('#editStatus').val();
+
+    // Update users
+    $.ajax({
+      url: '/api/users',
+      type: 'PUT',
+      data: JSON.stringify({ id, username, email, role, status }),
+      contentType: 'application/json',
+      success: function (response) {
+        $('#editUserModal').modal('hide');
+        getUsers();
+        loadUsers();
+        alert('Author updated successfully!');
+      },
+      error: function (error) {
+        console.error('Error updating author:', error);
+        alert('Error updating author. Please try again.');
+      }
+    });
+  });
+  $('#resetPasswordUserBtn').on('click', function () {
+    const username = $('#editUsername').val();
+    $.ajax({
+      url: '/api/users/reset',
+      type: 'POST',
+      data: JSON.stringify({ username }),
+      contentType: 'application/json',
+      success: function (response) {
+        alert('Password reset successfully!');
+      },
+      error: function (error) {
+        alert(`Error resetting password: ${error}`);
+      }
+    });
   });
   // Set up event handler for user edit button
   $(document).on('click', '.edit-user', function () {
@@ -407,6 +442,7 @@ $(document).ready(function () {
       contentType: 'application/json',
       success: function (response) {
         $('#addCategoryModal').modal('hide');
+        getCategories();
         loadCategories();
         alert('Category added successfully!');
       },
@@ -429,6 +465,7 @@ $(document).ready(function () {
       contentType: 'application/json',
       success: function (response) {
         $('#editCategoryModal').modal('hide');
+        getCategories();
         loadCategories();
         alert('Category updated successfully!');
       },
@@ -457,32 +494,32 @@ $(document).ready(function () {
   });
   // Handle tab navigation
   $('.admin-sidebar .nav-link').on('click', function () {
-      $('.admin-sidebar .nav-link').removeClass('active');
-      $(this).addClass('active');
-  
-      var targetTab = $(this).attr('href');
-  
-      // Hide all tab panes first
-      $('.tab-pane').removeClass('show active');
-  
-      // Show only the target tab pane
-      $(targetTab).addClass('show active');
-  
-      // Load data based on which tab is clicked
-      if (targetTab === '#articles') {
-        loadCategories();
-        loadUsers();
-        loadArticles();
-      }
-      else if (targetTab === '#users') {
-        loadUsers();
-      }
-      else if (targetTab === '#categories') {
-        loadCategories();
-      }
-      else if (targetTab === '#contacts') {
-        loadContacts();
-      }
+    $('.admin-sidebar .nav-link').removeClass('active');
+    $(this).addClass('active');
+
+    var targetTab = $(this).attr('href');
+
+    // Hide all tab panes first
+    $('.tab-pane').removeClass('show active');
+
+    // Show only the target tab pane
+    $(targetTab).addClass('show active');
+
+    // Load data based on which tab is clicked
+    if (targetTab === '#articles') {
+      loadCategories();
+      loadUsers();
+      loadArticles();
+    }
+    else if (targetTab === '#users') {
+      loadUsers();
+    }
+    else if (targetTab === '#categories') {
+      loadCategories();
+    }
+    else if (targetTab === '#contacts') {
+      loadContacts();
+    }
   });
   // Handle logout button
   $("#logout").on("click", function () {
@@ -491,7 +528,7 @@ $(document).ready(function () {
       type: 'POST',
       success: function (response) {
         if (response.success) {
-          window.location.href = '/admin/login';
+          window.location.href = '/';
         }
       },
       error: function (xhr, status, error) {

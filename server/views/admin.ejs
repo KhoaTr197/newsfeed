@@ -78,8 +78,8 @@
                 <div class="admin-card">
                   <div class="admin-card-body text-center">
                     <i class="fa fa-users fa-3x text-primary mb-3"></i>
-                    <h5>Total Authors</h5>
-                    <h2><!-- TODO: Display total authors count --></h2>
+                    <h5>Total Users</h5>
+                    <h2 id="userCount">0</h2>
                   </div>
                 </div>
               </div>
@@ -88,7 +88,7 @@
                   <div class="admin-card-body text-center">
                     <i class="fa fa-newspaper-o fa-3x text-success mb-3"></i>
                     <h5>Total Articles</h5>
-                    <h2><!-- TODO: Display total articles count --></h2>
+                    <h2 id="articleCount">0</h2>
                   </div>
                 </div>
               </div>
@@ -97,30 +97,8 @@
                   <div class="admin-card-body text-center">
                     <i class="fa fa-tags fa-3x text-warning mb-3"></i>
                     <h5>Total Categories</h5>
-                    <h2><!-- TODO: Display total categories count --></h2>
+                    <h2 id="categoryCount">0</h2>
                   </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="admin-card mt-4">
-              <div class="admin-card-header">Recent Articles</div>
-              <div class="admin-card-body">
-                <div class="table-responsive">
-                  <table class="table table-hover">
-                    <thead>
-                      <tr>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Category</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <!-- TODO: Loop through recent articles -->
-                    </tbody>
-                  </table>
                 </div>
               </div>
             </div>
@@ -361,6 +339,7 @@
               Close
             </button>
             <button id="editUserBtn" type="button" class="btn btn-primary">Save User</button>
+            <button id="resetPasswordUserBtn" type="button" class="btn btn-primary">Reset Password</button>
           </div>
         </div>
       </div>
