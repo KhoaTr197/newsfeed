@@ -4,7 +4,28 @@ const connection = require('../db/database');
 // get all articles
 const getAllArticles = async () => {
   try {
-    const queryStr = "SELECT * FROM articles";
+    const queryStr = `
+      SELECT articles.*, categories.cateName, users.username
+      FROM articles
+      JOIN categories ON articles.cateId = categories.id
+      JOIN users ON articles.userId = users.id
+    `;
+    const [data] = await connection.query(queryStr);
+    return data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+const getAllActiveArticles = async () => {
+  try {
+    const queryStr = `
+      SELECT articles.*, categories.cateName, users.username
+      FROM articles
+      JOIN categories ON articles.cateId = categories.id
+      JOIN users ON articles.userId = users.id
+      WHERE articles.status = 1
+    `;
     const [data] = await connection.query(queryStr);
     return data;
   } catch (err) {
@@ -15,7 +36,13 @@ const getAllArticles = async () => {
 // get specific article by id
 const getArticleById = async (id) => {
   try {
-    const queryStr = "SELECT * FROM articles WHERE id = ?";
+    const queryStr = `
+      SELECT articles.*, categories.cateName, users.username
+      FROM articles
+      JOIN categories ON articles.cateId = categories.id
+      JOIN users ON articles.userId = users.id
+      WHERE articles.id = ? and articles.status = 1
+    `;
     const [data] = await connection.query(queryStr, [id]);
     return data[0];
   } catch (err) {
@@ -26,7 +53,13 @@ const getArticleById = async (id) => {
 // get articles by user id
 const getArticlesByUserId = async (userId) => {
   try {
-    const queryStr = "SELECT * FROM articles WHERE userId = ?";
+    const queryStr = `
+      SELECT articles.*, categories.cateName, users.username
+      FROM articles
+      JOIN categories ON articles.cateId = categories.id
+      JOIN users ON articles.userId = users.id
+      WHERE articles.userId = ? and articles.status = 1
+    `;
     const [data] = await connection.query(queryStr, [userId]);
     return data;
   } catch (err) {
@@ -37,7 +70,13 @@ const getArticlesByUserId = async (userId) => {
 // get articles by category id
 const getArticlesByCategoryId = async (cateId) => {
   try {
-    const queryStr = "SELECT * FROM articles WHERE cateId = ?";
+    const queryStr = `
+      SELECT articles.*, categories.cateName, users.username
+      FROM articles
+      JOIN categories ON articles.cateId = categories.id
+      JOIN users ON articles.userId = users.id
+      WHERE articles.cateId = ? and articles.status = 1
+    `;
     const [data] = await connection.query(queryStr, [cateId]);
     return data;
   } catch (err) {
@@ -48,8 +87,33 @@ const getArticlesByCategoryId = async (cateId) => {
 // search articles by title
 const searchArticlesByTitle = async (title) => {
   try {
-    const queryStr = "SELECT * FROM articles WHERE title LIKE ?";
+    const queryStr = `
+      SELECT articles.*, categories.cateName, users.username
+      FROM articles
+      JOIN categories ON articles.cateId = categories.id
+      JOIN users ON articles.userId = users.id
+      WHERE articles.title LIKE ? and articles.status = 1
+    `;
     const [data] = await connection.query(queryStr, [`%${title}%`]);
+    return data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+// get related articles based on a specific article
+const getRelatedArticles = async (article, limit) => {
+  const { id, title, userId, cateId } = article;
+  try {
+    const queryStr = `
+      SELECT articles.*, categories.cateName, users.username
+      FROM articles
+      JOIN categories ON articles.cateId = categories.id
+      JOIN users ON articles.userId = users.id
+      WHERE articles.id != ? and (articles.title LIKE ? or articles.userId = ? or articles.cateId = ?) and articles.status = 1
+      LIMIT ?
+    `;
+    const [data] = await connection.query(queryStr, [id, `%${title}%`, userId, cateId, limit]);
     return data;
   } catch (err) {
     throw err;
@@ -89,10 +153,12 @@ const deleteArticle = async (id) => {
 
 module.exports = {
   getAllArticles,
+  getAllActiveArticles,
   getArticleById,
   getArticlesByUserId,
   getArticlesByCategoryId,
   searchArticlesByTitle,
+  getRelatedArticles,
   addArticle,
   updateArticle,
   deleteArticle

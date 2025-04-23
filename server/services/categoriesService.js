@@ -12,6 +12,16 @@ const getAllCategories = async () => {
   }
 };
 
+const getAllActiveCategories = async () => {
+  try {
+    const queryStr = "SELECT * FROM categories WHERE status = 1";
+    const [data] = await connection.query(queryStr);
+    return data;
+  } catch (err) {
+    throw err;
+  }
+};
+
 // add category
 const addCategory = async (name, status) => {
   try {
@@ -34,6 +44,7 @@ const updateCategory = async (id, name, status) => {
 
 module.exports = {
   getAllCategories,
+  getAllActiveCategories,
   updateCategory,
   addCategory,
 };

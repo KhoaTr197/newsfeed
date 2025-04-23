@@ -7,7 +7,6 @@ const getAllUsers = async () => {
   try {
     const queryStr = "SELECT * FROM users";
     const [data] = await connection.query(queryStr);
-    console.log(data)
     return data;
 
   } catch (err) {

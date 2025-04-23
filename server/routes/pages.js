@@ -1,10 +1,37 @@
 const router = require('express').Router();
+const categoriesService = require('../services/categoriesService');
+const articlesService = require('../services/articlesService');
 const auth = require('../middlewares/authMiddleware');
 // -----------------------------------
 
-router.get(["/", "/index", "/homepage"], (req, res) => {
-  res.render("index");
+router.get(["/", "/index", "/homepage"], async (req, res) => {
+  try {
+    const [allCategories, allArticles] = [
+      await categoriesService.getAllActiveCategories(),
+      await articlesService.getAllActiveArticles()
+    ];
+
+    res.render("index", {
+      categories: allCategories,
+      articles: allArticles
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
+
+router.get("/detail/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+  
+    const article = await articlesService.getArticleById(id);
+    const relatedArticles = await articlesService.getRelatedArticles(article, 3);
+  
+    res.render("detail", { ...article, relatedArticles });
+  } catch(err) {
+    res.status(500).json({ error: err.message });
+  }
+})
 
 router.get("/contact", (req, res) => {
   res.render("contact");
