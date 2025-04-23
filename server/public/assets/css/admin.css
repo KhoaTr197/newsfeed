@@ -125,15 +125,55 @@ body {
 }
 .admin-footer {
   text-align: center;
-  padding: 15px;
+  padding: 20px 0;
   color: #6c757d;
   font-size: 13px;
-  margin-top: 30px;
+  margin-top: 40px;
+  border-top: 1px solid #e9ecef;
+  width: 100%;
+  clear: both;
+  background-color: #f8f9fa;
+  border-radius: 0 0 4px 4px;
 }
 
-/* Hide dashboard panel when other links are active */
-.nav-link:not([href="#dashboard"]).active ~ .tab-content #dashboard {
+.admin-footer p {
+  margin-bottom: 5px;
+}
+
+.admin-footer .small {
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+.admin-footer .fa-heart {
+  animation: heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.1);
+  }
+  50% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Tab content styling */
+.tab-pane {
   display: none;
+}
+
+.tab-pane.active {
+  display: block;
 }
 
 #logout {
@@ -179,6 +219,16 @@ body {
   top: 1rem;
 }
 
+.status-published {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-pending {
+  background-color: #fff8e1;
+  color: #ff8f00;
+}
+
 .modal-header .close:hover {
   opacity: 0.75;
   color: #dc3545;
@@ -196,4 +246,16 @@ body {
 .modal-title {
   margin-bottom: 0;
   line-height: 1.5;
+}
+
+/* Add button styling */
+.admin-card-header .btn-primary {
+  margin-left: 15px;
+}
+
+label.error {
+  font-size: 12px;
+  font-weight: 400;
+  color: #ff0000;
+  margin-top: 4px
 }

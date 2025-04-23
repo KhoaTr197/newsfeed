@@ -24,7 +24,7 @@ CREATE TABLE `users` (
   `username` varchar(50),
   `password` varchar(32),
   `email` varchar(100) UNIQUE,
-  `role` bit,
+  `role` bool,
   `status` bool DEFAULT 1
 );
 

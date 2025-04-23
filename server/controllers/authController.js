@@ -40,26 +40,35 @@ const login = async (req, res) => {
     });
   }
 
-  const isAdmin = await userService.checkAdmin(username, password);
-  const isAuthor = await userService.checkAuthor(username, password);
+  const user = await userService.checkUserExist(username, password);
 
-  if (!isAdmin && !isAuthor) {
+  if (user === null) {
     return res.status(401).json({
       success: false,
       message: "Wrong username or password!",
     });
   }
+  if (!user.status) {
+    return res.status(401).json({
+      success: false,
+      message: "Your account is not active!",
+    });
+  }
+
+  const isAdmin = user.role === 1;
 
   const token = auth.generateToken({ username, password, role: isAdmin ? "admin" : "author" });
 
   res.cookie('token', token, {
     httpOnly: true, // Prevents JavaScript access
     sameSite: 'strict', // Prevents cross-site cookie
-    maxAge: 3600000 // 1 hour in milliseconds
+    maxAge: 3600000 * 24 // 1 hour in milliseconds
   });
 
   res.json({
     success: true,
+    id: user.id,
+    redirect: isAdmin ? "/admin" : "/author",
     token
   });
 

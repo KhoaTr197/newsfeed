@@ -1,8 +1,9 @@
 $(document).ready(function () {
-  // Global array to store all articles
+  // Global arrays to store all categories, articles, users, and contacts
   let allArticles = [];
   let allCategories = [];
-  let allAuthors = [];
+  let allUsers = [];
+  let allContacts = [];
 
   // Function to format date
   function formatDate(dateString) {
@@ -11,143 +12,265 @@ $(document).ready(function () {
     return date.toLocaleDateString('vi-VN', { year: 'numeric', month: 'short', day: 'numeric' });
   }
 
-  // Function to get status text
-  function getStatusText(status) {
-    return status ? '<span class="badge badge-success">Published</span>' : '<span class="badge badge-secondary">Draft</span>';
-  }
-
-  // Function to get article by ID from the array
-  function getArticleById(id) {
-    return allArticles.find(article => article.id == id);
-  }
-
-  // Function to update article
-  function updateArticle(article) {
-    return $.ajax({
-      url: '/api/articles',
-      type: 'PUT',
-      headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem('token')
-      },
-      data: JSON.stringify(article),
-      contentType: 'application/json'
-    });
-  }
-
-  function loadCategories() {
+  // Function to get categories
+  function getCategories() {
     $.ajax({
       url: '/api/categories',
       type: 'GET',
-      headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem('token')
-      },
       success: function (categories) {
         allCategories = categories;
-        const categorySelect = $('#category, #editCategory');
-        categorySelect.empty();
-        categories.forEach(category => {
-          categorySelect.append(`<option value="${category.id}">${category.cateName}</option>`);
-        });
+        $('#categoryCount').text(allCategories.length);
       },
       error: function (xhr, status, error) {
         console.error('Error loading categories:', error);
       }
     });
   }
+  // Function to load categories
+  function loadCategories() {
+    const categoryTableBody = $('#categoryTableBody');
+    categoryTableBody.empty();
 
-  function loadAuthors() {
+    allCategories.forEach(category => {
+      categoryTableBody.append(`
+            <tr>
+              <td>${category.id}</td>
+              <td>${category.cateName}</td>
+              <td>${category.status ? 'Active' : 'Inactive'}</td>
+              <td><button class="btn btn-sm btn-info edit-category" data-id="${category.id}">
+                <i class="fa fa-edit"></i>
+              </button></td>
+            </tr>
+          `);
+    });
+  }
+  // Function to get users
+  function getUsers() {
     $.ajax({
       url: '/api/users',
       type: 'GET',
-      headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem('token')
-      },
-      success: function (authors) {
-        allAuthors = authors;
-        const authorSelect = $('#author, #editAuthor');
-        authorSelect.empty();
-        authors.forEach(author => {
-          authorSelect.append(`<option value="${author.id}">${author.username}</option>`);
-        });
+      success: function (users) {
+        allUsers = users;
+        $('#userCount').text(allUsers.length);
       },
       error: function (xhr, status, error) {
-        console.error('Error loading authors:', error);
+        console.error('Error loading users:', error);
       }
     });
   }
+  // Function to load users
+  function loadUsers() {
+    const authorTableBody = $('#authorTableBody');
+    authorTableBody.empty();
 
-  // Function to load articles
-  function loadArticles() {
-    // Show loading indicator
-    const tableBody = $('#articles table tbody');
-    tableBody.html('<tr><td colspan="7" class="text-center">Loading articles...</td></tr>');
-
-    // Load articles
-    $.ajax({
-      url: '/api/articles',
-      type: 'GET',
-      headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem('token')
-      },
-      success: function (articles) {
-        // Store articles in the global array
-        allArticles = articles;
-
-        tableBody.empty();
-
-        if (articles.length === 0) {
-          tableBody.append('<tr><td colspan="7" class="text-center">No articles found</td></tr>');
-          return;
-        }
-
-        articles.forEach(article => {
-          tableBody.append(`
+    allUsers.forEach(author => {
+      authorTableBody.append(`
             <tr>
-              <td>${article.id}</td>
-              <td>${article.title}</td>
-              <td>${article.cateId || 'N/A'}</td>
-              <td>${article.userId || 'N/A'}</td>
-              <td>${formatDate(article.publishedDate)}</td>
-              <td>${getStatusText(article.status)}</td>
+              <td>${author.id}</td>
+              <td>${author.username}</td>
+              <td>${author.email}</td>
+              <td>${author.role ? '<span class="badge badge-primary">Author</span>' : '<span class="badge badge-info">Admin</span>'}</td>
+              <td>${author.status ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-danger">Inactive</span>'}</td>
               <td>
-                <button class="btn btn-sm btn-info edit-article" data-id="${article.id}">
+                <button class="btn btn-sm btn-info edit-user" data-id="${author.id}">
                   <i class="fa fa-edit"></i>
-                </button>           
+                </button>
               </td>
             </tr>
           `);
-        });
-
-        // Set up event handler for edit button
-        $('.edit-article').on('click', function () {
-          const articleId = $(this).data('id');
-
-          // Get article data from the array and populate the edit modal
-          const article = getArticleById(articleId);
-          if (article) {
-            $('#editArticleId').val(article.id);
-            $('#editTitle').val(article.title);
-            $('#editContent').val(article.content);
-            $('#editThumbnail').val(article.thumbnail);
-            $('#editCategory').val(article.cateId);
-            $('#editAuthor').val(article.userId);
-            $('#editStatus').val(article.status);
-        
-            $('#editArticleModal').modal('show');
-          } else {
-            alert('Article not found!');
-          }
-        });
+    });
+  }
+  // Function to get contacts
+  function getContacts() {
+    $.ajax({
+      url: '/api/contacts',
+      type: 'GET',
+      success: function (contacts) {
+        allContacts = contacts;
       },
       error: function (xhr, status, error) {
-        console.error('Error loading articles:', error);
-        tableBody.html('<tr><td colspan="7" class="text-center text-danger">Error loading articles</td></tr>');
+        console.error('Error loading contacts:', error);
       }
     });
   }
+  // Function to load contacts
+  function loadContacts() {
+    const contactTableBody = $('#contactTableBody');
+    contactTableBody.empty();
 
+    allContacts.forEach(contact => {
+      contactTableBody.append(`
+            <tr>
+              <td>${contact.id}</td>
+              <td>${contact.name}</td>
+              <td>${contact.email}</td>
+              <td>${contact.message}</td>
+            </tr>
+          `);
+    });
+  }
+  // Function to get articles
+  function getArticles() {
+    $.ajax({
+      url: '/api/articles',
+      type: 'GET',
+      success: function (articles) {
+        allArticles = articles;
+        $('#articleCount').text(allArticles.length);
+      },
+      error: function (xhr, status, error) {
+        console.error('Error loading articles:', error);
+      }
+    });
+  }
+  // Function to load articles
+  function loadArticles() {
+    const articleTableBody = $('#articleTableBody');
+    articleTableBody.empty();
+
+    allArticles.forEach(article => {
+      articleTableBody.append(`
+            <tr>
+              <td>${article.id}</td>
+              <td>${article.title}</td>
+              <td>${allCategories.find(category => category.id == article.cateId)?.cateName || 'N/A'}</td>
+              <td>${allUsers.find(user => user.id == article.userId)?.username || 'N/A'}</td>
+              <td>${formatDate(article.publishedDate)}</td>
+              <td>
+                ${article.status ?
+          '<span class="badge status-published">Published</span>' :
+          '<span class="badge status-pending">Pending</span>'
+        }
+              </td>
+              <td>
+                <button class="btn btn-sm btn-info edit-article" data-id="${article.id}">
+                  <i class="fa fa-edit"></i>
+                </button>
+              </td>
+            </tr>
+          `);
+    });
+  }
+  // -----------------------------------------
+  // Get Categories
+  getCategories();
+  // Get articles
+  getArticles();
+  // Get users
+  getUsers();
+  // Get contacts
+  getContacts();
+  // Ensure dashboard tab is active on page load
+  $('#dashboard').addClass('show active in');
+  $('.admin-sidebar .nav-link[href="#dashboard"]').addClass('active');
+  // ARTICLES
+  // Handle add article modal when showing
+  $('#addArticleModal').on('shown.bs.modal', function () {
+    // Clear existing options
+    $("#addCategory, #addAuthor").empty();
+
+    // Add a default option
+    $("#addCategory").append('<option value="" selected>Select a category</option>');
+    $("#addAuthor").append('<option value="" selected>Select an author</option>');
+
+    // Add options from allCategories, allUsers array
+    allCategories.forEach(category => {
+      $("#addCategory").append(`<option value="${category.id}">${category.cateName}</option>`);
+    });
+    allUsers.forEach(user => {
+      $("#addAuthor").append(`<option value="${user.id}">${user.username}</option>`);
+    });
+
+    // Clear form fields
+    $('#title').val('');
+    $('#content').val('');
+    $('#thumbnail').val('');
+    $('#status').val('1'); // Default to published
+    $('#publishedDate').val(new Date().toISOString().slice(0, 16)); // Default to current date and time
+  });
+  // Set up event handler for article edit button
+  $(document).on('click', '.edit-article', function () {
+    const articleId = $(this).data('id');
+
+    const article = allArticles.find(article => article.id == articleId);
+
+    if (article) {
+      $('#editArticleId').val(article.id);
+      $('#editTitle').val(article.title);
+      $('#editContent').val(article.content);
+      $('#editThumbnail').val(article.thumbnail);
+
+      // Clear existing options
+      $("#editCategory, #editAuthor").empty();
+
+      // Add a default option
+      $("#editCategory").append('<option value="">Select a category</option>');
+      $("#editAuthor").append('<option value="">Select an author</option>');
+
+      // Add options from allCategories, allUsers array
+      allCategories.forEach(category => {
+        const selected = category.id == article.cateId ? 'selected' : '';
+        $("#editCategory").append(`<option value="${category.id}" ${selected}>${category.cateName}</option>`);
+      });
+      allUsers.forEach(user => {
+        const selected = user.id == article.userId ? 'selected' : '';
+        $("#editAuthor").append(`<option value="${user.id}" ${selected}>${user.username}</option>`);
+      });
+
+      $('#editStatus').val(article.status);
+      $('#editPublishedDate').val(article.publishedDate ? article.publishedDate.slice(0, 16) : ''); // Set published date
+
+      $('#editArticleModal').modal('show');
+    } else {
+      alert('Article not found!');
+    }
+  });
+  // Handle save add article button
+  $('#addArticleBtn').on('click', function () {
+    const title = $('#title').val();
+    const content = $('#content').val();
+    const thumbnail = $('#thumbnail').val();
+    const cateId = $('#addCategory').val();
+    const userId = $('#addAuthor').val();
+    const status = $('#status').val();
+    const publishedDate = $('#publishedDate').val();
+
+    // Validate form
+    if (!title || !content) {
+      alert('Please fill in all required fields');
+      return;
+    }
+
+    if (!cateId) {
+      alert('Please select a category');
+      return;
+    }
+
+    if (!userId) {
+      alert('Please select an author');
+      return;
+    }
+
+    // Add article
+    $.ajax({
+      url: '/api/articles',
+      type: 'POST',
+      data: JSON.stringify({ title, content, thumbnail, cateId, userId, status, publishedDate }),
+      contentType: 'application/json',
+      success: function (response) {
+        $('#addArticleModal').modal('hide');
+        getArticles();
+        loadArticles();
+        alert('Article added successfully!');
+      },
+      error: function (xhr, status, error) {
+        console.error('Error adding article:', error);
+        alert('Error adding article. Please try again.');
+      }
+    });
+  });
   // Handle save edit article button
-  $('#saveEditArticle').on('click', function () {
+  $('#editArticleBtn').on('click', function () {
     const article = {
       id: $('#editArticleId').val(),
       title: $('#editTitle').val(),
@@ -155,7 +278,8 @@ $(document).ready(function () {
       thumbnail: $('#editThumbnail').val(),
       cateId: $('#editCategory').val(),
       userId: $('#editAuthor').val(),
-      status: $('#editStatus').val()
+      status: $('#editStatus').val(),
+      publishedDate: $('#editPublishedDate').val()
     };
 
     // Validate form
@@ -165,48 +289,246 @@ $(document).ready(function () {
     }
 
     // Update article
-    updateArticle(article)
-      .done(function (response) {
-        if (response.success) {
-          $('#editArticleModal').modal('hide');
-          loadArticles(); // Reload articles to show updated data
-          alert('Article updated successfully!');
-        } else {
-          alert('Error updating article: ' + response.message);
-        }
-      })
-      .fail(function (error) {
+    $.ajax({
+      url: '/api/articles',
+      type: 'PUT',
+      data: JSON.stringify(article),
+      contentType: 'application/json',
+      success: function (response) {
+        $('#editArticleModal').modal('hide');
+        getArticles();
+        loadArticles(); // Reload articles to show updated data
+        alert('Article updated successfully!');
+      },
+      error: function (error) {
         console.error('Error updating article:', error);
         alert('Error updating article. Please try again.');
-      });
+      }
+    });
   });
+  // USERS
+  // Handle when submit add new user
+  $('#addUserBtn').on('click', function () {
+    $(".form-error").text("").hide();
 
+    const username = $('#username').val();
+    const email = $('#email').val();
+    const password = $('#password').val();
+    const role = $('#role').val();
+    const status = $('#status').val();
+
+    const validator = new FormValidator({
+      username: {
+        minLength: 3,
+        maxLength: 20,
+        allowedChars: /^[a-zA-Z0-9_]+$/,
+        noSpaces: true,
+      },
+      email: {
+        regex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+      },
+      password: {
+        minLength: 3,
+        maxLength: 30,
+        mustContain: null,
+        noSpaces: true
+      }
+    });
+
+    const usernameResult = validator.username(username);
+    const emailResult = validator.email(email);
+    const passwordResult = validator.password(password);
+
+    if (!usernameResult.isValid) {
+      $("#username+label.error").text(`* ${usernameResult.message}`);
+      return;
+    }
+    if (!emailResult.isValid) {
+      $("#email+label.error").text(`* ${emailResult.message}`);
+      return;
+    }
+    if (!passwordResult.isValid) {
+      $("#password+label.error").text(`* ${passwordResult.message}`);
+      return;
+    }
+
+    $.ajax({
+      url: '/api/users',
+      type: 'POST',
+      data: JSON.stringify({ username, email, password, role, status }),
+      contentType: 'application/json',
+      success: function (response) {
+        $('#addUserModal').modal('hide');
+        getUsers();
+        loadUsers();
+        alert('Author added successfully!');
+      },
+      error: function (xhr, status, error) {
+        console.error('Error adding author:', error);
+        alert('Error adding author. Please try again.');
+      }
+    });
+  });
+  // Handle save edit user button
+  $('#editUserBtn').on('click', function () {
+    const id = $('#editUserId').val();
+    const username = $('#editUsername').val();
+    const email = $('#editEmail').val();
+    const role = $('#editRole').val();
+    const status = $('#editStatus').val();
+
+    // Update users
+    $.ajax({
+      url: '/api/users',
+      type: 'PUT',
+      data: JSON.stringify({ id, username, email, role, status }),
+      contentType: 'application/json',
+      success: function (response) {
+        $('#editUserModal').modal('hide');
+        getUsers();
+        loadUsers();
+        alert('Author updated successfully!');
+      },
+      error: function (error) {
+        console.error('Error updating author:', error);
+        alert('Error updating author. Please try again.');
+      }
+    });
+  });
+  $('#resetPasswordUserBtn').on('click', function () {
+    const username = $('#editUsername').val();
+    $.ajax({
+      url: '/api/users/reset',
+      type: 'POST',
+      data: JSON.stringify({ username }),
+      contentType: 'application/json',
+      success: function (response) {
+        alert('Password reset successfully!');
+      },
+      error: function (error) {
+        alert(`Error resetting password: ${error}`);
+      }
+    });
+  });
+  // Set up event handler for user edit button
+  $(document).on('click', '.edit-user', function () {
+    const userId = $(this).data('id');
+
+    const user = allUsers.find(user => user.id == userId);
+
+    if (user) {
+      $('#editUserId').val(user.id);
+      $('#editUsername').val(user.username);
+      $('#editEmail').val(user.email);
+      $('#editPassword').val(user.password);
+      $('#editRole').val(user.role);
+      $('#editStatus').val(user.status);
+
+      $('#editUserModal').modal('show');
+    } else {
+      alert('User not found!');
+    }
+  });
+  // CATEGORIES
+  // Handle when submit add new category
+  $('#addCategoryBtn').on('click', function () {
+    const name = $('#categoryName').val();
+    const status = $('#categoryStatus').val();
+
+    $.ajax({
+      url: '/api/categories',
+      type: 'POST',
+      data: JSON.stringify({ name, status }),
+      contentType: 'application/json',
+      success: function (response) {
+        $('#addCategoryModal').modal('hide');
+        getCategories();
+        loadCategories();
+        alert('Category added successfully!');
+      },
+      error: function (error) {
+        console.error('Error adding category:', error);
+        alert('Error adding category. Please try again.');
+      }
+    });
+  });
+  // Handle when submit edit category
+  $('#editCategoryBtn').on('click', function () {
+    const id = $('#editCategoryId').val();
+    const name = $('#editCategoryName').val();
+    const status = $('#editCategoryStatus').val();
+
+    $.ajax({
+      url: `/api/categories/${id}`,
+      type: 'PUT',
+      data: JSON.stringify({ name, status }),
+      contentType: 'application/json',
+      success: function (response) {
+        $('#editCategoryModal').modal('hide');
+        getCategories();
+        loadCategories();
+        alert('Category updated successfully!');
+      },
+      error: function (error) {
+        console.error('Error updating category:', error);
+        alert('Error updating category. Please try again.');
+      }
+    });
+
+  });
+  // Set up event handler for category edit button
+  $(document).on('click', '.edit-category', function () {
+    const categoryId = $(this).data('id');
+
+    const category = allCategories.find(category => category.id == categoryId);
+
+    if (category) {
+      $('#editCategoryId').val(category.id);
+      $('#editCategoryName').val(category.cateName);
+      $('#editCategoryStatus').val(category.status);
+
+      $('#editCategoryModal').modal('show');
+    } else {
+      alert('Category not found!');
+    }
+  });
   // Handle tab navigation
   $('.admin-sidebar .nav-link').on('click', function () {
     $('.admin-sidebar .nav-link').removeClass('active');
     $(this).addClass('active');
 
-    // Hide dashboard panel when other links are active
     var targetTab = $(this).attr('href');
-    if (targetTab !== '#dashboard') {
-      $('#dashboard').removeClass('show active');
-    } else {
-      $('#dashboard').addClass('show active');
-    }
 
-    // Load articles when articles tab is clicked
+    // Hide all tab panes first
+    $('.tab-pane').removeClass('show active');
+
+    // Show only the target tab pane
+    $(targetTab).addClass('show active');
+
+    // Load data based on which tab is clicked
     if (targetTab === '#articles') {
+      loadCategories();
+      loadUsers();
       loadArticles();
     }
+    else if (targetTab === '#users') {
+      loadUsers();
+    }
+    else if (targetTab === '#categories') {
+      loadCategories();
+    }
+    else if (targetTab === '#contacts') {
+      loadContacts();
+    }
   });
-
+  // Handle logout button
   $("#logout").on("click", function () {
     $.ajax({
       url: '/api/auth/logout',
       type: 'POST',
       success: function (response) {
         if (response.success) {
-          window.location.href = '/admin/login';
+          window.location.href = '/';
         }
       },
       error: function (xhr, status, error) {
