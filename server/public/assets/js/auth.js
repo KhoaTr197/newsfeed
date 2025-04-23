@@ -42,8 +42,11 @@ $(document).ready(() => {
       data: JSON.stringify({ username, password }),
       success: function (response) {
         if (response.success) {
-          // Redirect to admin dashboard
-          window.location.href = '/admin';
+          // Redirect to admin/author dashboard
+          if (response.redirect == "/author") {
+            window.localStorage.setItem("id", response.id);
+          }
+          window.location.href = response.redirect;
         } else {
           // Show error message
           $(".form-error").text("Something went wrong! Please Try Again").show();

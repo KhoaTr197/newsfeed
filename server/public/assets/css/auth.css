@@ -94,12 +94,7 @@ body {
   transform: translateY(-2px);
 }
 
-.login-options {
-  margin-top: 25px;
-  display: flex;
-  justify-content: space-between;
-}
-
+.login-options,
 .signup-options {
   margin-top: 25px;
   display: flex;

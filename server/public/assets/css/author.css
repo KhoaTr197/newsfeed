@@ -105,7 +105,7 @@ body {
   color: #2e7d32;
 }
 
-.status-draft {
+.status-pending {
   background-color: #fff8e1;
   color: #ff8f00;
 }
@@ -196,6 +196,40 @@ body {
 /* Hide dashboard panel when other links are active */
 .nav-link:not([href="#dashboard"]).active ~ .tab-content #dashboard {
   display: none;
+}
+
+#logout {
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.75);
+  padding: 12px 22px;
+  border-left: 3px solid transparent;
+}
+
+#logout:hover {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-left-color: #28a745;
+  text-decoration: none;
+  outline: none;
+}
+
+.article-preview {
+  margin-top: 24px;
+  height: 400px;
+  overflow-y: scroll;
+}
+
+#articleContent {
+  height: 400px;
+  overflow-y: scroll;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%;
+  resize: none;
 }
 
 /* Styles for the two-panel layout */
