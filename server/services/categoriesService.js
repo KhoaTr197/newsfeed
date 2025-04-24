@@ -33,10 +33,43 @@ const addCategory = async (name, status) => {
 };
 
 // update category
-const updateCategory = async (id, name, status) => {
+const updateCategory = async (id, name) => {
   try {
-    const queryStr = "UPDATE categories SET cateName = ?, status = ? WHERE id = ?";
-    await connection.query(queryStr, [name, status, id]);
+    const queryStr = "UPDATE categories SET cateName = ? WHERE id = ?";
+    await connection.query(queryStr, [name, id]);
+  } catch (err) {
+    throw err;
+  }
+};
+
+// active category
+const activeCategory = async (id) => {
+  try {
+    const categoryQuery = "UPDATE categories SET status = 1 WHERE id = ?";
+    const articleQuery = "UPDATE articles SET status = 1 WHERE cateId = ?";
+
+    const [data] = await connection.query(categoryQuery, [id]);
+    console.log(data.affectedRows)
+    if (data.affectedRows != 0) {
+      await connection.query(articleQuery, [id]);  
+    }
+
+  } catch (err) {
+    throw err;
+  }
+};
+
+// disable category
+const disableCategory = async (id) => {
+  try {
+    const categoryQuery = "UPDATE categories SET status = 0 WHERE id = ?";
+    const articleQuery = "UPDATE articles SET status = 0 WHERE cateId = ?";
+
+    const [data] = await connection.query(categoryQuery, [id]);
+    if (data.affectedRows != 0) {
+      await connection.query(articleQuery, [id]);  
+    }
+    
   } catch (err) {
     throw err;
   }
@@ -47,4 +80,6 @@ module.exports = {
   getAllActiveCategories,
   updateCategory,
   addCategory,
+  activeCategory,
+  disableCategory,
 };

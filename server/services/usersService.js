@@ -61,10 +61,10 @@ const addUser = async (username, password, email, role, status) => {
 };
 
 // update user
-const updateUser = async (username, password, email, role, status) => {
+const updateUser = async (username, password, email, role) => {
   try {
-    const queryStr = "UPDATE users SET password = MD5(?), email = ?, role = ?, status = ? WHERE username = ?";
-    await connection.query(queryStr, [password, email, role, status, username]);
+    const queryStr = "UPDATE users SET password = MD5(?), email = ?, role = ? WHERE username = ?";
+    await connection.query(queryStr, [password, email, role, username]);
 
     return true;
   } catch (err) {
@@ -80,6 +80,26 @@ const updateUser = async (username, password, email, role, status) => {
     }
 
     throw new Error("An error occurred while creating your account. Please try again later.");
+  }
+};
+
+// active user
+const activeUser = async (id) => {
+  try {
+    const queryStr = "UPDATE users SET status = 1 WHERE id = ?";
+    await connection.query(queryStr, [id]);
+  } catch (err) {
+    throw err;
+  }
+};
+
+// disable user
+const disableUser = async (id) => {
+  try {
+    const queryStr = "UPDATE users SET status = 0 WHERE id = ?";
+    await connection.query(queryStr, [id]);
+  } catch (err) {
+    throw err;
   }
 };
 
@@ -127,6 +147,8 @@ module.exports = {
   checkUserExist,
   addUser,
   updateUser,
+  activeUser,
+  disableUser,
   updatePassword,
   resetPassword
 };

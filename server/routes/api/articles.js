@@ -16,6 +16,8 @@ router.post("/", articleController.addArticle)
 
 router.put("/", articleController.updateArticle)
 
-router.delete("/", articleController.deleteArticle)
+router.put("/active", articleController.activeArticle)
+
+router.delete("/", articleController.disableArticle)
 
 module.exports = router;

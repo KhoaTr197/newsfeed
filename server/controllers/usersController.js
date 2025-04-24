@@ -79,9 +79,31 @@ const addUser = async (req, res) => {
 // update user
 const updateUser = async (req, res) => {
   try {
-    const { username, password, email, role, status } = req.body;
-    await userService.updateUser(username, password, email, Number(role), Number(status));
+    const { username, password, email, role } = req.body;
+    await userService.updateUser(username, password, email, Number(role));
     res.json({ message: 'User updated successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// active user
+const activeUser = async (req, res) => {
+  try {
+    const { id } = req.body;
+    await userService.activeUser(id);
+    res.json({ message: 'User activated successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// disable user
+const disableUser = async (req, res) => {
+  try {
+    const { id } = req.body;
+    await userService.disableUser(id);
+    res.json({ message: 'User disabled successfully' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -118,6 +140,8 @@ module.exports = {
   updateAuthor,
   addUser,
   updateUser,
+  activeUser,
+  disableUser,
   updatePassword,
   resetPassword
 };

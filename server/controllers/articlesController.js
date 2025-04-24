@@ -87,12 +87,23 @@ const updateArticle = async (req, res) => {
   }
 }
 
-// delete article
-const deleteArticle = async (req, res) => {
+// active article
+const activeArticle = async (req, res) => {
   try {
     const { id } = req.body;
-    await articleService.deleteArticle(id);
-    res.json({ message: 'Article deleted successfully' });
+    await articleService.activeArticle(id);
+    res.json({ message: 'Article activated successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+// disable article
+const disableArticle = async (req, res) => {
+  try {
+    const { id } = req.body;
+    await articleService.disableArticle(id);
+    res.json({ message: 'Article disabled successfully' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -106,5 +117,6 @@ module.exports = {
   searchArticlesByTitle,
   addArticle,
   updateArticle,
-  deleteArticle
+  activeArticle,
+  disableArticle,
 };

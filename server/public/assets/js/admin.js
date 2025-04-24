@@ -34,10 +34,15 @@ $(document).ready(function () {
             <tr>
               <td>${category.id}</td>
               <td>${category.cateName}</td>
-              <td>${category.status ? 'Active' : 'Inactive'}</td>
-              <td><button class="btn btn-sm btn-info edit-category" data-id="${category.id}">
-                <i class="fa fa-edit"></i>
-              </button></td>
+              <td>${category.status ? `<span class="badge category-status status-active" data-categorystatus=${category.id}>Active</span>` : `<span class="badge category-status status-inactive" data-categorystatus=${category.id}>Inactive</span>`}</td>
+              <td>
+                <button class="btn btn-sm btn-info edit-category" data-id="${category.id}">
+                  <i class="fa fa-edit"></i>
+                </button>
+                <button class="btn btn-sm ${category.status ? 'btn-danger' : 'btn-success'} toggle-category" data-id="${category.id}">
+                  <i class="fa ${category.status ? 'fa-ban' : 'fa-check'}"></i>
+                </button>
+              </td>
             </tr>
           `);
     });
@@ -58,20 +63,23 @@ $(document).ready(function () {
   }
   // Function to load users
   function loadUsers() {
-    const authorTableBody = $('#authorTableBody');
-    authorTableBody.empty();
+    const userTableBody = $('#userTableBody');
+    userTableBody.empty();
 
-    allUsers.forEach(author => {
-      authorTableBody.append(`
+    allUsers.forEach(user => {
+      userTableBody.append(`
             <tr>
-              <td>${author.id}</td>
-              <td>${author.username}</td>
-              <td>${author.email}</td>
-              <td>${author.role ? '<span class="badge badge-primary">Author</span>' : '<span class="badge badge-info">Admin</span>'}</td>
-              <td>${author.status ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-danger">Inactive</span>'}</td>
+              <td>${user.id}</td>
+              <td>${user.username}</td>
+              <td>${user.email}</td>
+              <td>${user.role ? '<span class="badge status-info">Admin</span>' : '<span class="badge">User</span>'}</td>
+              <td>${user.status ? `<span class="badge user-status status-active" data-userstatus=${user.id}>Active</span>` : `<span class="badge user-status status-inactive" data-userstatus=${user.id}>Inactive</span>`}</td>
               <td>
-                <button class="btn btn-sm btn-info edit-user" data-id="${author.id}">
+                <button class="btn btn-sm btn-info edit-user" data-id="${user.id}">
                   <i class="fa fa-edit"></i>
+                </button>
+                <button class="btn btn-sm ${user.status ? 'btn-danger' : 'btn-success'} toggle-user" data-id="${user.id}">
+                  <i class="fa ${user.status ? 'fa-ban' : 'fa-check'}"></i>
                 </button>
               </td>
             </tr>
@@ -126,6 +134,8 @@ $(document).ready(function () {
     const articleTableBody = $('#articleTableBody');
     articleTableBody.empty();
 
+    allArticles.sort((a, b) => a.id - b.id);
+
     allArticles.forEach(article => {
       articleTableBody.append(`
             <tr>
@@ -136,13 +146,16 @@ $(document).ready(function () {
               <td>${formatDate(article.publishedDate)}</td>
               <td>
                 ${article.status ?
-          '<span class="badge status-published">Published</span>' :
-          '<span class="badge status-pending">Pending</span>'
-        }
+                  `<span class="badge article-status status-published" data-articlestatus=${article.id}>Published</span>` :
+                  `<span class="badge article-status status-pending" data-articlestatus=${article.id}>Pending</span>`
+                }
               </td>
               <td>
                 <button class="btn btn-sm btn-info edit-article" data-id="${article.id}">
                   <i class="fa fa-edit"></i>
+                </button>
+                <button class="btn btn-sm ${article.status ? 'btn-danger' : 'btn-success'} toggle-article" data-id="${article.id}">
+                  <i class="fa ${article.status ? 'fa-ban' : 'fa-check'}"></i>
                 </button>
               </td>
             </tr>
@@ -162,8 +175,8 @@ $(document).ready(function () {
   $('#dashboard').addClass('show active in');
   $('.admin-sidebar .nav-link[href="#dashboard"]').addClass('active');
   // ARTICLES
-  // Handle add article modal when showing
-  $('#addArticleModal').on('shown.bs.modal', function () {
+  // Handle add article button
+  $('#addNewArticleBtn').on('click', function () {
     // Clear existing options
     $("#addCategory, #addAuthor").empty();
 
@@ -276,7 +289,7 @@ $(document).ready(function () {
       thumbnail: $('#editThumbnail').val(),
       cateId: $('#editCategory').val(),
       userId: $('#editAuthor').val(),
-      status: $('#editStatus').val(),
+      status: $('#editArticleStatus').val(),
       publishedDate: $('#editPublishedDate').val()
     };
 
@@ -303,6 +316,54 @@ $(document).ready(function () {
         alert('Error updating article. Please try again.');
       }
     });
+  });
+  $(document).on('click', '.toggle-article', function () {
+    const articleId = $(this).data('id');
+    const article = allArticles.find(article => article.id == articleId);
+
+    if (!article)
+      return;
+
+    if (article.status == 0) {
+      $.ajax({
+        url: '/api/articles/active',
+        type: 'PUT',
+        data: JSON.stringify({ id: articleId }),
+        contentType: 'application/json',
+        success: function (response) {
+          alert('Article activated successfully!');
+          getArticles();
+          loadArticles();
+
+          $(`.article-status[data-articlestatus="${articleId}"]`).removeClass('status-pending').addClass('status-published').text('Published');
+          $(`.toggle-article[data-id="${articleId}"]`).removeClass('btn-success').addClass('btn-danger');
+          $(`.toggle-article[data-id="${articleId}"] i`).removeClass('fa-check').addClass('fa-ban');
+        },
+        error: function (error) {
+          alert('Error activating article:', error);
+        }
+      });
+    }
+    else {
+      $.ajax({
+        url: '/api/articles/',
+        type: 'DELETE',
+        data: JSON.stringify({ id: articleId }),
+        contentType: 'application/json',
+        success: function (response) {
+          alert('Article deactivated successfully!');
+          getArticles();
+          loadArticles();
+
+          $(`.article-status[data-articlestatus="${articleId}"]`).removeClass('status-published').addClass('status-pending').text('Pending');
+          $(`.toggle-article[data-id="${articleId}"]`).removeClass('btn-danger').addClass('btn-success');
+          $(`.toggle-article[data-id="${articleId}"] i`).removeClass('fa-ban').addClass('fa-check');
+        },
+        error: function (error) {
+          alert('Error activating article:', error);
+        }
+      });
+    }
   });
   // USERS
   // Handle when submit add new user
@@ -373,13 +434,22 @@ $(document).ready(function () {
     const username = $('#editUsername').val();
     const email = $('#editEmail').val();
     const role = $('#editRole').val();
-    const status = $('#editStatus').val();
+
+    if (!username || !email) {
+      alert('Please fill in all required fields');
+      return;
+    }
+
+    if (!role) {
+      alert('Please select a role');
+      return;
+    }
 
     // Update users
     $.ajax({
       url: '/api/users',
       type: 'PUT',
-      data: JSON.stringify({ id, username, email, role, status }),
+      data: JSON.stringify({ id, username, email, role }),
       contentType: 'application/json',
       success: function (response) {
         $('#editUserModal').modal('hide');
@@ -427,6 +497,57 @@ $(document).ready(function () {
       alert('User not found!');
     }
   });
+  // Set up event handler for user toggle button
+  $(document).on('click', '.toggle-user', function () {
+      const userId = $(this).data('id');
+  
+      const user = allUsers.find(user => user.id == userId);
+  
+      if (!user)
+        return;
+  
+      console.log(user.status)
+      if (user.status == 0) {
+        $.ajax({
+          url: '/api/users/active',
+          type: 'PUT',
+          data: JSON.stringify({ id: userId }),
+          contentType: 'application/json',
+          success: function (response) {
+            alert('User activated successfully!');
+            getUsers();
+            loadUsers();
+
+            $(`.user-status[data-userstatus="${userId}"]`).removeClass('status-inactive').addClass('status-active').text('Active');
+            $(`.toggle-user[data-id="${userId}"]`).removeClass('btn-success').addClass('btn-danger');
+            $(`.toggle-user[data-id="${userId}"] i`).removeClass('fa-check').addClass('fa-ban');
+          },
+          error: function (error) {
+            alert('Error activating user:', error);
+          }
+        });
+      } else {
+        $.ajax({
+          url: '/api/users/',
+          type: 'DELETE',
+          data: JSON.stringify({ id: userId }),
+          contentType: 'application/json',
+          success: function (response) {
+            alert('User deactivated successfully!');
+            getUsers();
+            loadUsers();
+
+            $(`.user-status[data-userstatus="${userId}"]`).removeClass('status-active').addClass('status-inactive').text('Inactive');
+            $(`.toggle-user[data-id="${userId}"]`).removeClass('btn-danger').addClass('btn-success');
+            $(`.toggle-user[data-id="${userId}"] i`).removeClass('fa-ban').addClass('fa-check');
+
+          },
+          error: function (error) {
+            alert('Error deactivating user:', error);
+          }
+        });
+      }
+  });
   // CATEGORIES
   // Handle when submit add new category
   $('#addCategoryBtn').on('click', function () {
@@ -454,12 +575,11 @@ $(document).ready(function () {
   $('#editCategoryBtn').on('click', function () {
     const id = $('#editCategoryId').val();
     const name = $('#editCategoryName').val();
-    const status = $('#editCategoryStatus').val();
 
     $.ajax({
       url: `/api/categories/${id}`,
       type: 'PUT',
-      data: JSON.stringify({ name, status }),
+      data: JSON.stringify({ name }),
       contentType: 'application/json',
       success: function (response) {
         $('#editCategoryModal').modal('hide');
@@ -490,6 +610,55 @@ $(document).ready(function () {
       alert('Category not found!');
     }
   });
+  $(document).on('click', '.toggle-category', function () {
+    const categoryId = $(this).data('id');
+
+    const category = allCategories.find(category => category.id == categoryId);
+
+    if (!category)
+      return;
+
+    if (category.status == 0) {
+      $.ajax({
+        url: '/api/categories/active/',
+        type: 'PUT',
+        data: JSON.stringify({ id: categoryId }),
+        contentType: 'application/json',
+        success: function (response) {
+          alert('Category activated successfully!');
+          getCategories();
+          loadCategories();
+
+          $(`.category-status[data-categorystatus="${categoryId}"]`).removeClass('status-inactive').addClass('status-active').text('Active');
+          $(`.toggle-category[data-id="${categoryId}"]`).removeClass('btn-success').addClass('btn-danger');
+          $(`.toggle-category[data-id="${categoryId}"] i`).removeClass('fa-check').addClass('fa-ban');
+        },
+        error: function (error) {
+          alert('Error activating category:', error);
+        }
+      });
+    } else {
+      $.ajax({
+        url: '/api/categories/',
+        type: 'DELETE',
+        data: JSON.stringify({ id: categoryId }),
+        contentType: 'application/json',
+        success: function (response) {
+          alert('Category deactivated successfully!');
+          getCategories();
+          loadCategories();
+
+          $(`.category-status[data-categorystatus="${categoryId}"]`).removeClass('status-active').addClass('status-inactive').text('Inactive');
+          $(`.toggle-category[data-id="${categoryId}"]`).removeClass('btn-danger').addClass('btn-success');
+          $(`.toggle-category[data-id="${categoryId}"] i`).removeClass('fa-ban').addClass('fa-check');
+
+        },
+        error: function (error) {
+          alert('Error deactivating category:', error);
+        }
+      });
+    }
+});
   // Handle tab navigation
   $('.admin-sidebar .nav-link').on('click', function () {
     $('.admin-sidebar .nav-link').removeClass('active');

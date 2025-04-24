@@ -141,15 +141,26 @@ const updateArticle = async (id, title, content, thumbnail, publishedDate, userI
   }
 };
 
-// delete article
-const deleteArticle = async (id) => {
+// active article
+const activeArticle = async (id) => {
   try {
-    const queryStr = "DELETE FROM articles WHERE id = ?";
+    const queryStr = "UPDATE articles SET status = 1 WHERE id = ?";
     await connection.query(queryStr, [id]);
   } catch (err) {
     throw err;
   }
 };
+
+// disable article
+const disableArticle = async (id) => {
+  try {
+    const queryStr = "UPDATE articles SET status = 0 WHERE id = ?";
+    await connection.query(queryStr, [id]);
+  } catch (err) {
+    throw err;
+  }
+};
+
 
 module.exports = {
   getAllArticles,
@@ -161,5 +172,6 @@ module.exports = {
   getRelatedArticles,
   addArticle,
   updateArticle,
-  deleteArticle
+  activeArticle,
+  disableArticle,
 };

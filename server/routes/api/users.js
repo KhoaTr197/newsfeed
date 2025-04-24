@@ -10,6 +10,10 @@ router.post("/", userController.addUser)
 
 router.put("/", userController.updateUser)
 
+router.put("/active", userController.activeUser)
+
+router.delete("/", userController.disableUser)
+
 router.put("/password", userController.updatePassword)
 
 router.post("/reset", userController.resetPassword)

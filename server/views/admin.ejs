@@ -126,7 +126,7 @@
                         <th>Actions</th>
                       </tr>
                     </thead>
-                    <tbody id="authorTableBody">
+                    <tbody id="userTableBody">
                       <!-- TODO: Loop through authors data -->
                     </tbody>
                   </table>
@@ -140,7 +140,7 @@
             <div class="admin-card">
               <div class="admin-card-header d-flex justify-content-between align-items-center">
                 <span>Manage Articles</span>
-                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addArticleModal">
+                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addArticleModal" id="addNewArticleBtn">
                   <i class="fa fa-plus"></i> Add New Article
                 </button>
               </div>
@@ -324,14 +324,7 @@
                   <option value="0">Author</option>
                   <option value="1">Admin</option>
                 </select>
-              </div>
-              <div class="form-group">
-                <label for="status">Status</label>
-                <select id="editStatus" class="form-control" id="status">
-                  <option value="1">Active</option>
-                  <option value="0">Inactive</option>
-                </select>
-              </div>
+              </div>           
             </form>
           </div>
           <div class="modal-footer">
@@ -468,13 +461,6 @@
                 <label for="categoryName">Category Name</label>
                 <input type="text" class="form-control" id="editCategoryName" placeholder="Enter category name">
               </div>
-              <div class="form-group">
-                <label for="categoryStatus">Status</label>
-                <select class="form-control" id="editCategoryStatus">
-                  <option value="1">Active</option>
-                  <option value="0">Inactive</option>
-                </select>
-              </div>
             </form>
           </div>
           <div class="modal-footer">
@@ -528,16 +514,7 @@
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="editStatus">Status</label>
-                  <select class="form-control" id="editStatus">
-                    <option value="1">Published</option>
-                    <option value="0">Draft</option>
-                  </select>
-                </div>
-              </div>
+            <div class="row">           
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="editPublishedDate">Published Date</label>

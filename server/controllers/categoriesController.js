@@ -1,6 +1,7 @@
 const categoriesService = require("../services/categoriesService");
 // ---------------------------------------------
 
+// get all categories
 const getAllCategories = async (req, res) => {
   try {
     const categories = await categoriesService.getAllCategories();
@@ -12,12 +13,13 @@ const getAllCategories = async (req, res) => {
   }
 };
 
+// update category
 const updateCategory = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, status } = req.body;
+    const { name } = req.body;
     console.log(req.body);
-    await categoriesService.updateCategory(id, name, status);
+    await categoriesService.updateCategory(id, name);
 
     res.json({ message: 'Category updated successfully' });
   } catch (err) {
@@ -26,6 +28,7 @@ const updateCategory = async (req, res) => {
   }
 };
 
+// add category
 const addCategory = async (req, res) => {
   try {
     const { name, status } = req.body;
@@ -37,8 +40,34 @@ const addCategory = async (req, res) => {
   }
 };
 
+// active category
+const activeCategory = async (req, res) => {
+  try {
+    const { id } = req.body;
+    await categoriesService.activeCategory(id);
+
+    res.json({ message: "Category activated successfully" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+// disable category
+const disableCategory = async (req, res) => {
+  try {
+    const { id } = req.body;
+    await categoriesService.disableCategory(id);
+
+    res.json({ message: "Category deactivated successfully" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
 module.exports = {
   getAllCategories,
   updateCategory,
   addCategory,
+  activeCategory,
+  disableCategory,
 };
