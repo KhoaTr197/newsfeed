@@ -87,3 +87,25 @@ async function setupApp() {
     );
   });
 }
+
+// const compressor = require('./server/utils/ImageCompressor')();
+
+// (async () => {
+//   try {
+//     const images = [
+//       ['images/image_1.avif', 'images/thumbnail/thumb_1.jpeg'],
+//       ['images/image_2.jpg', 'images/thumbnail/thumb_2.jpeg'],
+//       ['images/image_3.jpg', 'images/thumbnail/thumb_3.jpeg'],
+//       ['images/image_4.avif', 'images/thumbnail/thumb_4.jpeg'],
+//       ['images/image_5.avif', 'images/thumbnail/thumb_5.jpeg'],
+//       ['images/image_6.avif', 'images/thumbnail/thumb_6.jpeg'],
+//     ]
+//     images.forEach(async (image) => {
+//       const [original, thumbnail] = image;
+//       const result = await compressor.compressImage(`server/public/${original}`, `server/public/${thumbnail}`, 'jpeg');
+//       console.log('Original image path:', result);
+//     })
+//   } catch (error) {
+//     console.error('Error during processing:', error);
+//   }
+// })();
