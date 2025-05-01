@@ -2,7 +2,7 @@ SET NAMES utf8mb4;
 SET CHARACTER SET utf8mb4;
 SET COLLATION_CONNECTION = 'utf8mb4_unicode_ci';
 
-INSERT INTO `categories` (`cateName`, `status`) VALUES
+INSERT INTO `categories` (`cate_name`, `status`) VALUES
 ('sports', 1),
 ('fashion', 1),
 ('Business', 1),
@@ -51,7 +51,7 @@ INSERT INTO `articles` (`title`, `content`, `thumbnail`, `original_image`, `publ
 -- Bài 15: Life & Style
 ('Hành động nhỏ bảo vệ môi trường', 'Bảo vệ môi trường bắt đầu từ hành động nhỏ. Tái chế rác thải giúp giảm ô nhiễm. Sử dụng túi vải thay cho túi nilon là lựa chọn thông minh. Tiết kiệm điện góp phần giảm khí thải. Trồng cây xanh làm không khí trong lành hơn. Hạn chế dùng nhựa một lần là xu hướng hiện nay. Mọi người nên phân loại rác tại nhà. Đi bộ hoặc xe đạp thay vì xe máy khi có thể. Tuyên truyền ý thức bảo vệ môi trường rất quan trọng. Trẻ em cần học về điều này từ nhỏ. Các công ty cũng nên áp dụng sản xuất xanh. Nước sạch là tài nguyên cần được bảo vệ. Ô nhiễm không khí đang là vấn đề toàn cầu. Hành động của mỗi người đều tạo ra sự khác biệt. Hãy tắt đèn khi không sử dụng. Sử dụng năng lượng tái tạo nếu có điều kiện. Một môi trường sạch mang lại sức khỏe tốt hơn. Thói quen tốt cần được duy trì lâu dài. Bảo vệ môi trường là trách nhiệm chung. Hãy bắt đầu từ hôm nay để cứu lấy hành tinh.', 'images/thumbnail/thumb_5.jpeg', 'images/image_5.avif', '2025-04-15 11:00:00', 167, 5, 6, 1),
 -- Bài 16: Games
-('Sự phát triển của ngành game', 'Trò chơi điện tử đã thay đổi qua nhiều thập kỷ. Những năm 1970, Pong là tựa game đơn giản đầu tiên. Atari mở ra kỷ nguyên giải trí tại nhà. Nintendo mang đến Mario và Zelda huyền thoại. PlayStation định nghĩa lại đồ họa game. Máy tính cá nhân cũng trở thành nền tảng chơi game. Trò chơi trực tuyến xuất hiện vào những năm 2000. Esports giờ đây là ngành công nghiệp lớn. Công nghệ thực tế ảo mang lại trải nghiệm mới. Game mobile phổ biến nhờ smartphone. Các nhà phát triển không ngừng sáng tạo nội dung. Trò chơi giúp giải trí và giảm căng thẳng. Tuy nhiên, chơi quá mức có thể gây nghiện. Cha mẹ cần kiểm soát thời gian chơi của trẻ. Game còn được dùng trong giáo dục. Đồ họa ngày càng chân thực hơn bao giờ hết. Cộng đồng game thủ toàn cầu rất sôi động. Việt Nam cũng có nhiều tựa game nội địa. Tương lai hứa hẹn nhiều đột phá hơn. Trò chơi điện tử là một phần của văn hóa hiện đại.', 'images/thumbnail/thumb_16.jpeg', 'images/image_16.avif', '2025-04-16 13:00:00', 245, 3, 5, 1),
+('Sự phát triển của ngành game', 'Trò chơi điện tử đã thay đổi qua nhiều thập kỷ. Những năm 1970, Pong là tựa game đơn giản đầu tiên. Atari mở ra kỷ nguyên giải trí tại nhà. Nintendo mang đến Mario và Zelda huyền thoại. PlayStation định nghĩa lại đồ họa game. Máy tính cá nhân cũng trở thành nền tảng chơi game. Trò chơi trực tuyến xuất hiện vào những năm 2000. Esports giờ đây là ngành công nghiệp lớn. Công nghệ thực tế ảo mang lại trải nghiệm mới. Game mobile phổ biến nhờ smartphone. Các nhà phát triển không ngừng sáng tạo nội dung. Trò chơi giúp giải trí và giảm căng thẳng. Tuy nhiên, chơi quá mức có thể gây nghiện. Cha mẹ cần kiểm soát thời gian chơi của trẻ. Game còn được dùng trong giáo dục. Đồ họa ngày càng chân thực hơn bao giờ hết. Cộng đồng game thủ toàn cầu rất sôi động. Việt Nam cũng có nhiều tựa game nội địa. Tương lai hứa hẹn nhiều đột phá hơn. Trò chơi điện tử là một phần của văn hóa hiện đại.', 'images/thumbnail/thumb_6.jpeg', 'images/image_6.avif', '2025-04-16 13:00:00', 245, 3, 5, 1),
 -- Bài 17: Business
 ('Tiết kiệm tiền cho doanh nghiệp nhỏ', 'Tiết kiệm tiền là kỹ năng cần thiết trong cuộc sống. Đầu tiên, hãy lập ngân sách hàng tháng. Ghi lại mọi khoản chi tiêu để kiểm soát tốt hơn. Tránh mua sắm impulsively không cần thiết. Mở tài khoản tiết kiệm riêng là ý tưởng hay. Đặt mục tiêu cụ thể để có động lực. Hạn chế ăn ngoài để tiết kiệm chi phí. Sử dụng phiếu giảm giá khi mua sắm. Tận dụng các chương trình khuyến mãi. Tiền tiết kiệm nên được đầu tư khôn ngoan. Học cách sửa chữa thay vì mua mới. Chia nhỏ thu nhập thành các phần hợp lý. Tránh nợ tín dụng không cần thiết. Kiểm tra hóa đơn để phát hiện sai sót. Tiết kiệm năng lượng cũng là cách giảm chi phí. Hãy kiên nhẫn vì tiết kiệm cần thời gian. Một khoản dự phòng giúp bạn an tâm hơn. Thói quen tốt sẽ mang lại kết quả lớn. Tài chính ổn định là nền tảng cho tương lai. Bắt đầu tiết kiệm từ những điều nhỏ nhất.', 'images/thumbnail/thumb_1.jpeg', 'images/image_1.avif', '2025-04-17 09:30:00', 78, 2, 3, 1),
 -- Bài 18: Fashion
@@ -67,3 +67,30 @@ INSERT INTO `contact` (`name`, `email`, `phone`, `title`, `content`) VALUES
 ('Le Van C', 'levanc@example.com', '0123456789', 'Tôi cần hỗ trợ kỹ thuật ngay lập tức.', 'Tôi cần hỗ trợ kỹ thuật ngay lập tức.'),
 ('Pham Thi D', 'phamthid@example.com', '0123456789', 'Có chương trình khuyến mãi nào không?', 'Có chương trình khuyến mãi nào không?'),
 ('Hoang Van E', 'hoangvane@example.com', '0123456789', 'Gửi tôi thông tin chi tiết về sản phẩm.', 'Gửi tôi thông tin chi tiết về sản phẩm.');
+
+INSERT INTO `newsletterSubscribers` (`email`)VALUES
+('subscriber1@example.com'),
+('subscriber2@example.com'),
+('subscriber3@example.com');
+
+INSERT INTO `websiteInfo` (`address`, `email`, `facebook_url`, `youtube_url`, `copyright`) VALUES
+('123 Đường ABC, Quận XYZ, Thành phố ABC', 'newsfeed@example.com', 'https://www.facebook.com/Newsfeed', 'https://www.youtube.com/Newsfeed', '© 2025 Newsfeed Inc. All rights reserved.');
+
+INSERT INTO `comments` (`email`, `content`, `article_id`, `created_at`) VALUES
+('nguyenthanhlong@gmail.com', 'Bài viết rất hay và bổ ích. Tôi đã áp dụng một số lời khuyên về chạy bộ và thấy sức khỏe cải thiện rõ rệt.', 1, '2025-04-26 09:15:00'),
+('tranminhhieu@example.com', 'Tôi thường xuyên chơi thể thao và hoàn toàn đồng ý với những lợi ích mà bài viết đề cập. Mong tác giả chia sẻ thêm về chế độ dinh dưỡng phù hợp cho người tập thể thao.', 1, '2025-04-26 14:30:00'),
+('phamthuylinh@hotmail.com', 'Bài viết này đã thay đổi cách nhìn của tôi về tập thể dục. Trước đây tôi nghĩ chỉ cần tập mạnh là tốt, nhưng giờ tôi hiểu tầm quan trọng của việc khởi động và tập đúng cách. Cảm ơn tác giả!', 1, '2025-04-27 10:45:00'),
+('hoangvanthanh@gmail.com', 'AI đang thay đổi cuộc sống của chúng ta theo nhiều cách không ngờ. Tôi làm việc trong lĩnh vực IT và thấy rằng bài viết này đã nêu rất chính xác những xu hướng hiện tại.', 2, '2025-04-28 08:30:00'),
+('lethihoa@example.com', 'Tôi lo ngại về vấn đề đạo đức khi AI phát triển quá nhanh. Liệu chúng ta có đang chuẩn bị đủ tốt cho những thách thức này?', 2, '2025-04-28 14:45:00'),
+('nguyenducminh@hotmail.com', 'Tôi đã thử nhiều món ăn đường phố ở Hà Nội và phải công nhận rằng phở bò và bún chả thực sự tuyệt vời. Bài viết mô tả rất chính xác hương vị đặc trưng của ẩm thực Hà Nội.', 3, '2025-04-29 09:20:00'),
+('vuhoangnam@gmail.com', 'Đọc sách thực sự đã thay đổi cuộc đời tôi. Tôi bắt đầu đọc 30 phút mỗi ngày và thấy tư duy của mình mở rộng đáng kể. Cảm ơn tác giả đã chia sẻ những lợi ích tuyệt vời này.', 4, '2025-04-29 16:10:00'),
+('tranquynhanh@example.com', 'Du lịch xanh là xu hướng cần được khuyến khích. Tôi đã tham gia một tour du lịch sinh thái ở Việt Nam và rất ấn tượng với cách họ bảo vệ môi trường tự nhiên.', 5, '2025-04-30 11:25:00'),
+('phamvantruong@gmail.com', 'Smartphone đã phát triển nhanh chóng trong 10 năm qua. Tôi còn nhớ chiếc Nokia đầu tiên của mình và so với iPhone bây giờ thật sự là một sự khác biệt lớn. Bài viết rất hay và đầy đủ thông tin.', 6, '2025-04-30 15:40:00'),
+('nguyenthianh@example.com', 'Tôi đã thử áp dụng một số mẹo chăm sóc cây cảnh từ bài viết này và thực sự hiệu quả. Cây của tôi đã phát triển tốt hơn nhiều. Cảm ơn tác giả!', 7, '2025-05-01 10:15:00'),
+('levanquang@hotmail.com', 'Giáo dục trẻ em là nền tảng cho tương lai. Tôi là một giáo viên và hoàn toàn đồng ý với quan điểm của bài viết. Chúng ta cần đầu tư nhiều hơn vào giáo dục sớm.', 8, '2025-05-01 14:30:00'),
+('tranthihien@gmail.com', 'Tôi đã bắt đầu chạy bộ được 3 tháng và cảm thấy sức khỏe cải thiện rõ rệt. Bài viết này đã cung cấp cho tôi nhiều thông tin hữu ích để tập luyện hiệu quả hơn.', 9, '2025-05-02 08:45:00'),
+('phamthanhbinh@example.com', 'Tôi là một nhiếp ảnh gia nghiệp dư và rất thích chụp ảnh thiên văn. Bài viết này đã cho tôi nhiều gợi ý hay để cải thiện kỹ năng của mình.', 10, '2025-05-02 16:20:00'),
+('nguyenvanminh@gmail.com', 'Phong cách tối giản đã giúp tôi sống có ý thức hơn. Tôi đã loại bỏ nhiều đồ không cần thiết và cảm thấy cuộc sống nhẹ nhàng hơn rất nhiều.', 11, '2025-05-03 09:30:00'),
+('tranthithu@example.com', 'Tôi làm việc trong ngành tài chính và thấy rằng blockchain đang thực sự thay đổi cách chúng ta giao dịch. Bài viết này đã giải thích rất rõ ràng về công nghệ phức tạp này.', 12, '2025-05-03 13:45:00'),
+('levantuan@hotmail.com', 'Nấu ăn tại nhà không chỉ tiết kiệm mà còn là niềm vui. Tôi đã thử công thức trong bài viết và gia đình tôi rất thích. Mong tác giả chia sẻ thêm nhiều công thức nữa.', 13, '2025-05-04 10:10:00'),
+('phamthihang@gmail.com', 'Mạng xã hội có cả mặt tích cực và tiêu cực. Tôi nghĩ chúng ta cần dạy trẻ em cách sử dụng chúng một cách có trách nhiệm. Bài viết đã nêu rất đúng những điểm này.', 14, '2025-05-04 15:30:00');

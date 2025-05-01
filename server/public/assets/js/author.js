@@ -27,7 +27,7 @@ $(document).ready(function () {
     let categorySelect = $("#articleCategory")
 
     allCategories.forEach(category => {
-      categorySelect.append(`<option value="${category.id}">${category.cateName}</option>`);
+      categorySelect.append(`<option value="${category.id}">${category.cate_name}</option>`);
     });
   }
   // Function to get articles
@@ -45,20 +45,20 @@ $(document).ready(function () {
   }
   // Function to load articles to table
   function loadArticlesToTable(table) {
-        const articleTableBody = $(table);
-        articleTableBody.empty();
+    const articleTableBody = $(table);
+    articleTableBody.empty();
 
-        allArticles.forEach(article => {
-          articleTableBody.append(`
+    allArticles.forEach(article => {
+      articleTableBody.append(`
             <tr>
               <td>${article.title}</td>
-              <td>${allCategories.find(category => category.id == article.cateId)?.cateName || 'N/A'}</td>
+              <td>${allCategories.find(category => category.id == article.cate_id)?.cate_name || 'N/A'}</td>
               <td>${formatDate(article.publishedDate)}</td>
               <td>
                 ${article.status ?
-                  '<span class="badge status-published">Published</span>' :
-                  '<span class="badge status-pending">Pending</span>'
-                }
+          '<span class="badge status-published">Published</span>' :
+          '<span class="badge status-pending">Pending</span>'
+        }
               </td>
               <td>
                 <button class="btn btn-sm btn-info edit-article" data-id="${article.id}">
@@ -67,7 +67,7 @@ $(document).ready(function () {
               </td>
             </tr>
           `);
-        });
+    });
   }
   // Function to load summary
   function loadSummary() {
@@ -126,7 +126,7 @@ $(document).ready(function () {
 
     // Hide all tab panes first
     $('.tab-pane').removeClass('show active');
-  
+
     // Show only the target tab pane
     $(targetTab).addClass('show active');
 
@@ -177,10 +177,10 @@ $(document).ready(function () {
     const content = $('#articleContent').val();
     const thumbnail = $('#articleThumbnail').val();
     const publishedDate = $('#articlePublishedDate').val();
-    const cateId = $('#articleCategory').val();
-    const userId = window.localStorage.getItem("id");
+    const cate_id = $('#articleCategory').val();
+    const user_id = window.localStorage.getItem("id");
 
-    if (!title || !thumbnail || !content || !cateId || publishedDate === undefined) {
+    if (!title || !thumbnail || !content || !cate_id || publishedDate === undefined) {
       alert('Please fill in all required fields');
       return;
     }
@@ -188,7 +188,7 @@ $(document).ready(function () {
     $.ajax({
       url: '/api/articles',
       type: 'POST',
-      data: JSON.stringify({ title, content, thumbnail, publishedDate, userId, cateId, status: 1 }),
+      data: JSON.stringify({ title, content, thumbnail, publishedDate, user_id, cate_id, status: 1 }),
       contentType: 'application/json',
       success: function (response) {
         alert('Article published successfully!');
@@ -219,7 +219,7 @@ $(document).ready(function () {
     $.ajax({
       url: '/api/users/password',
       type: 'PUT',
-      data: JSON.stringify({ 
+      data: JSON.stringify({
         username: currentUser.username,
         password: currentPassword,
         newPassword: newPassword,

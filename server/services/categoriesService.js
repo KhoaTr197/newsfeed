@@ -25,7 +25,7 @@ const getAllActiveCategories = async () => {
 // add category
 const addCategory = async (name, status) => {
   try {
-    const queryStr = "INSERT INTO categories (cateName, status) VALUES (?, ?)";
+    const queryStr = "INSERT INTO categories (cate_name, status) VALUES (?, ?)";
     await connection.query(queryStr, [name, status]);
   } catch (err) {
     throw err;
@@ -35,7 +35,7 @@ const addCategory = async (name, status) => {
 // update category
 const updateCategory = async (id, name) => {
   try {
-    const queryStr = "UPDATE categories SET cateName = ? WHERE id = ?";
+    const queryStr = "UPDATE categories SET cate_name = ? WHERE id = ?";
     await connection.query(queryStr, [name, id]);
   } catch (err) {
     throw err;
@@ -46,12 +46,12 @@ const updateCategory = async (id, name) => {
 const activeCategory = async (id) => {
   try {
     const categoryQuery = "UPDATE categories SET status = 1 WHERE id = ?";
-    const articleQuery = "UPDATE articles SET status = 1 WHERE cateId = ?";
+    const articleQuery = "UPDATE articles SET status = 1 WHERE cate_id = ?";
 
     const [data] = await connection.query(categoryQuery, [id]);
     console.log(data.affectedRows)
     if (data.affectedRows != 0) {
-      await connection.query(articleQuery, [id]);  
+      await connection.query(articleQuery, [id]);
     }
 
   } catch (err) {
@@ -63,13 +63,13 @@ const activeCategory = async (id) => {
 const disableCategory = async (id) => {
   try {
     const categoryQuery = "UPDATE categories SET status = 0 WHERE id = ?";
-    const articleQuery = "UPDATE articles SET status = 0 WHERE cateId = ?";
+    const articleQuery = "UPDATE articles SET status = 0 WHERE cate_id = ?";
 
     const [data] = await connection.query(categoryQuery, [id]);
     if (data.affectedRows != 0) {
-      await connection.query(articleQuery, [id]);  
+      await connection.query(articleQuery, [id]);
     }
-    
+
   } catch (err) {
     throw err;
   }

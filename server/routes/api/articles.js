@@ -6,9 +6,9 @@ router.get("/", articleController.getAllArticles)
 
 router.get("/:id", articleController.getArticleById)
 
-router.get("/user/:userId", articleController.getArticlesByUserId)
+router.get("/user/:user_id", articleController.getArticlesByuser_id)
 
-router.get("/category/:cateId", articleController.getArticlesByCategoryId)
+router.get("/category/:cate_id", articleController.getArticlesByCategoryId)
 
 router.get("/search/:title", articleController.searchArticlesByTitle)
 

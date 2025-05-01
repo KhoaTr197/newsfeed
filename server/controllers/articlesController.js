@@ -27,10 +27,10 @@ const getArticleById = async (req, res) => {
 }
 
 // get articles by user id
-const getArticlesByUserId = async (req, res) => {
+const getArticlesByuser_id = async (req, res) => {
   try {
-    const { userId } = req.params;
-    const articles = await articleService.getArticlesByUserId(userId);
+    const { user_id } = req.params;
+    const articles = await articleService.getArticlesByuser_id(user_id);
     res
       .set('Content-Type', 'application/json; charset=utf-8')
       .json(articles);
@@ -42,8 +42,8 @@ const getArticlesByUserId = async (req, res) => {
 // get articles by category id
 const getArticlesByCategoryId = async (req, res) => {
   try {
-    const { cateId } = req.params;
-    const articles = await articleService.getArticlesByCategoryId(cateId);
+    const { cate_id } = req.params;
+    const articles = await articleService.getArticlesByCategoryId(cate_id);
     res
       .set('Content-Type', 'application/json; charset=utf-8')
       .json(articles);
@@ -68,8 +68,8 @@ const searchArticlesByTitle = async (req, res) => {
 // add new aricle
 const addArticle = async (req, res) => {
   try {
-    const { title, content, thumbnail, publishedDate, userId, cateId, status } = req.body;
-    await articleService.addArticle(title, content, thumbnail, publishedDate, userId, cateId, status);
+    const { title, content, thumbnail, publishedDate, user_id, cate_id, status } = req.body;
+    await articleService.addArticle(title, content, thumbnail, publishedDate, user_id, cate_id, status);
     res.json({ message: 'Article added successfully' });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -79,8 +79,8 @@ const addArticle = async (req, res) => {
 // update article
 const updateArticle = async (req, res) => {
   try {
-    const { id, title, content, thumbnail, publishedDate, userId, cateId, status } = req.body;
-    await articleService.updateArticle(id, title, content, thumbnail, publishedDate, userId, cateId, status);
+    const { id, title, content, thumbnail, publishedDate, user_id, cate_id, status } = req.body;
+    await articleService.updateArticle(id, title, content, thumbnail, publishedDate, user_id, cate_id, status);
     res.json({ message: 'Article updated successfully' });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -112,7 +112,7 @@ const disableArticle = async (req, res) => {
 module.exports = {
   getAllArticles,
   getArticleById,
-  getArticlesByUserId,
+  getArticlesByuser_id,
   getArticlesByCategoryId,
   searchArticlesByTitle,
   addArticle,

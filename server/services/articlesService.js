@@ -5,10 +5,10 @@ const connection = require('../db/database');
 const getAllArticles = async () => {
   try {
     const queryStr = `
-      SELECT articles.*, categories.cateName, users.username
+      SELECT articles.*, categories.cate_name, users.username
       FROM articles
-      JOIN categories ON articles.cateId = categories.id
-      JOIN users ON articles.userId = users.id
+      JOIN categories ON articles.cate_id = categories.id
+      JOIN users ON articles.user_id = users.id
     `;
     const [data] = await connection.query(queryStr);
     return data;
@@ -20,10 +20,10 @@ const getAllArticles = async () => {
 const getAllActiveArticles = async () => {
   try {
     const queryStr = `
-      SELECT articles.*, categories.cateName, users.username
+      SELECT articles.*, categories.cate_name, users.username
       FROM articles
-      JOIN categories ON articles.cateId = categories.id
-      JOIN users ON articles.userId = users.id
+      JOIN categories ON articles.cate_id = categories.id
+      JOIN users ON articles.user_id = users.id
       WHERE articles.status = 1
     `;
     const [data] = await connection.query(queryStr);
@@ -37,10 +37,10 @@ const getAllActiveArticles = async () => {
 const getArticleById = async (id) => {
   try {
     const queryStr = `
-      SELECT articles.*, categories.cateName, users.username
+      SELECT articles.*, categories.cate_name, users.username
       FROM articles
-      JOIN categories ON articles.cateId = categories.id
-      JOIN users ON articles.userId = users.id
+      JOIN categories ON articles.cate_id = categories.id
+      JOIN users ON articles.user_id = users.id
       WHERE articles.id = ? and articles.status = 1
     `;
     const [data] = await connection.query(queryStr, [id]);
@@ -51,16 +51,16 @@ const getArticleById = async (id) => {
 };
 
 // get articles by user id
-const getArticlesByUserId = async (userId) => {
+const getArticlesByuser_id = async (user_id) => {
   try {
     const queryStr = `
-      SELECT articles.*, categories.cateName, users.username
+      SELECT articles.*, categories.cate_name, users.username
       FROM articles
-      JOIN categories ON articles.cateId = categories.id
-      JOIN users ON articles.userId = users.id
-      WHERE articles.userId = ? and articles.status = 1
+      JOIN categories ON articles.cate_id = categories.id
+      JOIN users ON articles.user_id = users.id
+      WHERE articles.user_id = ? and articles.status = 1
     `;
-    const [data] = await connection.query(queryStr, [userId]);
+    const [data] = await connection.query(queryStr, [user_id]);
     return data;
   } catch (err) {
     throw err;
@@ -68,16 +68,16 @@ const getArticlesByUserId = async (userId) => {
 };
 
 // get articles by category id
-const getArticlesByCategoryId = async (cateId) => {
+const getArticlesByCategoryId = async (cate_id) => {
   try {
     const queryStr = `
-      SELECT articles.*, categories.cateName, users.username
+      SELECT articles.*, categories.cate_name, users.username
       FROM articles
-      JOIN categories ON articles.cateId = categories.id
-      JOIN users ON articles.userId = users.id
-      WHERE articles.cateId = ? and articles.status = 1
+      JOIN categories ON articles.cate_id = categories.id
+      JOIN users ON articles.user_id = users.id
+      WHERE articles.cate_id = ? and articles.status = 1
     `;
-    const [data] = await connection.query(queryStr, [cateId]);
+    const [data] = await connection.query(queryStr, [cate_id]);
     return data;
   } catch (err) {
     throw err;
@@ -88,10 +88,10 @@ const getArticlesByCategoryId = async (cateId) => {
 const searchArticlesByTitle = async (title) => {
   try {
     const queryStr = `
-      SELECT articles.*, categories.cateName, users.username
+      SELECT articles.*, categories.cate_name, users.username
       FROM articles
-      JOIN categories ON articles.cateId = categories.id
-      JOIN users ON articles.userId = users.id
+      JOIN categories ON articles.cate_id = categories.id
+      JOIN users ON articles.user_id = users.id
       WHERE articles.title LIKE ? and articles.status = 1
     `;
     const [data] = await connection.query(queryStr, [`%${title}%`]);
@@ -103,17 +103,17 @@ const searchArticlesByTitle = async (title) => {
 
 // get related articles based on a specific article
 const getRelatedArticles = async (article, limit) => {
-  const { id, title, userId, cateId } = article;
+  const { id, title, user_id, cate_id } = article;
   try {
     const queryStr = `
-      SELECT articles.*, categories.cateName, users.username
+      SELECT articles.*, categories.cate_name, users.username
       FROM articles
-      JOIN categories ON articles.cateId = categories.id
-      JOIN users ON articles.userId = users.id
-      WHERE articles.id != ? and (articles.title LIKE ? or articles.userId = ? or articles.cateId = ?) and articles.status = 1
+      JOIN categories ON articles.cate_id = categories.id
+      JOIN users ON articles.user_id = users.id
+      WHERE articles.id != ? and (articles.title LIKE ? or articles.user_id = ? or articles.cate_id = ?) and articles.status = 1
       LIMIT ?
     `;
-    const [data] = await connection.query(queryStr, [id, `%${title}%`, userId, cateId, limit]);
+    const [data] = await connection.query(queryStr, [id, `%${title}%`, user_id, cate_id, limit]);
     return data;
   } catch (err) {
     throw err;
@@ -121,10 +121,10 @@ const getRelatedArticles = async (article, limit) => {
 };
 
 // add new aricle
-const addArticle = async (title, content, thumbnail, publishedDate, userId, cateId, status) => {
+const addArticle = async (title, content, thumbnail, publishedDate, user_id, cate_id, status) => {
   try {
-    const queryStr = "INSERT INTO articles (title, content, thumbnail, publishedDate, userId, cateId, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    await connection.query(queryStr, [title, content, thumbnail, publishedDate, userId, cateId, status]);
+    const queryStr = "INSERT INTO articles (title, content, thumbnail, publishedDate, user_id, cate_id, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    await connection.query(queryStr, [title, content, thumbnail, publishedDate, user_id, cate_id, status]);
     return true;
   } catch (err) {
     throw err;
@@ -132,10 +132,10 @@ const addArticle = async (title, content, thumbnail, publishedDate, userId, cate
 };
 
 // update article
-const updateArticle = async (id, title, content, thumbnail, publishedDate, userId, cateId, status) => {
+const updateArticle = async (id, title, content, thumbnail, publishedDate, user_id, cate_id, status) => {
   try {
-    const queryStr = "UPDATE articles SET title = ?, content = ?, thumbnail = ?, publishedDate = ?, userId = ?, cateId = ?, status = ? WHERE id = ?";
-    await connection.query(queryStr, [title, content, thumbnail, publishedDate, userId, cateId, status, id]);
+    const queryStr = "UPDATE articles SET title = ?, content = ?, thumbnail = ?, publishedDate = ?, user_id = ?, cate_id = ?, status = ? WHERE id = ?";
+    await connection.query(queryStr, [title, content, thumbnail, publishedDate, user_id, cate_id, status, id]);
   } catch (err) {
     throw err;
   }
@@ -166,7 +166,7 @@ module.exports = {
   getAllArticles,
   getAllActiveArticles,
   getArticleById,
-  getArticlesByUserId,
+  getArticlesByuser_id,
   getArticlesByCategoryId,
   searchArticlesByTitle,
   getRelatedArticles,

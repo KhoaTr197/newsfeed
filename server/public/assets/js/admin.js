@@ -33,7 +33,7 @@ $(document).ready(function () {
       categoryTableBody.append(`
             <tr>
               <td>${category.id}</td>
-              <td>${category.cateName}</td>
+              <td>${category.cate_name}</td>
               <td>${category.status ? `<span class="badge category-status status-active" data-categorystatus=${category.id}>Active</span>` : `<span class="badge category-status status-inactive" data-categorystatus=${category.id}>Inactive</span>`}</td>
               <td>
                 <button class="btn btn-sm btn-info edit-category" data-id="${category.id}">
@@ -141,14 +141,14 @@ $(document).ready(function () {
             <tr>
               <td>${article.id}</td>
               <td>${article.title}</td>
-              <td>${allCategories.find(category => category.id == article.cateId)?.cateName || 'N/A'}</td>
-              <td>${allUsers.find(user => user.id == article.userId)?.username || 'N/A'}</td>
+              <td>${allCategories.find(category => category.id == article.cate_id)?.cate_name || 'N/A'}</td>
+              <td>${allUsers.find(user => user.id == article.user_id)?.username || 'N/A'}</td>
               <td>${formatDate(article.publishedDate)}</td>
               <td>
                 ${article.status ?
-                  `<span class="badge article-status status-published" data-articlestatus=${article.id}>Published</span>` :
-                  `<span class="badge article-status status-pending" data-articlestatus=${article.id}>Pending</span>`
-                }
+          `<span class="badge article-status status-published" data-articlestatus=${article.id}>Published</span>` :
+          `<span class="badge article-status status-pending" data-articlestatus=${article.id}>Pending</span>`
+        }
               </td>
               <td>
                 <button class="btn btn-sm btn-info edit-article" data-id="${article.id}">
@@ -186,7 +186,7 @@ $(document).ready(function () {
 
     // Add options from allCategories, allUsers array
     allCategories.forEach(category => {
-      $("#addCategory").append(`<option value="${category.id}">${category.cateName}</option>`);
+      $("#addCategory").append(`<option value="${category.id}">${category.cate_name}</option>`);
     });
     allUsers.forEach(user => {
       $("#addAuthor").append(`<option value="${user.id}">${user.username}</option>`);
@@ -220,11 +220,11 @@ $(document).ready(function () {
 
       // Add options from allCategories, allUsers array
       allCategories.forEach(category => {
-        const selected = category.id == article.cateId ? 'selected' : '';
-        $("#editCategory").append(`<option value="${category.id}" ${selected}>${category.cateName}</option>`);
+        const selected = category.id == article.cate_id ? 'selected' : '';
+        $("#editCategory").append(`<option value="${category.id}" ${selected}>${category.cate_name}</option>`);
       });
       allUsers.forEach(user => {
-        const selected = user.id == article.userId ? 'selected' : '';
+        const selected = user.id == article.user_id ? 'selected' : '';
         $("#editAuthor").append(`<option value="${user.id}" ${selected}>${user.username}</option>`);
       });
 
@@ -241,8 +241,8 @@ $(document).ready(function () {
     const title = $('#title').val();
     const content = $('#content').val();
     const thumbnail = $('#thumbnail').val();
-    const cateId = $('#addCategory').val();
-    const userId = $('#addAuthor').val();
+    const cate_id = $('#addCategory').val();
+    const user_id = $('#addAuthor').val();
     const status = $('#status').val();
     const publishedDate = $('#publishedDate').val();
 
@@ -252,12 +252,12 @@ $(document).ready(function () {
       return;
     }
 
-    if (!cateId) {
+    if (!cate_id) {
       alert('Please select a category');
       return;
     }
 
-    if (!userId) {
+    if (!user_id) {
       alert('Please select an author');
       return;
     }
@@ -266,7 +266,7 @@ $(document).ready(function () {
     $.ajax({
       url: '/api/articles',
       type: 'POST',
-      data: JSON.stringify({ title, content, thumbnail, cateId, userId, status, publishedDate }),
+      data: JSON.stringify({ title, content, thumbnail, cate_id, user_id, status, publishedDate }),
       contentType: 'application/json',
       success: function (response) {
         $('#addArticleModal').modal('hide');
@@ -287,8 +287,8 @@ $(document).ready(function () {
       title: $('#editTitle').val(),
       content: $('#editContent').val(),
       thumbnail: $('#editThumbnail').val(),
-      cateId: $('#editCategory').val(),
-      userId: $('#editAuthor').val(),
+      cate_id: $('#editCategory').val(),
+      user_id: $('#editAuthor').val(),
       status: $('#editArticleStatus').val(),
       publishedDate: $('#editPublishedDate').val()
     };
@@ -430,7 +430,7 @@ $(document).ready(function () {
   });
   // Handle save edit user button
   $('#editUserBtn').on('click', function () {
-    const id = $('#editUserId').val();
+    const id = $('#edituser_id').val();
     const username = $('#editUsername').val();
     const email = $('#editEmail').val();
     const role = $('#editRole').val();
@@ -480,12 +480,12 @@ $(document).ready(function () {
   });
   // Set up event handler for user edit button
   $(document).on('click', '.edit-user', function () {
-    const userId = $(this).data('id');
+    const user_id = $(this).data('id');
 
-    const user = allUsers.find(user => user.id == userId);
+    const user = allUsers.find(user => user.id == user_id);
 
     if (user) {
-      $('#editUserId').val(user.id);
+      $('#edituser_id').val(user.id);
       $('#editUsername').val(user.username);
       $('#editEmail').val(user.email);
       $('#editPassword').val(user.password);
@@ -499,54 +499,54 @@ $(document).ready(function () {
   });
   // Set up event handler for user toggle button
   $(document).on('click', '.toggle-user', function () {
-      const userId = $(this).data('id');
-  
-      const user = allUsers.find(user => user.id == userId);
-  
-      if (!user)
-        return;
-  
-      console.log(user.status)
-      if (user.status == 0) {
-        $.ajax({
-          url: '/api/users/active',
-          type: 'PUT',
-          data: JSON.stringify({ id: userId }),
-          contentType: 'application/json',
-          success: function (response) {
-            alert('User activated successfully!');
-            getUsers();
-            loadUsers();
+    const user_id = $(this).data('id');
 
-            $(`.user-status[data-userstatus="${userId}"]`).removeClass('status-inactive').addClass('status-active').text('Active');
-            $(`.toggle-user[data-id="${userId}"]`).removeClass('btn-success').addClass('btn-danger');
-            $(`.toggle-user[data-id="${userId}"] i`).removeClass('fa-check').addClass('fa-ban');
-          },
-          error: function (error) {
-            alert('Error activating user:', error);
-          }
-        });
-      } else {
-        $.ajax({
-          url: '/api/users/',
-          type: 'DELETE',
-          data: JSON.stringify({ id: userId }),
-          contentType: 'application/json',
-          success: function (response) {
-            alert('User deactivated successfully!');
-            getUsers();
-            loadUsers();
+    const user = allUsers.find(user => user.id == user_id);
 
-            $(`.user-status[data-userstatus="${userId}"]`).removeClass('status-active').addClass('status-inactive').text('Inactive');
-            $(`.toggle-user[data-id="${userId}"]`).removeClass('btn-danger').addClass('btn-success');
-            $(`.toggle-user[data-id="${userId}"] i`).removeClass('fa-ban').addClass('fa-check');
+    if (!user)
+      return;
 
-          },
-          error: function (error) {
-            alert('Error deactivating user:', error);
-          }
-        });
-      }
+    console.log(user.status)
+    if (user.status == 0) {
+      $.ajax({
+        url: '/api/users/active',
+        type: 'PUT',
+        data: JSON.stringify({ id: user_id }),
+        contentType: 'application/json',
+        success: function (response) {
+          alert('User activated successfully!');
+          getUsers();
+          loadUsers();
+
+          $(`.user-status[data-userstatus="${user_id}"]`).removeClass('status-inactive').addClass('status-active').text('Active');
+          $(`.toggle-user[data-id="${user_id}"]`).removeClass('btn-success').addClass('btn-danger');
+          $(`.toggle-user[data-id="${user_id}"] i`).removeClass('fa-check').addClass('fa-ban');
+        },
+        error: function (error) {
+          alert('Error activating user:', error);
+        }
+      });
+    } else {
+      $.ajax({
+        url: '/api/users/',
+        type: 'DELETE',
+        data: JSON.stringify({ id: user_id }),
+        contentType: 'application/json',
+        success: function (response) {
+          alert('User deactivated successfully!');
+          getUsers();
+          loadUsers();
+
+          $(`.user-status[data-userstatus="${user_id}"]`).removeClass('status-active').addClass('status-inactive').text('Inactive');
+          $(`.toggle-user[data-id="${user_id}"]`).removeClass('btn-danger').addClass('btn-success');
+          $(`.toggle-user[data-id="${user_id}"] i`).removeClass('fa-ban').addClass('fa-check');
+
+        },
+        error: function (error) {
+          alert('Error deactivating user:', error);
+        }
+      });
+    }
   });
   // CATEGORIES
   // Handle when submit add new category
@@ -602,7 +602,7 @@ $(document).ready(function () {
 
     if (category) {
       $('#editCategoryId').val(category.id);
-      $('#editCategoryName').val(category.cateName);
+      $('#editCategoryName').val(category.cate_name);
       $('#editCategoryStatus').val(category.status);
 
       $('#editCategoryModal').modal('show');
@@ -658,7 +658,7 @@ $(document).ready(function () {
         }
       });
     }
-});
+  });
   // Handle tab navigation
   $('.admin-sidebar .nav-link').on('click', function () {
     $('.admin-sidebar .nav-link').removeClass('active');
