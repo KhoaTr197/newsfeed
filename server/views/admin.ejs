@@ -140,7 +140,8 @@
             <div class="admin-card">
               <div class="admin-card-header d-flex justify-content-between align-items-center">
                 <span>Manage Articles</span>
-                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addArticleModal" id="addNewArticleBtn">
+                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addArticleModal"
+                  id="addNewArticleBtn">
                   <i class="fa fa-plus"></i> Add New Article
                 </button>
               </div>
@@ -290,53 +291,54 @@
     </div>
   </div>
 
-    <!-- Edit User Modal -->
-    <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form method="post" action="" id="editUserForm">
-              <input type="hidden" id="editUserId">
-              <div class="form-group">
-                <label for="username">Username</label>
-                <input id="editUsername" type="text" class="form-control" id="username" placeholder="Enter username" />
-                <label class="error"></label>
-              </div>
-              <div class="form-group">
-                <label for="email">Email</label>
-                <input id="editEmail" type="email" class="form-control" id="email" placeholder="Enter email" />
-                <label class="error"></label>
-              </div>
-              <div class="form-group">
-                <label for="password">Password</label>
-                <input readonly id="editPassword" type="password" class="form-control" id="password" placeholder="Enter password" />
-                <label class="error"></label>
-              </div>
-              <div class="form-group">
-                <label for="role">Role</label>
-                <select id="editRole" class="form-control" id="role">
-                  <option value="0">Author</option>
-                  <option value="1">Admin</option>
-                </select>
-              </div>           
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-              Close
-            </button>
-            <button id="editUserBtn" type="button" class="btn btn-primary">Save User</button>
-            <button id="resetPasswordUserBtn" type="button" class="btn btn-primary">Reset Password</button>
-          </div>
+  <!-- Edit User Modal -->
+  <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="post" action="" id="editUserForm">
+            <input type="hidden" id="edituser_id">
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input id="editUsername" type="text" class="form-control" id="username" placeholder="Enter username" />
+              <label class="error"></label>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input id="editEmail" type="email" class="form-control" id="email" placeholder="Enter email" />
+              <label class="error"></label>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input readonly id="editPassword" type="password" class="form-control" id="password"
+                placeholder="Enter password" />
+              <label class="error"></label>
+            </div>
+            <div class="form-group">
+              <label for="role">Role</label>
+              <select id="editRole" class="form-control" id="role">
+                <option value="0">Author</option>
+                <option value="1">Admin</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button id="editUserBtn" type="button" class="btn btn-primary">Save User</button>
+          <button id="resetPasswordUserBtn" type="button" class="btn btn-primary">Reset Password</button>
         </div>
       </div>
     </div>
+  </div>
 
   <!-- Add Article Modal -->
   <div class="modal fade" id="addArticleModal" tabindex="-1" role="dialog" aria-labelledby="addArticleModalLabel">
@@ -358,7 +360,8 @@
             </div>
             <div class="form-group">
               <label for="content">Content</label>
-              <textarea required class="form-control" id="content" rows="10" placeholder="Enter article content"></textarea>
+              <textarea required class="form-control" id="content" rows="10"
+                placeholder="Enter article content"></textarea>
             </div>
             <div class="form-group">
               <label for="thumbnail">Thumbnail URL</label>
@@ -444,32 +447,32 @@
     </div>
   </div>
 
-    <!-- Edit Category Modal -->
-    <div class="modal fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-labelledby="editCategoryModalLabel">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="editCategoryModalLabel">Edit New Category</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form id="editCategoryForm">
-              <input type="hidden" id="editCategoryId">
-              <div class="form-group">
-                <label for="categoryName">Category Name</label>
-                <input type="text" class="form-control" id="editCategoryName" placeholder="Enter category name">
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" id="editCategoryBtn">Save Category</button>
-          </div>
+  <!-- Edit Category Modal -->
+  <div class="modal fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-labelledby="editCategoryModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editCategoryModalLabel">Edit New Category</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="editCategoryForm">
+            <input type="hidden" id="editCategoryId">
+            <div class="form-group">
+              <label for="categoryName">Category Name</label>
+              <input type="text" class="form-control" id="editCategoryName" placeholder="Enter category name">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="editCategoryBtn">Save Category</button>
         </div>
       </div>
     </div>
+  </div>
 
   <!-- Edit Article Modal -->
   <div class="modal fade" id="editArticleModal" tabindex="-1" role="dialog" aria-labelledby="editArticleModalLabel">
@@ -514,7 +517,7 @@
                 </div>
               </div>
             </div>
-            <div class="row">           
+            <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="editPublishedDate">Published Date</label>

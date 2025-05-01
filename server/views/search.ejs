@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<%- include('partials/head') %>
+
+  <body>
+    <div id="preloader">
+      <div id="status">&nbsp;</div>
+    </div>
+    <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
+    <div class="container">
+      <%- include('partials/header') %>
+        <section id="newsSection">
+          <div class="row">
+            <div class="col-lg-12 col-md-12">
+              <div class="latest_newsarea">
+                <span>Latest News</span>
+                <ul id="ticker01" class="news_sticker">
+                  <li>
+                    <a href="#"><img src="/images/news_thumbnail3.jpg" alt="" />My First
+                      News Item</a>
+                  </li>
+                  <li>
+                    <a href="#"><img src="/images/news_thumbnail3.jpg" alt="" />My Second
+                      News Item</a>
+                  </li>
+                  <li>
+                    <a href="#"><img src="/images/news_thumbnail3.jpg" alt="" />My Third
+                      News Item</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="contentSection">
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8">
+              <div class="left_content">
+                <div class="single_post_content">
+                  <h2><span>Search Results for: "<%= searchTerm %>"</span></h2>
+                  <div class="search_result_summary">
+                    <p>
+                      <%= articles.length %> result<%= articles.length !==1 ? 's' : '' %> found
+                    </p>
+                  </div>
+                  <div class="single_post_content_span">
+                    <ul class="business_catgnav wow fadeInDown">
+                      <% if (articles.length> 0) { %>
+                        <% // Calculate pagination const itemsPerPage=5; const totalPages=Math.ceil(articles.length /
+                          itemsPerPage); const currentPage=parseInt(page) || 1; const startIndex=(currentPage - 1) *
+                          itemsPerPage; const endIndex=Math.min(startIndex + itemsPerPage, articles.length); const
+                          paginatedArticles=articles.slice(startIndex, endIndex); %>
+
+                          <% for (const article of paginatedArticles) { %>
+                            <li>
+                              <figure class="bsbig_fig">
+                                <a href="/detail/<%= article.id %>" class="featured_img">
+                                  <img alt="" src="/<%= article.thumbnail %>" />
+                                  <span class="overlay"></span>
+                                </a>
+                                <figcaption>
+                                  <a href="/detail/<%= article.id %>">
+                                    <%= article.title %>
+                                  </a>
+                                </figcaption>
+                                <p>
+                                  <%= article.content.slice(0, 100) + "..." %>
+                                </p>
+                              </figure>
+                            </li>
+                            <% } %>
+
+                              <!-- Pagination -->
+                              <% if (totalPages> 1) { %>
+                                <div class="pagination_area">
+                                  <nav>
+                                    <ul class="pagination">
+                                      <!-- Previous page link -->
+                                      <% if (currentPage> 1) { %>
+                                        <li>
+                                          <a href="/search?q=<%= searchTerm %>&page=<%= currentPage - 1 %>"
+                                            aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                          </a>
+                                        </li>
+                                        <% } %>
+
+                                          <!-- Page numbers -->
+                                          <% for (let i=1; i <=totalPages; i++) { %>
+                                            <li class="<%= i === currentPage ? 'active' : '' %>">
+                                              <a href="/search?q=<%= searchTerm %>&page=<%= i %>">
+                                                <%= i %>
+                                              </a>
+                                            </li>
+                                            <% } %>
+
+                                              <!-- Next page link -->
+                                              <% if (currentPage < totalPages) { %>
+                                                <li>
+                                                  <a href="/search?q=<%= searchTerm %>&page=<%= currentPage + 1 %>"
+                                                    aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                  </a>
+                                                </li>
+                                                <% } %>
+                                    </ul>
+                                  </nav>
+                                </div>
+                                <% } %>
+                                  <% } else { %>
+                                    <div class="no_results">
+                                      <p>No results found for "<%= searchTerm %>". Please try a different search term.
+                                      </p>
+                                    </div>
+                                    <% } %>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4">
+              <aside class="right_content">
+                <div class="single_sidebar">
+                  <h2><span>Search</span></h2>
+                  <div class="search_form">
+                    <form action="/search" method="GET">
+                      <input type="text" name="q" placeholder="Search..." required>
+                      <button type="submit" class="btn btn-default">Search</button>
+                    </form>
+                  </div>
+                </div>
+                <div class="single_sidebar">
+                  <h2><span>Popular Post</span></h2>
+                  <ul class="spost_nav">
+                    <li>
+                      <div class="media wow fadeInDown">
+                        <a href="#" class="media-left">
+                          <img alt="" src="/images/post_img1.jpg" />
+                        </a>
+                        <div class="media-body">
+                          <a href="#" class="catg_title">
+                            Aliquam malesuada diam eget turpis varius 1</a>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="media wow fadeInDown">
+                        <a href="#" class="media-left">
+                          <img alt="" src="/images/post_img2.jpg" />
+                        </a>
+                        <div class="media-body">
+                          <a href="#" class="catg_title">
+                            Aliquam malesuada diam eget turpis varius 2</a>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </section>
+        <%- include('partials/footer') %>
+    </div>
+    <%- include('partials/scripts') %>
+  </body>
+
+</html>
