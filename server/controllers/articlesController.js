@@ -27,10 +27,10 @@ const getArticleById = async (req, res) => {
 }
 
 // get articles by user id
-const getArticlesByuser_id = async (req, res) => {
+const getArticlesByUser_id = async (req, res) => {
   try {
     const { user_id } = req.params;
-    const articles = await articleService.getArticlesByuser_id(user_id);
+    const articles = await articleService.getArticlesByUser_id(user_id);
     res
       .set('Content-Type', 'application/json; charset=utf-8')
       .json(articles);
@@ -112,7 +112,7 @@ const disableArticle = async (req, res) => {
 module.exports = {
   getAllArticles,
   getArticleById,
-  getArticlesByuser_id,
+  getArticlesByUser_id,
   getArticlesByCategoryId,
   searchArticlesByTitle,
   addArticle,

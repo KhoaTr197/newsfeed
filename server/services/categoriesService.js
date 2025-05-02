@@ -22,6 +22,21 @@ const getAllActiveCategories = async () => {
   }
 };
 
+const countArticlesByCategory = async () => {
+  try {
+    const queryStr = `
+      SELECT cate_id, COUNT(*) as count
+      FROM articles
+      WHERE status = 1
+      GROUP BY cate_id
+    `;
+    const [data] = await connection.query(queryStr);
+    return data;
+  } catch (err) {
+    throw err;
+  }
+};
+
 // add category
 const addCategory = async (name, status) => {
   try {
@@ -49,7 +64,6 @@ const activeCategory = async (id) => {
     const articleQuery = "UPDATE articles SET status = 1 WHERE cate_id = ?";
 
     const [data] = await connection.query(categoryQuery, [id]);
-    console.log(data.affectedRows)
     if (data.affectedRows != 0) {
       await connection.query(articleQuery, [id]);
     }
@@ -75,11 +89,24 @@ const disableCategory = async (id) => {
   }
 };
 
+// get category by id
+const getCategoryById = async (id) => {
+  try {
+    const queryStr = "SELECT * FROM categories WHERE id = ? AND status = 1";
+    const [data] = await connection.query(queryStr, [id]);
+    return data.length > 0 ? data[0] : null;
+  } catch (err) {
+    throw err;
+  }
+};
+
 module.exports = {
   getAllCategories,
   getAllActiveCategories,
+  countArticlesByCategory,
   updateCategory,
   addCategory,
   activeCategory,
   disableCategory,
+  getCategoryById,
 };

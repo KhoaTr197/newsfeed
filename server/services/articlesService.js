@@ -51,7 +51,7 @@ const getArticleById = async (id) => {
 };
 
 // get articles by user id
-const getArticlesByuser_id = async (user_id) => {
+const getArticlesByUser_id = async (user_id) => {
   try {
     const queryStr = `
       SELECT articles.*, categories.cate_name, users.username
@@ -120,6 +120,22 @@ const getRelatedArticles = async (article, limit) => {
   }
 };
 
+const getLatestArticles = async (limit) => {
+  try {
+    const queryStr = `
+      SELECT id, title, thumbnail, published_date
+      FROM articles
+      WHERE status = 1
+      ORDER BY published_date DESC
+      LIMIT ?
+    `;
+    const [data] = await connection.query(queryStr, [limit]);
+    return data;
+  } catch (err) {
+    throw err;
+  }
+};
+
 // add new aricle
 const addArticle = async (title, content, thumbnail, publishedDate, user_id, cate_id, status) => {
   try {
@@ -166,7 +182,7 @@ module.exports = {
   getAllArticles,
   getAllActiveArticles,
   getArticleById,
-  getArticlesByuser_id,
+  getArticlesByUser_id,
   getArticlesByCategoryId,
   searchArticlesByTitle,
   getRelatedArticles,

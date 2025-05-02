@@ -7,7 +7,7 @@
           <ul class="top_nav">
             <li><a href="/index">Home</a></li>
             <li><a href="#">About</a></li>
-            <li><a href="/contact">Contact</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#contactModal">Contact</a></li>
           </ul>
         </div>
         <div class="header_top_right">
@@ -50,14 +50,17 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categories
             <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <!-- Placeholder categories - will be replaced with real data later -->
-            <li><a href="/category/1">Sports</a></li>
-            <li><a href="/category/2">Fashion</a></li>
-            <li><a href="/category/3">Business</a></li>
-            <li><a href="/category/4">Technology</a></li>
-            <li><a href="/category/5">Games</a></li>
-            <li><a href="/category/6">Life & Style</a></li>
-            <li><a href="/category/7">Photography</a></li>
+            <% if (typeof categories !=='undefined' && categories.length> 0) { %>
+              <% categories.forEach(category=> { %>
+                <li><a href="/category/<%= category.id %>">
+                    <%= category.cate_name %>
+                  </a></li>
+                <% }); %>
+                  <% } else { %>
+                    <li><a href="/categories">View All Categories</a></li>
+                    <% } %>
+                      <li class="divider"></li>
+                      <li><a href="/categories"><strong>See All Categories</strong></a></li>
           </ul>
         </li>
         <!-- Other menu items can go here -->
