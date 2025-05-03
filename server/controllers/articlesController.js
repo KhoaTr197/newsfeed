@@ -26,6 +26,19 @@ const getArticleById = async (req, res) => {
   }
 }
 
+// get comments by article id
+const getCommentsByArticleId = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const comments = await articleService.getCommentsByArticleId(id);
+    res
+      .set('Content-Type', 'application/json; charset=utf-8')
+      .json(comments);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
 // get articles by user id
 const getArticlesByUser_id = async (req, res) => {
   try {
@@ -60,6 +73,20 @@ const searchArticlesByTitle = async (req, res) => {
     res
       .set('Content-Type', 'application/json; charset=utf-8')
       .json(articles);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+// add comment
+const addComment = async (req, res) => {
+  try {
+    const { email, content, article_id, created_at } = req.body;
+    await articleService.addComment(email, content, article_id, created_at);
+    res.json({
+      comment: { email, content, article_id, created_at },
+      message: 'Comment added successfully'
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -112,10 +139,12 @@ const disableArticle = async (req, res) => {
 module.exports = {
   getAllArticles,
   getArticleById,
+  getCommentsByArticleId,
   getArticlesByUser_id,
   getArticlesByCategoryId,
   searchArticlesByTitle,
   addArticle,
+  addComment,
   updateArticle,
   activeArticle,
   disableArticle,

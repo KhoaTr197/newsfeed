@@ -31,11 +31,11 @@ router.get("/detail/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    const [article, relatedArticles, websiteInfo] = [
+    const [article, , websiteInfo] = [
       await articlesService.getArticleById(id),
-      await articlesService.getRelatedArticles(id, 3),
       await websiteInfoService.getWebsiteInfo()
     ];
+    const relatedArticles = await articlesService.getRelatedArticles(article, 3);
 
     if (!article || !relatedArticles) {
       return res.status(404).render("404");
