@@ -3,38 +3,78 @@
   <div class="footer_top">
     <div class="row">
       <div class="col-lg-4 col-md-4 col-sm-4">
-        <div class="footer_widget wow fadeInLeftBig">
-          <h2>Flickr Images</h2>
+        <div class="footer_widget">
+          <h2>About Us</h2>
+          <p>NewsFeed is your trusted source for the latest news, articles, and information across various categories.
+          </p>
+          <div class="social_area">
+            <ul class="social_nav">
+              <% if (typeof websiteInfo !=='undefined' && websiteInfo.facebook_url) { %>
+                <li class="facebook"><a href="<%= websiteInfo.facebook_url %>" target="_blank" title="Facebook"><i
+                      class="fa fa-facebook"></i></a></li>
+                <% } %>
+                  <% if (typeof websiteInfo !=='undefined' && websiteInfo.youtube_url) { %>
+                    <li class="youtube"><a href="<%= websiteInfo.youtube_url %>" target="_blank" title="YouTube"><i
+                          class="fa fa-youtube"></i></a></li>
+                    <% } %>
+                      <% if (typeof websiteInfo !=='undefined' && websiteInfo.email) { %>
+                        <li class="mail"><a href="mailto:<%= websiteInfo.email %>" title="Email Us"><i
+                              class="fa fa-envelope"></i></a></li>
+                        <% } %>
+            </ul>
+          </div>
+
+          <div class="newsletter-section">
+            <h3>Subscribe to Newsletter</h3>
+            <p>Stay updated with our latest news and articles</p>
+            <form id="newsletterForm" class="newsletter-form">
+              <input type="email" id="newsletterEmail" placeholder="Enter your email" required>
+              <button type="submit">Subscribe</button>
+            </form>
+          </div>
         </div>
       </div>
       <div class="col-lg-4 col-md-4 col-sm-4">
-        <div class="footer_widget wow fadeInDown">
-          <h2>Tag</h2>
+        <div class="footer_widget">
+          <h2>Quick Links</h2>
           <ul class="tag_nav">
-            <li><a href="#">Games</a></li>
-            <li><a href="#">Sports</a></li>
-            <li><a href="#">Fashion</a></li>
-            <li><a href="#">Business</a></li>
-            <li><a href="#">Life &amp; Style</a></li>
-            <li><a href="#">Technology</a></li>
-            <li><a href="#">Photo</a></li>
-            <li><a href="#">Slider</a></li>
+            <li><a href="/index">Home</a></li>
+            <li><a href="/categories">Categories</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#contactModal">Contact</a></li>
           </ul>
         </div>
       </div>
       <div class="col-lg-4 col-md-4 col-sm-4">
-        <div class="footer_widget wow fadeInRightBig">
-          <h2>Contact</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-          <address>
-            Perfect News,1238 S . 123 St.Suite 25 Town City 3333,USA Phone: 123-326-789 Fax: 123-546-567
-          </address>
+        <div class="footer_widget">
+          <h2>Contact Info</h2>
+          <% if (typeof websiteInfo !=='undefined' ) { %>
+            <address>
+              <% if (websiteInfo.address) { %>
+                <p><i class="fa fa-map-marker"></i>
+                  <%= websiteInfo.address %>
+                </p>
+                <% } %>
+                  <% if (websiteInfo.email) { %>
+                    <p><i class="fa fa-envelope"></i> <a href="mailto:<%= websiteInfo.email %>">
+                        <%= websiteInfo.email %>
+                      </a></p>
+                    <% } %>
+            </address>
+            <% } else { %>
+              <p>Contact information not available</p>
+              <% } %>
         </div>
       </div>
     </div>
   </div>
   <div class="footer_bottom">
-    <p class="copyright">Copyright &copy; 2045 <a href="/index">NewsFeed</a></p>
-    <p class="developer">Developed By Wpfreeware</p>
+    <% if (typeof websiteInfo !=='undefined' && websiteInfo.copyright) { %>
+      <p class="copyright">
+        <%= websiteInfo.copyright %>
+      </p>
+      <% } else { %>
+        <p class="copyright">Copyright &copy; <%= new Date().getFullYear() %> <a href="/index">NewsFeed</a></p>
+        <% } %>
+          <p class="developer">Designed with <i class="fa fa-heart"></i> for better news experience</p>
   </div>
 </footer>

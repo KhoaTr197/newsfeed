@@ -8,6 +8,7 @@ router.use('/api/users', require('./api/users'))
 router.use('/api/articles', require('./api/articles'))
 router.use('/api/categories', require('./api/categories'))
 router.use('/api/contacts', require('./api/contacts'))
+router.use('/api/newsletter', require('./api/newsletter'))
 
 //html pages route
 router.use('/', require('./pages'))

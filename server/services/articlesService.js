@@ -84,17 +84,17 @@ const getArticlesByCategoryId = async (cate_id) => {
   }
 };
 
-// search articles by title
-const searchArticlesByTitle = async (title) => {
+// search articles by keyword
+const searchArticlesByKeyword = async (keyword) => {
   try {
     const queryStr = `
       SELECT articles.*, categories.cate_name, users.username
       FROM articles
       JOIN categories ON articles.cate_id = categories.id
       JOIN users ON articles.user_id = users.id
-      WHERE articles.title LIKE ? and articles.status = 1
+      WHERE articles.title LIKE ? or articles.content LIKE ? and articles.status = 1
     `;
-    const [data] = await connection.query(queryStr, [`%${title}%`]);
+    const [data] = await connection.query(queryStr, [`%${keyword}%`, `%${keyword}%`]);
     return data;
   } catch (err) {
     throw err;
@@ -184,8 +184,9 @@ module.exports = {
   getArticleById,
   getArticlesByUser_id,
   getArticlesByCategoryId,
-  searchArticlesByTitle,
+  searchArticlesByKeyword,
   getRelatedArticles,
+  getLatestArticles,
   addArticle,
   updateArticle,
   activeArticle,
