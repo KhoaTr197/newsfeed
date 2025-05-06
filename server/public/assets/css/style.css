@@ -383,3 +383,8 @@ li.pagination-btn {
   font-style: italic;
   color: #666;
 }
+
+.article-meta {
+  display: flex;
+  margin-bottom: 20px;
+}

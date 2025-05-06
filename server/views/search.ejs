@@ -70,9 +70,31 @@
                                         <%= article.title %>
                                       </a>
                                     </figcaption>
-                                    <p>
-                                      <%= article.content.slice(0, 100) + "..." %>
-                                    </p>
+                                    <div class="article-meta">
+                                      <span style="color: #d083cf;">
+                                        <span style="display: flex;gap:16px;">
+                                          <p class="small text-secondary">
+                                            <i class="fa fa-folder"></i>
+                                            <%= article.cate_name %>
+                                          </p>
+                                          <p class="small text-secondary">
+                                            <i class="fa fa-user"></i>
+                                            <%= article.username %>
+                                          </p>
+                                          <p class="small text-secondary">
+                                            <i class="fa fa-eye"></i>
+                                            <%= article.views %> views
+                                          </p>
+                                        </span>
+                                        <p class="small text-secondary">
+                                          <i class="fa fa-calendar"></i>
+                                          <%= article.published_date %>
+                                        </p>
+                                      </span>
+                                      <p class="small text-secondary">
+                                        <%= article.content.slice(0, 100) + "..." %>
+                                      </p>
+                                    </div>
                                   </figure>
                                 </li>
                                 <% } %>
