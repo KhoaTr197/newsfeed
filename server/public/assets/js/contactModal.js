@@ -1,8 +1,18 @@
 $(document).ready(function () {
   // Check if URL has #contact hash and open modal
-  if (window.location.hash === '#contact') {
-    $('#contactModal').modal('show');
+  if (window.location.hash === "#contact") {
+    $("#contactModal").modal("show");
   }
+  //Show the contact modal after scrolling 30%
+  $(window).scroll(function () {
+    const scrollPercent =
+      ($(window).scrollTop() / ($(document).height() - $(window).height())) *
+      100;
+    if (scrollPercent > 30) {
+      $("#contactModal").modal("show");
+      $(window).off("scroll");
+    }
+  });
   // Handle contact form submission
   $("#submitContactForm").on("click", function () {
     const name = $("#name").val();

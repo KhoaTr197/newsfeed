@@ -2,37 +2,34 @@
   <div class="single_sidebar">
     <h2><span>Popular Post</span></h2>
     <ul class="spost_nav">
-      <li>
-        <div class="media wow fadeInDown">
-          <a href="#" class="media-left">
-            <img alt="" src="/images/post_img1.jpg" />
-          </a>
-          <div class="media-body">
-            <a href="#" class="catg_title">
-              Aliquam malesuada diam eget turpis varius 1</a>
+      <% for (const article of mostViewedArticles) { %>
+        <li>
+          <div class="media">
+            <a href="detail/<%= article.id %>" class="media-left">
+              <img alt="" src="<%= article.thumbnail %>" />
+            </a>
+            <div class="media-body" style="display: flex; flex-direction: column; justify-content: space-between;">
+              <a href="detail/<%= article.id %>" class="catg_title">
+                <%= article.title %>
+              </a>
+              <div class="article-meta" style="display: flex; margin-top: 16px; gap: 16px; font-size: 12px;">
+                <p class="text-secondary">
+                  <i class="fa fa-calendar"></i>
+                  <%= new Date(article.published_date).toLocaleDateString() %>
+                </p>
+                <p class="text-secondary">
+                  <i class="fa fa-eye"></i>
+                  <%= article.views %>
+                </p>
+                <p class="text-secondary">
+                  <i class="fa fa-folder"></i>
+                  <%= article.cate_name %>
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
-      </li>
-      <li>
-        <div class="media wow fadeInDown">
-          <a href="#" class="media-left">
-            <img alt="" src="/images/post_img2.jpg" />
-          </a>
-          <div class="media-body">
-            <a href="#" class="catg_title">
-              Aliquam malesuada diam eget turpis varius 2</a>
-          </div>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <div class="single_sidebar wow fadeInDown">
-    <h2><span>Links</span></h2>
-    <ul>
-      <li><a href="#">Blog</a></li>
-      <li><a href="#">Rss Feed</a></li>
-      <li><a href="#">Login</a></li>
-      <li><a href="#">Life &amp; Style</a></li>
+        </li>
+        <% } %>
     </ul>
   </div>
 </aside>

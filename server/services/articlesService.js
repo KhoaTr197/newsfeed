@@ -17,14 +17,22 @@ const getAllArticles = async () => {
   }
 };
 
-const getAllActiveArticles = async () => {
+const getAllActiveArticles = async (cate_ids, limit) => {
   try {
+    let whereClause = "articles.status = 1";
+    let limitClause = limit ? `LIMIT ${limit}` : "";
+
+    if (cate_ids && cate_ids.length > 0) {
+      whereClause += ` AND articles.cate_id IN (${cate_ids.join(',')})`;
+    }
+
     const queryStr = `
       SELECT articles.*, categories.cate_name, users.username
       FROM articles
       JOIN categories ON articles.cate_id = categories.id
       JOIN users ON articles.user_id = users.id
-      WHERE articles.status = 1
+      WHERE ${whereClause}
+      ${limitClause}
     `;
     const [data] = await connection.query(queryStr);
     return data;
@@ -85,19 +93,59 @@ const getArticlesByCategoryId = async (cate_id) => {
 };
 
 // search articles by keyword
-const searchArticlesByKeyword = async (keyword) => {
+const searchArticlesByKeyword = async (keyword, page, limit, category, sort = 'newest') => {
   try {
+    // Build the WHERE clause
+    let whereClause = "articles.title LIKE ? OR articles.content LIKE ? AND articles.status = 1";
+    const queryParams = [`%${keyword}%`, `%${keyword}%`];
+
+    // Add category filter if provided
+    if (category) {
+      whereClause += " AND articles.cate_id = ?";
+      queryParams.push(category);
+    }
+
+    // Determine sort order
+    let orderBy;
+    switch (sort) {
+      case 'oldest':
+        orderBy = "articles.published_date ASC";
+        break;
+      case 'newest':
+      default:
+        orderBy = "articles.published_date DESC";
+        break;
+    }
+
+    // Count query
+    const countQueryStr = `
+      SELECT COUNT(*) as resultCount
+      FROM articles
+      WHERE ${whereClause}
+    `;
+
+    const [countData] = await connection.query(countQueryStr, queryParams);
+
+    // Main query with pagination
+    const offset = (page - 1) * limit;
     const queryStr = `
       SELECT articles.*, categories.cate_name, users.username
       FROM articles
       JOIN categories ON articles.cate_id = categories.id
       JOIN users ON articles.user_id = users.id
-      WHERE articles.title LIKE ? or articles.content LIKE ? and articles.status = 1
+      WHERE ${whereClause}
+      ORDER BY ${orderBy}
+      LIMIT ? OFFSET ?
     `;
-    const [data] = await connection.query(queryStr, [`%${keyword}%`, `%${keyword}%`]);
-    return data;
-  } catch (err) {
-    throw err;
+
+    // Add pagination parameters
+    const mainQueryParams = [...queryParams, parseInt(limit), parseInt(offset)];
+
+    const [articles] = await connection.query(queryStr, mainQueryParams);
+
+    return [articles, countData[0].resultCount];
+  } catch (error) {
+    throw error;
   }
 };
 
@@ -124,10 +172,29 @@ const getRelatedArticles = async (article, limit) => {
 const getLatestArticles = async (limit) => {
   try {
     const queryStr = `
-      SELECT id, title, thumbnail, published_date
+      SELECT articles.*, categories.cate_name
       FROM articles
-      WHERE status = 1
+      JOIN categories ON articles.cate_id = categories.id
+      WHERE articles.status = 1
       ORDER BY published_date DESC
+      LIMIT ?
+    `;
+    const [data] = await connection.query(queryStr, [limit]);
+    return data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+// get most viewed articles
+const getMostViewedArticles = async (limit) => {
+  try {
+    const queryStr = `
+      SELECT articles.*, categories.cate_name
+      FROM articles
+      JOIN categories ON articles.cate_id = categories.id
+      WHERE articles.status = 1
+      ORDER BY views DESC
       LIMIT ?
     `;
     const [data] = await connection.query(queryStr, [limit]);
@@ -215,6 +282,7 @@ module.exports = {
   searchArticlesByKeyword,
   getRelatedArticles,
   getLatestArticles,
+  getMostViewedArticles,
   addArticle,
   addComment,
   updateArticle,

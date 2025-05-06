@@ -8,7 +8,7 @@ CREATE TABLE `articles` (
   `content` text,
   `thumbnail` text,
   `original_image` text,
-  `published_date` datetime,
+  `published_date` datetime DEFAULT CURRENT_TIMESTAMP,
   `views` int UNSIGNED NOT NULL DEFAULT 0,
   `user_id` int,
   `cate_id` int,
@@ -18,6 +18,7 @@ CREATE TABLE `articles` (
 CREATE TABLE `categories` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `cate_name` nvarchar(50),
+  `is_featured` bool,
   `status` bool DEFAULT 1
 );
 
@@ -26,7 +27,7 @@ CREATE TABLE `comments` (
   `email` varchar(100),
   `content` text,
   `article_id` int,
-  `created_at` datetime
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE `users` (
@@ -44,7 +45,9 @@ CREATE TABLE `contact` (
   `email` text,
   `phone` text,
   `title` text,
-  `content` text
+  `content` text,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `status` ENUM('pending', 'in_progress', 'resolved', 'rejected') NOT NULL
 );
 
 CREATE TABLE `newsletterSubscribers` (
@@ -59,7 +62,7 @@ CREATE TABLE `websiteInfo` (
   `facebook_url` VARCHAR(255),
   `youtube_url` VARCHAR(255),
   `copyright` VARCHAR(255),
-  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 ALTER TABLE `articles` ADD FOREIGN KEY (`cate_id`) REFERENCES `categories` (`id`);
