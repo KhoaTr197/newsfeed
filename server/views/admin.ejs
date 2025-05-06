@@ -49,11 +49,6 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#newsletters" data-toggle="tab">
-              <i class="fa fa-book"></i> Newsletter
-            </a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="/">
               <i class="fa fa-globe"></i> View Site
             </a>
@@ -166,7 +161,6 @@
                     </thead>
                     <tbody id="articleTableBody">
                       <!-- TODO: Loop through articles data -->
-
                     </tbody>
                   </table>
                 </div>
@@ -196,7 +190,6 @@
                     </thead>
                     <tbody id="categoryTableBody">
                       <!-- TODO: Loop through categories data -->
-
                     </tbody>
                   </table>
                 </div>
@@ -210,367 +203,460 @@
           <div class="admin-card">
             <div class="admin-card-header d-flex justify-content-between align-items-center">
               <span>Contact</span>
-
             </div>
             <div class="admin-card-body">
-              <div class="table-responsive">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Phone</th>
-                      <th>Title</th>
-                      <th>Content</th>
-                    </tr>
-                  </thead>
-                  <tbody id="contactTableBody">
-                    <!-- TODO: Loop through contact data -->
+              <!-- Tab Navigation -->
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                  <a href="#pending" aria-controls="pending" role="tab" data-toggle="tab">Pending</a>
+                </li>
+                <li role="presentation">
+                  <a href="#in_progress" aria-controls="in_progress" role="tab" data-toggle="tab">In progress</a>
+                </li>
+                <li role="presentation">
+                  <a href="#resolved" aria-controls="resolved" role="tab" data-toggle="tab">Resolved</a>
+                </li>
+                <li role="presentation">
+                  <a href="#rejected" aria-controls="rejected" role="tab" data-toggle="tab">Rejected</a>
+                </li>
+              </ul>
 
-                  </tbody>
-                </table>
+              <!-- Tab Content -->
+              <div class="tab-content">
+
+                <!-- Pending Tab -->
+                <div role="tabpanel" class="tab-pane active" id="pending">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Telephone</th>
+                          <th>Title</th>
+                          <th>Content</th>
+                          <th>Created at</th>
+                          <th>Status</th>
+                          <th colspan="2">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody id="contactTableBody_pending">
+                        <!-- TODO: Loop through contact data -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- In_process Tab -->
+                <div role="tabpanel" class="tab-pane" id="in_progress">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Telephone</th>
+                          <th>Title</th>
+                          <th>Content</th>
+                          <th>Created at</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody id="contactTableBody_in_progress">
+                        <!-- TODO: Loop through contact data -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- Rejected Tab -->
+                <div role="tabpanel" class="tab-pane" id="resolved">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Telephone</th>
+                          <th>Title</th>
+                          <th>Content</th>
+                          <th>Created at</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody id="contactTableBody_resolved">
+                        <!-- TODO: Loop through contact data -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- Rejected Tab -->
+                <div role="tabpanel" class="tab-pane" id="rejected">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Telephone</th>
+                          <th>Title</th>
+                          <th>Content</th>
+                          <th>Created at</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody id="contactTableBody_rejected">
+                        <!-- TODO: Loop through contact data -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <!-- Newsletter Tab -->
-        <div class="tab-pane fade" id="newsletters">
-          <div class="admin-card">
-            <div class="admin-card-header d-flex justify-content-between align-items-center">
-              <span>Newsletter</span>
-
-            </div>
-            <div class="admin-card-body">
-              <div class="table-responsive">
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Email</th>
-                    </tr>
-                  </thead>
-                  <tbody id="newsletterTableBody">
-                    <!-- TODO: Loop through newsletter data -->
-
-                  </tbody>
-                </table>
-              </div>
+          <!-- Footer -->
+          <div class="admin-footer">
+            <div class="container-fluid">
+              <p>Copyright &copy; 2025 NewsFeed Admin Panel</p>
+              <p class="small">
+                Designed with <i class="fa fa-heart text-danger"></i> for better
+                news experience
+              </p>
             </div>
           </div>
         </div>
-        <!-- Footer -->
-        <div class="admin-footer">
-          <div class="container-fluid">
-            <p>Copyright &copy; 2025 NewsFeed Admin Panel</p>
-            <p class="small">Designed with <i class="fa fa-heart text-danger"></i> for better news experience</p>
+      </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form method="post" action="" id="addUserForm">
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input required type="text" class="form-control" id="username" placeholder="Enter username" />
+                <label class="error"></label>
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input required type="email" class="form-control" id="email" placeholder="Enter email" />
+                <label class="error"></label>
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input required type="password" class="form-control" id="password" placeholder="Enter password" />
+                <label class="error"></label>
+              </div>
+              <div class="form-group">
+                <label for="role">Role</label>
+                <select class="form-control" id="role">
+                  <option value="0">Author</option>
+                  <option value="1">Admin</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="status">Status</label>
+                <select class="form-control" id="status">
+                  <option value="1">Active</option>
+                  <option value="0">Inactive</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+            <button id="addUserBtn" type="button" class="btn btn-primary">
+              Add User
+            </button>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Add User Modal -->
-  <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form method="post" action="" id="addUserForm">
-            <div class="form-group">
-              <label for="username">Username</label>
-              <input required type="text" class="form-control" id="username" placeholder="Enter username" />
-              <label class="error"></label>
-            </div>
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input required type="email" class="form-control" id="email" placeholder="Enter email" />
-              <label class="error"></label>
-            </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input required type="password" class="form-control" id="password" placeholder="Enter password" />
-              <label class="error"></label>
-            </div>
-            <div class="form-group">
-              <label for="role">Role</label>
-              <select class="form-control" id="role">
-                <option value="0">Author</option>
-                <option value="1">Admin</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="status">Status</label>
-              <select class="form-control" id="status">
-                <option value="1">Active</option>
-                <option value="0">Inactive</option>
-              </select>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            Close
-          </button>
-          <button id="addUserBtn" type="button" class="btn btn-primary">Add User</button>
+    <!-- Edit User Modal -->
+    <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form method="post" action="" id="editUserForm">
+              <input type="hidden" id="edituser_id" />
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input id="editUsername" type="text" class="form-control" id="username" placeholder="Enter username" />
+                <label class="error"></label>
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input id="editEmail" type="email" class="form-control" id="email" placeholder="Enter email" />
+                <label class="error"></label>
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input readonly id="editPassword" type="password" class="form-control" id="password"
+                  placeholder="Enter password" />
+                <label class="error"></label>
+              </div>
+              <div class="form-group">
+                <label for="role">Role</label>
+                <select id="editRole" class="form-control" id="role">
+                  <option value="0">Author</option>
+                  <option value="1">Admin</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+            <button id="editUserBtn" type="button" class="btn btn-primary">
+              Save User
+            </button>
+            <button id="resetPasswordUserBtn" type="button" class="btn btn-primary">
+              Reset Password
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Edit User Modal -->
-  <div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form method="post" action="" id="editUserForm">
-            <input type="hidden" id="edituser_id">
-            <div class="form-group">
-              <label for="username">Username</label>
-              <input id="editUsername" type="text" class="form-control" id="username" placeholder="Enter username" />
-              <label class="error"></label>
-            </div>
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input id="editEmail" type="email" class="form-control" id="email" placeholder="Enter email" />
-              <label class="error"></label>
-            </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input readonly id="editPassword" type="password" class="form-control" id="password"
-                placeholder="Enter password" />
-              <label class="error"></label>
-            </div>
-            <div class="form-group">
-              <label for="role">Role</label>
-              <select id="editRole" class="form-control" id="role">
-                <option value="0">Author</option>
-                <option value="1">Admin</option>
-              </select>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            Close
-          </button>
-          <button id="editUserBtn" type="button" class="btn btn-primary">Save User</button>
-          <button id="resetPasswordUserBtn" type="button" class="btn btn-primary">Reset Password</button>
+    <!-- Add Article Modal -->
+    <div class="modal fade" id="addArticleModal" tabindex="-1" role="dialog" aria-labelledby="addArticleModalLabel">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addArticleModalLabel">
+              Add New Article
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="addArticleForm">
+              <div class="form-group">
+                <label for="title">Title</label>
+                <input required type="text" class="form-control" id="title" placeholder="Enter article title" />
+              </div>
+              <div class="form-group">
+                <label for="content">Content</label>
+                <textarea required class="form-control" id="content" rows="10"
+                  placeholder="Enter article content"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="thumbnail">Thumbnail URL</label>
+                <input required type="text" class="form-control" id="thumbnail" placeholder="Enter thumbnail URL" />
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="category">Category</label>
+                    <select class="form-control" id="addCategory">
+                      <!-- TODO: Loop through categories -->
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="author">Author</label>
+                    <select class="form-control" id="addAuthor">
+                      <!-- TODO: Loop through authors -->
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="status">Status</label>
+                    <select class="form-control" id="status">
+                      <option value="1">Published</option>
+                      <option value="0">Draft</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="publishedDate">Published Date</label>
+                    <input required type="datetime-local" class="form-control" id="publishedDate" />
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+            <button type="button" class="btn btn-primary" id="addArticleBtn">
+              Save Article
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Add Article Modal -->
-  <div class="modal fade" id="addArticleModal" tabindex="-1" role="dialog" aria-labelledby="addArticleModalLabel">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addArticleModalLabel">
-            Add New Article
-          </h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form id="addArticleForm">
-            <div class="form-group">
-              <label for="title">Title</label>
-              <input required type="text" class="form-control" id="title" placeholder="Enter article title" />
-            </div>
-            <div class="form-group">
-              <label for="content">Content</label>
-              <textarea required class="form-control" id="content" rows="10"
-                placeholder="Enter article content"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="thumbnail">Thumbnail URL</label>
-              <input required type="text" class="form-control" id="thumbnail" placeholder="Enter thumbnail URL" />
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="category">Category</label>
-                  <select class="form-control" id="addCategory">
-                    <!-- TODO: Loop through categories -->
-                  </select>
-                </div>
+    <!-- Add Category Modal -->
+    <div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addCategoryModalLabel">
+              Add New Category
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="addCategoryForm">
+              <div class="form-group">
+                <label for="categoryName">Category Name</label>
+                <input required type="text" class="form-control" id="categoryName" placeholder="Enter category name" />
               </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="author">Author</label>
-                  <select class="form-control" id="addAuthor">
-                    <!-- TODO: Loop through authors -->
-                  </select>
-                </div>
+              <div class="form-group">
+                <label for="categoryStatus">Status</label>
+                <select class="form-control" id="categoryStatus">
+                  <option value="1">Active</option>
+                  <option value="0">Inactive</option>
+                </select>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="status">Status</label>
-                  <select class="form-control" id="status">
-                    <option value="1">Published</option>
-                    <option value="0">Draft</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="publishedDate">Published Date</label>
-                  <input required type="datetime-local" class="form-control" id="publishedDate">
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            Close
-          </button>
-          <button type="button" class="btn btn-primary" id="addArticleBtn">Save Article</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+            <button type="button" class="btn btn-primary" id="addCategoryBtn">
+              Add Category
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Add Category Modal -->
-  <div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addCategoryModalLabel">Add New Category</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form id="addCategoryForm">
-            <div class="form-group">
-              <label for="categoryName">Category Name</label>
-              <input required type="text" class="form-control" id="categoryName" placeholder="Enter category name">
-            </div>
-            <div class="form-group">
-              <label for="categoryStatus">Status</label>
-              <select class="form-control" id="categoryStatus">
-                <option value="1">Active</option>
-                <option value="0">Inactive</option>
-              </select>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="addCategoryBtn">Add Category</button>
+    <!-- Edit Category Modal -->
+    <div class="modal fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-labelledby="editCategoryModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editCategoryModalLabel">
+              Edit New Category
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="editCategoryForm">
+              <input type="hidden" id="editCategoryId" />
+              <div class="form-group">
+                <label for="categoryName">Category Name</label>
+                <input type="text" class="form-control" id="editCategoryName" placeholder="Enter category name" />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+            <button type="button" class="btn btn-primary" id="editCategoryBtn">
+              Save Category
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Edit Category Modal -->
-  <div class="modal fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-labelledby="editCategoryModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editCategoryModalLabel">Edit New Category</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form id="editCategoryForm">
-            <input type="hidden" id="editCategoryId">
-            <div class="form-group">
-              <label for="categoryName">Category Name</label>
-              <input type="text" class="form-control" id="editCategoryName" placeholder="Enter category name">
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="editCategoryBtn">Save Category</button>
+    <!-- Edit Article Modal -->
+    <div class="modal fade" id="editArticleModal" tabindex="-1" role="dialog" aria-labelledby="editArticleModalLabel">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editArticleModalLabel">Edit Article</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="editArticleForm">
+              <input type="hidden" id="editArticleId" />
+              <div class="form-group">
+                <label for="editTitle">Title</label>
+                <input type="text" class="form-control" id="editTitle" placeholder="Enter article title" />
+              </div>
+              <div class="form-group">
+                <label for="editContent">Content</label>
+                <textarea class="form-control" id="editContent" rows="10"
+                  placeholder="Enter article content"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="editThumbnail">Thumbnail URL</label>
+                <input type="text" class="form-control" id="editThumbnail" placeholder="Enter thumbnail URL" />
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="editCategory">Category</label>
+                    <select class="form-control" id="editCategory">
+                      <!-- TODO: Loop through categories -->
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="editAuthor">Author</label>
+                    <select class="form-control" id="editAuthor">
+                      <!-- TODO: Loop through authors -->
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="editPublishedDate">Published Date</label>
+                    <input type="datetime-local" class="form-control" id="editPublishedDate" />
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+            <button type="button" class="btn btn-primary" id="editArticleBtn">
+              Save Changes
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Edit Article Modal -->
-  <div class="modal fade" id="editArticleModal" tabindex="-1" role="dialog" aria-labelledby="editArticleModalLabel">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editArticleModalLabel">Edit Article</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form id="editArticleForm">
-            <input type="hidden" id="editArticleId">
-            <div class="form-group">
-              <label for="editTitle">Title</label>
-              <input type="text" class="form-control" id="editTitle" placeholder="Enter article title">
-            </div>
-            <div class="form-group">
-              <label for="editContent">Content</label>
-              <textarea class="form-control" id="editContent" rows="10" placeholder="Enter article content"></textarea>
-            </div>
-            <div class="form-group">
-              <label for="editThumbnail">Thumbnail URL</label>
-              <input type="text" class="form-control" id="editThumbnail" placeholder="Enter thumbnail URL">
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="editCategory">Category</label>
-                  <select class="form-control" id="editCategory">
-                    <!-- TODO: Loop through categories -->
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="editAuthor">Author</label>
-                  <select class="form-control" id="editAuthor">
-                    <!-- TODO: Loop through authors -->
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="editPublishedDate">Published Date</label>
-                  <input type="datetime-local" class="form-control" id="editPublishedDate">
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="editArticleBtn">Save Changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script src="assets/js/jquery.min.js"></script>
-  <script src="assets/js/bootstrap.min.js"></script>
-  <script src="assets/js/validator.js"></script>
-  <script src="assets/js/admin.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/validator.js"></script>
+    <script src="assets/js/admin.js"></script>
 </body>
 
 </html>

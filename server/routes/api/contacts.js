@@ -5,4 +5,6 @@ router.get("/", contactController.getAllContacts);
 
 router.post("/", contactController.addContact);
 
+router.patch("/status", contactController.updateContactStatus);
+
 module.exports = router;
