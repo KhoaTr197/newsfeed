@@ -39,20 +39,17 @@ $(document).ready(function () {
             <tr>
               <td>${category.id}</td>
               <td>${category.cate_name}</td>
-              <td>${
-                category.status
-                  ? `<span class="badge category-status status-active" data-categorystatus=${category.id}>Active</span>`
-                  : `<span class="badge category-status status-inactive" data-categorystatus=${category.id}>Inactive</span>`
-              }</td>
+              <td>${category.status
+          ? `<span class="badge category-status status-active" data-categorystatus=${category.id}>Active</span>`
+          : `<span class="badge category-status status-inactive" data-categorystatus=${category.id}>Inactive</span>`
+        }</td>
               <td>
-                <button class="btn btn-sm btn-info edit-category" data-id="${
-                  category.id
-                }">
+                <button class="btn btn-sm btn-info edit-category" data-id="${category.id
+        }">
                   <i class="fa fa-edit"></i>
                 </button>
-                <button class="btn btn-sm ${
-                  category.status ? "btn-danger" : "btn-success"
-                } toggle-category" data-id="${category.id}">
+                <button class="btn btn-sm ${category.status ? "btn-danger" : "btn-success"
+        } toggle-category" data-id="${category.id}">
                   <i class="fa ${category.status ? "fa-ban" : "fa-check"}"></i>
                 </button>
               </td>
@@ -85,25 +82,21 @@ $(document).ready(function () {
               <td>${user.id}</td>
               <td>${user.username}</td>
               <td>${user.email}</td>
-              <td>${
-                user.role
-                  ? '<span class="badge status-info">Admin</span>'
-                  : '<span class="badge">User</span>'
-              }</td>
-              <td>${
-                user.status
-                  ? `<span class="badge user-status status-active" data-userstatus=${user.id}>Active</span>`
-                  : `<span class="badge user-status status-inactive" data-userstatus=${user.id}>Inactive</span>`
-              }</td>
+              <td>${user.role
+          ? '<span class="badge status-info">Admin</span>'
+          : '<span class="badge">User</span>'
+        }</td>
+              <td>${user.status
+          ? `<span class="badge user-status status-active" data-userstatus=${user.id}>Active</span>`
+          : `<span class="badge user-status status-inactive" data-userstatus=${user.id}>Inactive</span>`
+        }</td>
               <td>
-                <button class="btn btn-sm btn-info edit-user" data-id="${
-                  user.id
-                }">
+                <button class="btn btn-sm btn-info edit-user" data-id="${user.id
+        }">
                   <i class="fa fa-edit"></i>
                 </button>
-                <button class="btn btn-sm ${
-                  user.status ? "btn-danger" : "btn-success"
-                } toggle-user" data-id="${user.id}">
+                <button class="btn btn-sm ${user.status ? "btn-danger" : "btn-success"
+        } toggle-user" data-id="${user.id}">
                   <i class="fa ${user.status ? "fa-ban" : "fa-check"}"></i>
                 </button>
               </td>
@@ -127,10 +120,10 @@ $(document).ready(function () {
   // Function to load contacts
   function loadContacts() {
     const contactStatus = {
-      pending: "Đang chờ xử lý",
-      in_progress: "Đang xử lý",
-      resolved: "Đã xử lý",
-      rejected: "Từ chối",
+      pending: "Pending",
+      in_progress: "In progress",
+      resolved: "Resolved",
+      rejected: "Rejected",
     };
 
     const contactTableBody_pending = $("#contactTableBody_pending");
@@ -139,8 +132,8 @@ $(document).ready(function () {
     const pendingContacts = allContacts.filter(
       (contact) => contact.status === "pending"
     );
-    //
-    if (pendingContacts.length) {
+
+    if (pendingContacts) {
       pendingContacts.forEach((contact) => {
         contactTableBody_pending.append(`
             <tr>
@@ -153,24 +146,22 @@ $(document).ready(function () {
               <td>${formatDate(contact.created_at)}</td>
               <td>${contactStatus[contact.status]}</td>
               <td><button 
-            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${
-              contact.id
-            }" 
+            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${contact.id
+          }" 
         data-new-status='in_progress'
-          >Đang xử lý
+          >Process
           </button></td><td><button 
-            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${
-              contact.id
-            }" 
+            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${contact.id
+          }" 
         data-new-status='rejected'
-          >Từ chối
+          >Reject
           </button></td>
             </tr>
           `);
       });
     } else {
       contactTableBody_pending.append(`<tr>
-        <td colspan="10">Không có liên hệ</td>
+        <td colspan="10">No contacts</td>
         </tr>`);
     }
 
@@ -180,7 +171,7 @@ $(document).ready(function () {
     const inProgressContacts = allContacts.filter(
       (contact) => contact.status === "in_progress"
     );
-    if (inProgressContacts.length) {
+    if (inProgressContacts) {
       inProgressContacts.forEach((contact) => {
         contactTableBody_in_progress.append(`
             <tr>
@@ -192,18 +183,17 @@ $(document).ready(function () {
             <td>${contact.content}</td>
             <td>${formatDate(contact.created_at)}</td>
             <td>${contactStatus[contact.status]}</td><td><button 
-            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${
-              contact.id
-            }" 
+            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${contact.id
+          }" 
               data-new-status='resolved'
-              >Đã xử lý
+              >Done
               </button></td>
               </tr>
               `);
       });
     } else {
       contactTableBody_in_progress.append(`<tr>
-              <td colspan="10">Không có liên hệ</td>
+              <td colspan="10">No contacts</td>
               </tr>`);
     }
 
@@ -213,7 +203,7 @@ $(document).ready(function () {
     const resolvedContacts = allContacts.filter(
       (contact) => contact.status === "resolved"
     );
-    if (resolvedContacts.length) {
+    if (resolvedContacts) {
       resolvedContacts.forEach((contact) => {
         contactTableBody_resolved.append(`
               <tr>
@@ -230,7 +220,7 @@ $(document).ready(function () {
       });
     } else {
       contactTableBody_resolved.append(`<tr>
-              <td colspan="10">Không có liên hệ</td>
+              <td colspan="10">No contacts</td>
               </tr>`);
     }
 
@@ -240,7 +230,7 @@ $(document).ready(function () {
     const rejectedContacts = allContacts.filter(
       (contact) => contact.status === "rejected"
     );
-    if (rejectedContacts.length) {
+    if (rejectedContacts) {
       rejectedContacts.forEach((contact) => {
         contactTableBody_rejected.append(`
               <tr>
@@ -251,13 +241,13 @@ $(document).ready(function () {
                 <td>${contact.title}</td>
                 <td>${contact.content}</td>
                 <td>${formatDate(contact.created_at)}</td>
-                <td>${contact.status}</td>
+                <td>${contactStatus[contact.status]}</td>
               </tr>
             `);
       });
     } else {
       contactTableBody_rejected.append(`<tr>
-        <td colspan="10">Không có liên hệ</td>
+        <td colspan="10">No contacts</td>
         </tr>`);
     }
   }
@@ -325,31 +315,26 @@ $(document).ready(function () {
             <tr>
               <td>${article.id}</td>
               <td>${article.title}</td>
-              <td>${
-                allCategories.find((category) => category.id == article.cate_id)
-                  ?.cate_name || "N/A"
-              }</td>
-              <td>${
-                allUsers.find((user) => user.id == article.user_id)?.username ||
-                "N/A"
-              }</td>
+              <td>${allCategories.find((category) => category.id == article.cate_id)
+          ?.cate_name || "N/A"
+        }</td>
+              <td>${allUsers.find((user) => user.id == article.user_id)?.username ||
+        "N/A"
+        }</td>
               <td>${formatDate(article.published_date)}</td>
               <td>
-                ${
-                  article.status
-                    ? `<span class="badge article-status status-published" data-articlestatus=${article.id}>Published</span>`
-                    : `<span class="badge article-status status-pending" data-articlestatus=${article.id}>Pending</span>`
-                }
+                ${article.status
+          ? `<span class="badge article-status status-published" data-articlestatus=${article.id}>Published</span>`
+          : `<span class="badge article-status status-pending" data-articlestatus=${article.id}>Pending</span>`
+        }
               </td>
               <td>
-                <button class="btn btn-sm btn-info edit-article" data-id="${
-                  article.id
-                }">
+                <button class="btn btn-sm btn-info edit-article" data-id="${article.id
+        }">
                   <i class="fa fa-edit"></i>
                 </button>
-                <button class="btn btn-sm ${
-                  article.status ? "btn-danger" : "btn-success"
-                } toggle-article" data-id="${article.id}">
+                <button class="btn btn-sm ${article.status ? "btn-danger" : "btn-success"
+        } toggle-article" data-id="${article.id}">
                   <i class="fa ${article.status ? "fa-ban" : "fa-check"}"></i>
                 </button>
               </td>
@@ -968,6 +953,7 @@ $(document).ready(function () {
       loadCategories();
     } else if (targetTab === "#contacts") {
       loadContacts();
+      $("#pending").addClass("active");
     } else if (targetTab === "#newsletters") {
       loadNewsletters();
     }
