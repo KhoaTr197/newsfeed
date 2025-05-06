@@ -5,6 +5,12 @@ $(document).ready(function () {
   let allUsers = [];
   let allContacts = [];
   let allNewsletters = [];
+  const contactStatus = {
+    pending: "Pending",
+    in_progress: "In progress",
+    resolved: "Resolved",
+    rejected: "Rejected",
+  };
   // Function to format date
   function formatDate(dateString) {
     if (!dateString) return "N/A";
@@ -15,6 +21,278 @@ $(document).ready(function () {
       day: "numeric",
     });
   }
+  //Pagination func
+  function setupPagination(config) {
+    const {
+      paginationId, // ID của <ul class="pagination">
+      tableBodyId, // ID của <tbody>
+      data, // Mảng dữ liệu
+      itemsPerPage = 5, // Số bản ghi mỗi trang
+      renderRow, // Callback để render mỗi hàng
+    } = config;
+
+    let currentPage = 1; // Trang hiện tại
+
+    // Hàm hiển thị dữ liệu theo trang
+    function displayData(page) {
+      const start = (page - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      const paginatedData = data.slice(start, end);
+
+      // Xóa nội dung cũ
+      $(`#${tableBodyId}`).empty();
+
+      // Thêm dữ liệu mới
+      paginatedData.forEach((item) => {
+        $(`#${tableBodyId}`).append(renderRow(item));
+      });
+    }
+
+    // Hàm tạo các nút phân trang
+    function renderPagination() {
+      const pageCount = Math.ceil(data.length / itemsPerPage);
+      $(`#${paginationId}`).empty();
+
+      // Nút Previous
+      $(`#${paginationId}`).append(`
+        <li class="page-item ${currentPage === 1 ? "disabled" : ""}">
+          <a class="page-link" href="#" aria-label="Previous" data-page="${
+            currentPage - 1
+          }">
+            <span aria-hidden="true">«</span>
+          </a>
+        </li>
+      `);
+
+      // Các nút số trang
+      for (let i = 1; i <= pageCount; i++) {
+        $(`#${paginationId}`).append(`
+          <li class="page-item ${i === currentPage ? "active" : ""}">
+            <a class="page-link" href="#" data-page="${i}">${i}</a>
+          </li>
+        `);
+      }
+
+      // Nút Next
+      $(`#${paginationId}`).append(`
+        <li class="page-item ${currentPage === pageCount ? "disabled" : ""}">
+          <a class="page-link" href="#" aria-label="Next" data-page="${
+            currentPage + 1
+          }">
+            <span aria-hidden="true">»</span>
+          </a>
+        </li>
+      `);
+    }
+
+    // Xử lý sự kiện click vào nút phân trang
+    $(`#${paginationId}`).on("click", ".page-link", function (e) {
+      e.preventDefault();
+      const page = $(this).data("page");
+      if (page && page > 0 && page <= Math.ceil(data.length / itemsPerPage)) {
+        currentPage = page;
+        displayData(currentPage);
+        renderPagination();
+      }
+    });
+
+    // Khởi tạo
+    displayData(currentPage);
+    renderPagination();
+  }
+  //Pagination users
+  function PaginationUsers() {
+    // Cấu hình phân trang cho Users
+    setupPagination({
+      paginationId: "userPagination",
+      tableBodyId: "userTableBody",
+      data: allUsers,
+      itemsPerPage: 5,
+      renderRow: (user) => `
+      <tr>
+              <td>${user.id}</td>
+              <td>${user.username}</td>
+              <td>${user.email}</td>
+              <td>${
+                user.role
+                  ? '<span class="badge status-info">Admin</span>'
+                  : '<span class="badge">User</span>'
+              }</td>
+              <td>${
+                user.status
+                  ? `<span class="badge user-status status-active" data-userstatus=${user.id}>Active</span>`
+                  : `<span class="badge user-status status-inactive" data-userstatus=${user.id}>Inactive</span>`
+              }</td>
+              <td>
+                <button class="btn btn-sm btn-info edit-user" data-id="${
+                  user.id
+                }">
+                  <i class="fa fa-edit"></i>
+                </button>
+                <button class="btn btn-sm ${
+                  user.status ? "btn-danger" : "btn-success"
+                } toggle-user" data-id="${user.id}">
+                  <i class="fa ${user.status ? "fa-ban" : "fa-check"}"></i>
+                </button>
+              </td>
+            </tr>
+    `,
+    });
+  }
+  //
+  function PaginationArticles() {
+    setupPagination({
+      paginationId: "articlePagination",
+      tableBodyId: "articleTableBody",
+      data: allArticles,
+      itemsPerPage: 5,
+      renderRow: (article) => `
+      <tr>
+              <td>${article.id}</td>
+              <td>${article.title}</td>
+              <td>${
+                allCategories.find((category) => category.id == article.cate_id)
+                  ?.cate_name || "N/A"
+              }</td>
+              <td>${
+                allUsers.find((user) => user.id == article.user_id)?.username ||
+                "N/A"
+              }</td>
+              <td>${formatDate(article.published_date)}</td>
+              <td>
+                ${
+                  article.status
+                    ? `<span class="badge article-status status-published" data-articlestatus=${article.id}>Published</span>`
+                    : `<span class="badge article-status status-pending" data-articlestatus=${article.id}>Pending</span>`
+                }
+              </td>
+              <td>
+                <button class="btn btn-sm btn-info edit-article" data-id="${
+                  article.id
+                }">
+                  <i class="fa fa-edit"></i>
+                </button>
+                <button class="btn btn-sm ${
+                  article.status ? "btn-danger" : "btn-success"
+                } toggle-article" data-id="${article.id}">
+                  <i class="fa ${article.status ? "fa-ban" : "fa-check"}"></i>
+                </button>
+              </td>
+            </tr>
+        
+    `,
+    });
+  }
+  //
+  function PaginationCategroties() {
+    setupPagination({
+      paginationId: "categoryPagination",
+      tableBodyId: "categoryTableBody",
+      data: allArticles,
+      itemsPerPage: 5,
+      renderRow: (category) => `
+      <tr>
+              <td>${category.id}</td>
+              <td>${category.cate_name}</td>
+              <td>${
+                category.status
+                  ? `<span class="badge category-status status-active" data-categorystatus=${category.id}>Active</span>`
+                  : `<span class="badge category-status status-inactive" data-categorystatus=${category.id}>Inactive</span>`
+              }</td>
+              <td>
+                <button class="btn btn-sm btn-info edit-category" data-id="${
+                  category.id
+                }">
+                  <i class="fa fa-edit"></i>
+                </button>
+                <button class="btn btn-sm ${
+                  category.status ? "btn-danger" : "btn-success"
+                } toggle-category" data-id="${category.id}">
+                  <i class="fa ${category.status ? "fa-ban" : "fa-check"}"></i>
+                </button>
+              </td>
+            </tr>
+    `,
+    });
+  }
+  //
+  function PaginationContacts(status = "pending") {
+    const pagiContactId = `contactPagination_${status}`;
+    const tableBodyContactId = `contactTableBody_${status}`;
+    const data = allContacts.filter((contact) => contact.status === status);
+    const itemsPerPage = 5;
+    let callback = (contact) => `
+    <tr>
+            <td>${contact.id}</td>
+            <td>${contact.name}</td>
+            <td>${contact.email}</td>
+            <td>${contact.phone}</td>
+            <td>${contact.title}</td>
+            <td>${contact.content}</td>
+            <td>${formatDate(contact.created_at)}</td>
+            <td>${contactStatus[contact.status]}</td>
+          </tr>
+    `;
+    switch (status) {
+      case "pending": {
+        callback = (contact) => `
+        <tr>
+              <td>${contact.id}</td>
+              <td>${contact.name}</td>
+              <td>${contact.email}</td>
+              <td>${contact.phone}</td>
+              <td>${contact.title}</td>
+              <td>${contact.content}</td>
+              <td>${formatDate(contact.created_at)}</td>
+              <td>${contactStatus[contact.status]}</td>
+              <td><button 
+            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${
+              contact.id
+            }" 
+        data-new-status='in_progress'
+          >Process
+          </button></td><td><button 
+            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${
+              contact.id
+            }" 
+        data-new-status='rejected'
+          >Reject
+          </button></td>
+            </tr>
+        `;
+        break;
+      }
+      case "in_progress": {
+        callback = (contact) => `
+        <tr>
+            <td>${contact.id}</td>
+            <td>${contact.name}</td>
+            <td>${contact.email}</td>
+            <td>${contact.phone}</td>
+            <td>${contact.title}</td>
+            <td>${contact.content}</td>
+            <td>${formatDate(contact.created_at)}</td>
+            <td>${contactStatus[contact.status]}</td><td><button 
+            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${
+              contact.id
+            }" 
+              data-new-status='resolved'
+              >Done
+              </button></td>
+              </tr>
+        `;
+        break;
+      }
+    }
+    setupPagination({
+      paginationId: pagiContactId,
+      tableBodyId: tableBodyContactId,
+      data: data,
+      itemsPerPage: itemsPerPage,
+      renderRow: callback,
+    });
+  }
+
   // Function to get categories
   function getCategories() {
     $.ajax({
@@ -39,17 +317,20 @@ $(document).ready(function () {
             <tr>
               <td>${category.id}</td>
               <td>${category.cate_name}</td>
-              <td>${category.status
-          ? `<span class="badge category-status status-active" data-categorystatus=${category.id}>Active</span>`
-          : `<span class="badge category-status status-inactive" data-categorystatus=${category.id}>Inactive</span>`
-        }</td>
+              <td>${
+                category.status
+                  ? `<span class="badge category-status status-active" data-categorystatus=${category.id}>Active</span>`
+                  : `<span class="badge category-status status-inactive" data-categorystatus=${category.id}>Inactive</span>`
+              }</td>
               <td>
-                <button class="btn btn-sm btn-info edit-category" data-id="${category.id
-        }">
+                <button class="btn btn-sm btn-info edit-category" data-id="${
+                  category.id
+                }">
                   <i class="fa fa-edit"></i>
                 </button>
-                <button class="btn btn-sm ${category.status ? "btn-danger" : "btn-success"
-        } toggle-category" data-id="${category.id}">
+                <button class="btn btn-sm ${
+                  category.status ? "btn-danger" : "btn-success"
+                } toggle-category" data-id="${category.id}">
                   <i class="fa ${category.status ? "fa-ban" : "fa-check"}"></i>
                 </button>
               </td>
@@ -82,21 +363,25 @@ $(document).ready(function () {
               <td>${user.id}</td>
               <td>${user.username}</td>
               <td>${user.email}</td>
-              <td>${user.role
-          ? '<span class="badge status-info">Admin</span>'
-          : '<span class="badge">User</span>'
-        }</td>
-              <td>${user.status
-          ? `<span class="badge user-status status-active" data-userstatus=${user.id}>Active</span>`
-          : `<span class="badge user-status status-inactive" data-userstatus=${user.id}>Inactive</span>`
-        }</td>
+              <td>${
+                user.role
+                  ? '<span class="badge status-info">Admin</span>'
+                  : '<span class="badge">User</span>'
+              }</td>
+              <td>${
+                user.status
+                  ? `<span class="badge user-status status-active" data-userstatus=${user.id}>Active</span>`
+                  : `<span class="badge user-status status-inactive" data-userstatus=${user.id}>Inactive</span>`
+              }</td>
               <td>
-                <button class="btn btn-sm btn-info edit-user" data-id="${user.id
-        }">
+                <button class="btn btn-sm btn-info edit-user" data-id="${
+                  user.id
+                }">
                   <i class="fa fa-edit"></i>
                 </button>
-                <button class="btn btn-sm ${user.status ? "btn-danger" : "btn-success"
-        } toggle-user" data-id="${user.id}">
+                <button class="btn btn-sm ${
+                  user.status ? "btn-danger" : "btn-success"
+                } toggle-user" data-id="${user.id}">
                   <i class="fa ${user.status ? "fa-ban" : "fa-check"}"></i>
                 </button>
               </td>
@@ -119,13 +404,6 @@ $(document).ready(function () {
   }
   // Function to load contacts
   function loadContacts() {
-    const contactStatus = {
-      pending: "Pending",
-      in_progress: "In progress",
-      resolved: "Resolved",
-      rejected: "Rejected",
-    };
-
     const contactTableBody_pending = $("#contactTableBody_pending");
     contactTableBody_pending.empty();
 
@@ -146,13 +424,15 @@ $(document).ready(function () {
               <td>${formatDate(contact.created_at)}</td>
               <td>${contactStatus[contact.status]}</td>
               <td><button 
-            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${contact.id
-          }" 
+            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${
+              contact.id
+            }" 
         data-new-status='in_progress'
           >Process
           </button></td><td><button 
-            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${contact.id
-          }" 
+            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${
+              contact.id
+            }" 
         data-new-status='rejected'
           >Reject
           </button></td>
@@ -183,8 +463,9 @@ $(document).ready(function () {
             <td>${contact.content}</td>
             <td>${formatDate(contact.created_at)}</td>
             <td>${contactStatus[contact.status]}</td><td><button 
-            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${contact.id
-          }" 
+            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${
+              contact.id
+            }" 
               data-new-status='resolved'
               >Done
               </button></td>
@@ -273,7 +554,12 @@ $(document).ready(function () {
           cache: false, // Ngăn caching để lấy dữ liệu mới nhất
           success: function (contacts) {
             allContacts = contacts;
-            loadContacts(); // Tải lại bảng
+            //loadContacts(); // Tải lại bảng
+            ["pending", "in_progress", "resolved", "rejected"].forEach(
+              (status) => {
+                PaginationContacts(status);
+              }
+            );
             $("#successModal").modal("show");
           },
           error: function (xhr, status, error) {
@@ -288,6 +574,15 @@ $(document).ready(function () {
       },
     });
   }
+  // Xử lý sự kiện chuyển tab trong Contacts
+  $('a[data-toggle="tab"]').on("shown.bs.tab", function (e) {
+    const targetTab = $(e.target).attr("aria-controls"); // Lấy ID của tab
+    if (
+      ["pending", "in_progress", "resolved", "rejected"].includes(targetTab)
+    ) {
+      PaginationContacts(targetTab); // Làm mới phân trang cho tab đang active
+    }
+  });
 
   // Function to get articles
   function getArticles() {
@@ -315,26 +610,31 @@ $(document).ready(function () {
             <tr>
               <td>${article.id}</td>
               <td>${article.title}</td>
-              <td>${allCategories.find((category) => category.id == article.cate_id)
-          ?.cate_name || "N/A"
-        }</td>
-              <td>${allUsers.find((user) => user.id == article.user_id)?.username ||
-        "N/A"
-        }</td>
+              <td>${
+                allCategories.find((category) => category.id == article.cate_id)
+                  ?.cate_name || "N/A"
+              }</td>
+              <td>${
+                allUsers.find((user) => user.id == article.user_id)?.username ||
+                "N/A"
+              }</td>
               <td>${formatDate(article.published_date)}</td>
               <td>
-                ${article.status
-          ? `<span class="badge article-status status-published" data-articlestatus=${article.id}>Published</span>`
-          : `<span class="badge article-status status-pending" data-articlestatus=${article.id}>Pending</span>`
-        }
+                ${
+                  article.status
+                    ? `<span class="badge article-status status-published" data-articlestatus=${article.id}>Published</span>`
+                    : `<span class="badge article-status status-pending" data-articlestatus=${article.id}>Pending</span>`
+                }
               </td>
               <td>
-                <button class="btn btn-sm btn-info edit-article" data-id="${article.id
-        }">
+                <button class="btn btn-sm btn-info edit-article" data-id="${
+                  article.id
+                }">
                   <i class="fa fa-edit"></i>
                 </button>
-                <button class="btn btn-sm ${article.status ? "btn-danger" : "btn-success"
-        } toggle-article" data-id="${article.id}">
+                <button class="btn btn-sm ${
+                  article.status ? "btn-danger" : "btn-success"
+                } toggle-article" data-id="${article.id}">
                   <i class="fa ${article.status ? "fa-ban" : "fa-check"}"></i>
                 </button>
               </td>
@@ -376,6 +676,7 @@ $(document).ready(function () {
   getArticles();
   // Get users
   getUsers();
+
   // Get contacts
   getContacts();
   // Get newsletter
@@ -502,7 +803,8 @@ $(document).ready(function () {
       success: function (response) {
         $("#addArticleModal").modal("hide");
         getArticles();
-        loadArticles();
+        //loadArticles();
+        PaginationArticles();
         alert("Article added successfully!");
       },
       error: function (xhr, status, error) {
@@ -539,7 +841,8 @@ $(document).ready(function () {
       success: function (response) {
         $("#editArticleModal").modal("hide");
         getArticles();
-        loadArticles(); // Reload articles to show updated data
+        //loadArticles(); // Reload articles to show updated data
+        PaginationArticles();
         alert("Article updated successfully!");
       },
       error: function (error) {
@@ -563,7 +866,8 @@ $(document).ready(function () {
         success: function (response) {
           alert("Article activated successfully!");
           getArticles();
-          loadArticles();
+          //loadArticles();
+          PaginationArticles();
 
           $(`.article-status[data-articlestatus="${articleId}"]`)
             .removeClass("status-pending")
@@ -589,7 +893,8 @@ $(document).ready(function () {
         success: function (response) {
           alert("Article deactivated successfully!");
           getArticles();
-          loadArticles();
+          //loadArticles();
+          PaginationArticles();
 
           $(`.article-status[data-articlestatus="${articleId}"]`)
             .removeClass("status-published")
@@ -662,7 +967,8 @@ $(document).ready(function () {
       success: function (response) {
         $("#addUserModal").modal("hide");
         getUsers();
-        loadUsers();
+        //loadUsers();
+        PaginationUsers();
         alert("Author added successfully!");
       },
       error: function (xhr, status, error) {
@@ -817,7 +1123,8 @@ $(document).ready(function () {
       success: function (response) {
         $("#addCategoryModal").modal("hide");
         getCategories();
-        loadCategories();
+        //loadCategories();
+        PaginationCategroties();
         alert("Category added successfully!");
       },
       error: function (error) {
@@ -839,7 +1146,8 @@ $(document).ready(function () {
       success: function (response) {
         $("#editCategoryModal").modal("hide");
         getCategories();
-        loadCategories();
+        //loadCategories();
+        PaginationCategroties();
         alert("Category updated successfully!");
       },
       error: function (error) {
@@ -866,11 +1174,10 @@ $(document).ready(function () {
       alert("Category not found!");
     }
   });
-  $(document).on('click', '.toggle-category', function () {
-    if (!confirm("Are you sure you want to toggle this category?"))
-      return;
+  $(document).on("click", ".toggle-category", function () {
+    if (!confirm("Are you sure you want to toggle this category?")) return;
 
-    const categoryId = $(this).data('id');
+    const categoryId = $(this).data("id");
 
     const category = allCategories.find(
       (category) => category.id == categoryId
@@ -887,7 +1194,8 @@ $(document).ready(function () {
         success: function (response) {
           alert("Category activated successfully!");
           getCategories();
-          loadCategories();
+          //loadCategories();
+          PaginationCategroties();
 
           $(`.category-status[data-categorystatus="${categoryId}"]`)
             .removeClass("status-inactive")
@@ -913,7 +1221,8 @@ $(document).ready(function () {
         success: function (response) {
           alert("Category deactivated successfully!");
           getCategories();
-          loadCategories();
+          //loadCategories();
+          PaginationCategroties();
 
           $(`.category-status[data-categorystatus="${categoryId}"]`)
             .removeClass("status-active")
@@ -947,15 +1256,20 @@ $(document).ready(function () {
 
     // Load data based on which tab is clicked
     if (targetTab === "#articles") {
-      loadCategories();
+      //loadCategories();
+      PaginationCategroties();
       loadUsers();
-      loadArticles();
+      //loadArticles();
+      PaginationArticles();
     } else if (targetTab === "#users") {
-      loadUsers();
+      //loadUsers();
+      PaginationUsers();
     } else if (targetTab === "#categories") {
-      loadCategories();
+      //loadCategories();
+      PaginationCategroties();
     } else if (targetTab === "#contacts") {
-      loadContacts();
+      //loadContacts();
+      PaginationContacts();
       $("#pending").addClass("active");
     } else if (targetTab === "#newsletters") {
       loadNewsletters();
