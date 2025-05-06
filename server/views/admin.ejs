@@ -241,26 +241,11 @@
                         <th>ID</th>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Telephone</th>
-                        <th>Title</th>
-                        <th>Content</th>
+                        <th>Message</th>
                       </tr>
                     </thead>
                     <tbody id="contactTableBody">
                       <!-- TODO: Loop through contact data -->
-                      <% console.log(contacts) %>
-                      <!---->
-                      <% contacts.forEach(contact => { %>
-                      <tr>
-                        <td>test</td>
-                        <% console.log(contact.id); %>
-                        <td><%=contact.name%></td>
-                        <td><%=contact.email%></td>
-                        <td><%=contact.phone%></td>
-                        <td><%=contact.title%></td>
-                        <td><%=contact.content%></td>
-                      </tr>
-                      <% }); %>
                     </tbody>
                   </table>
                 </div>
