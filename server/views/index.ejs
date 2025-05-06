@@ -143,9 +143,24 @@
                                     <span class="overlay"></span>
                                   </a>
                                   <figcaption>
-                                    <a href="detail/<%= article.id %>">
+                                    <a href="detail/<%= article.id %>" class="single_post_content_title">
                                       <%= article.title %>
                                     </a>
+                                    <div class="article-meta"
+                                      style="display: flex; margin-top: 16px; gap: 16px; font-size: 12px;">
+                                      <p class="text-secondary">
+                                        <i class="fa fa-calendar"></i>
+                                        <%= new Date(article.published_date).toLocaleDateString() %>
+                                      </p>
+                                      <p class="text-secondary">
+                                        <i class="fa fa-eye"></i>
+                                        <%= article.views %>
+                                      </p>
+                                      <p class="text-secondary">
+                                        <i class="fa fa-folder"></i>
+                                        <%= article.cate_name %>
+                                      </p>
+                                    </div>
                                   </figcaption>
                                   <p>
                                     <%= article.content.slice(0, 100) + "..." %>
