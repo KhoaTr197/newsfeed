@@ -12,22 +12,54 @@
                 <div class="col-lg-8 col-md-8 col-sm-8">
                   <div class="left_content">
                     <div class="single_post_content">
-                      <h2><span>Search Results for: "<%= searchTerm %>"</span></h2>
-                      <div class="search_result_summary">
-                        <p>
-                          <%= articles.length %> result<%= articles.length !==1 ? 's' : '' %> found
-                        </p>
+                      <h2><span>
+                          <%= resultCount %> search results for: "<%= searchTerm %>" in <%= category ? category
+                                : 'all categories' %>
+                        </span></h2>
+
+                      <!-- Filter and Sort Options -->
+                      <div class="search_filters">
+                        <form action="/search" method="GET" class="filter-form">
+                          <input type="hidden" name="keyword" value="<%= searchTerm %>">
+
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="category">Category:</label>
+                                <select name="category" id="category" class="form-control"
+                                  onchange="this.form.submit()">
+                                  <option value="">All Categories</option>
+                                  <% if (typeof allCategories !=='undefined' && allCategories.length> 0) { %>
+                                    <% allCategories.forEach(cat=> { %>
+                                      <option value="<%= cat.id %>" <%=category==cat.id ? 'selected' : '' %>>
+                                        <%= cat.cate_name %>
+                                      </option>
+                                      <% }); %>
+                                        <% } %>
+                                </select>
+                              </div>
+                            </div>
+
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="sort">Sort By:</label>
+                                <select name="sort" id="sort" class="form-control" onchange="this.form.submit()">
+                                  <option value="newest" <%=sort=='newest' ? 'selected' : '' %>>Newest First</option>
+                                  <option value="oldest" <%=sort=='oldest' ? 'selected' : '' %>>Oldest First</option>
+                                  <option value="views" <%=sort=='views' ? 'selected' : '' %>>Most Viewed</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
                       </div>
+
                       <div class="single_post_content_span">
                         <ul class="business_catgnav wow fadeInDown">
-                          <% if (articles.length> 0) { %>
-                            <% // Calculate pagination const itemsPerPage=5; const totalPages=Math.ceil(articles.length
-                              / itemsPerPage); const currentPage=parseInt(page) || 1; const startIndex=(currentPage - 1)
-                              * itemsPerPage; const endIndex=Math.min(startIndex + itemsPerPage, articles.length); const
-                              paginatedArticles=articles.slice(startIndex, endIndex); %>
-
-                              <% for (const article of paginatedArticles) { %>
-                                <li>
+                          <% if (resultCount> 0) { %>
+                            <% const currentPage=parseInt(page); %>
+                              <% for (const article of articles) { %>
+                                <li class="business_catgnav_item">
                                   <figure class="bsbig_fig">
                                     <a href="/detail/<%= article.id %>" class="featured_img">
                                       <img alt="" src="/<%= article.thumbnail %>" />
@@ -52,8 +84,8 @@
                                         <ul class="pagination">
                                           <!-- Previous page link -->
                                           <% if (currentPage> 1) { %>
-                                            <li>
-                                              <a href="/search?q=<%= searchTerm %>&page=<%= currentPage - 1 %>"
+                                            <li class="pagination-btn">
+                                              <a href="/search?keyword=<%= searchTerm %>&page=<%= currentPage - 1 %>&category=<%= category %>"
                                                 aria-label="Previous">
                                                 <span aria-hidden="true">&laquo;</span>
                                               </a>
@@ -62,8 +94,9 @@
 
                                               <!-- Page numbers -->
                                               <% for (let i=1; i <=totalPages; i++) { %>
-                                                <li class="<%= i === currentPage ? 'active' : '' %>">
-                                                  <a href="/search?q=<%= searchTerm %>&page=<%= i %>">
+                                                <li class="pagination-btn <%= i === currentPage ? 'active' : '' %>">
+                                                  <a
+                                                    href="/search?keyword=<%= searchTerm %>&page=<%= i %>&category=<%= category %>">
                                                     <%= i %>
                                                   </a>
                                                 </li>
@@ -71,8 +104,8 @@
 
                                                   <!-- Next page link -->
                                                   <% if (currentPage < totalPages) { %>
-                                                    <li>
-                                                      <a href="/search?q=<%= searchTerm %>&page=<%= currentPage + 1 %>"
+                                                    <li class="pagination-btn">
+                                                      <a href="/search?keyword=<%= searchTerm %>&page=<%= currentPage + 1 %>&category=<%= category %>"
                                                         aria-label="Next">
                                                         <span aria-hidden="true">&raquo;</span>
                                                       </a>
@@ -84,8 +117,9 @@
                                     <% } %>
                                       <% } else { %>
                                         <div class="no_results">
-                                          <p>No results found for "<%= searchTerm %>". Please try a different search
-                                              term.
+                                          <p>No results found for "<%= searchTerm %>" in <%= category ? category
+                                                : 'all categories' %>. Please try a different search
+                                                term.
                                           </p>
                                         </div>
                                         <% } %>

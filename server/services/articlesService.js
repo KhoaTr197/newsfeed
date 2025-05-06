@@ -84,20 +84,74 @@ const getArticlesByCategoryId = async (cate_id) => {
   }
 };
 
+<<<<<<< Updated upstream
 // search articles by title
 const searchArticlesByTitle = async (title) => {
+=======
+// search articles by keyword
+const searchArticlesByKeyword = async (keyword, page, limit, category, sort = 'newest') => {
+>>>>>>> Stashed changes
   try {
+    // Build the WHERE clause
+    let whereClause = "articles.title LIKE ? OR articles.content LIKE ? AND articles.status = 1";
+    const queryParams = [`%${keyword}%`, `%${keyword}%`];
+
+    // Add category filter if provided
+    if (category) {
+      whereClause += " AND articles.cate_id = ?";
+      queryParams.push(category);
+    }
+
+    // Determine sort order
+    let orderBy;
+    switch (sort) {
+      case 'oldest':
+        orderBy = "articles.published_date ASC";
+        break;
+      case 'newest':
+      default:
+        orderBy = "articles.published_date DESC";
+        break;
+    }
+
+    // Count query
+    const countQueryStr = `
+      SELECT COUNT(*) as resultCount
+      FROM articles
+      WHERE ${whereClause}
+    `;
+
+    const [countData] = await connection.query(countQueryStr, queryParams);
+
+    // Main query with pagination
+    const offset = (page - 1) * limit;
     const queryStr = `
       SELECT articles.*, categories.cate_name, users.username
       FROM articles
       JOIN categories ON articles.cate_id = categories.id
       JOIN users ON articles.user_id = users.id
+<<<<<<< Updated upstream
       WHERE articles.title LIKE ? and articles.status = 1
     `;
     const [data] = await connection.query(queryStr, [`%${title}%`]);
     return data;
   } catch (err) {
     throw err;
+=======
+      WHERE ${whereClause}
+      ORDER BY ${orderBy}
+      LIMIT ? OFFSET ?
+    `;
+
+    // Add pagination parameters
+    const mainQueryParams = [...queryParams, parseInt(limit), parseInt(offset)];
+
+    const [articles] = await connection.query(queryStr, mainQueryParams);
+
+    return [articles, countData[0].resultCount];
+  } catch (error) {
+    throw error;
+>>>>>>> Stashed changes
   }
 };
 

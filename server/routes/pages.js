@@ -97,6 +97,50 @@ router.get("/category/:id", async (req, res) => {
   }
 });
 
+// Search page
+router.get("/search", async (req, res) => {
+  try {
+    const { keyword, page = 1, limit = 15, category, sort } = req.query;
+
+    if (!keyword) {
+      res.redirect("/");
+      return;
+    }
+
+    const [
+      allCategories,
+      [articles, resultCount],
+      websiteInfo
+    ] = [
+        await categoriesService.getAllActiveCategories(),
+        await articlesService.searchArticlesByKeyword(
+          keyword,
+          page,
+          limit,
+          category,
+          sort
+        ),
+        await websiteInfoService.getWebsiteInfo()
+      ];
+
+    res.render("search", {
+      articles,
+      searchTerm: keyword,
+      resultCount,
+      page,
+      totalPages: Math.ceil(resultCount / limit),
+      itemsPerPage: limit,
+      category,
+      sort,
+      allCategories,
+      websiteInfo,
+    });
+  }
+  catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+})
+
 // protected routes (route need to be authenticated, role checked before access)
 router.get("/admin", auth.verifyToken("/login"), auth.checkRole(['admin']), (req, res) => {
   res.render("admin");
