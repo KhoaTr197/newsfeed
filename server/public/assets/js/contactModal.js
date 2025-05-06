@@ -39,9 +39,9 @@ $(document).ready(function () {
         title,
         message,
       }),
-      success: function () {
+      success: function (response) {
         // Show success message and clear form
-        alert("Message sent successfully!");
+        alert(response.message);
         $("#name").val("");
         $("#email").val("");
         $("#tel").val("");
