@@ -100,39 +100,10 @@ router.get("/categories", async (req, res) => {
   }
 });
 
-// Category detail page - show articles by category
-router.get("/category/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const [category, articles, websiteInfo] = [
-      await categoriesService.getCategoryById(id),
-      await articlesService.getArticlesByCategoryId(id),
-      await websiteInfoService.getWebsiteInfo()
-    ];
-
-    if (!category || !articles) {
-      return res.status(404).render("404");
-    }
-
-    res.render("category", {
-      category: category,
-      articles: articles,
-      websiteInfo: websiteInfo
-    });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
 // Search page
 router.get("/search", async (req, res) => {
   try {
     const { keyword, page = 1, limit = 15, category, sort } = req.query;
-
-    if (!keyword) {
-      res.redirect("/");
-      return;
-    }
 
     const [
       allCategories,

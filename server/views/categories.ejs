@@ -18,7 +18,7 @@
                         <ul class="cat-list">
                           <% categories.forEach(category=> { %>
                             <li>
-                              <a href="/category/<%= category.id %>">
+                              <a href="/search?category=<%= category.id %>">
                                 <%= category.cate_name %>
                                   <% if (categoryCounts && categoryCounts[category.id]) { %>
                                     <span class="count">(<%= categoryCounts[category.id] %>)</span>

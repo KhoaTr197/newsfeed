@@ -643,6 +643,9 @@ $(document).ready(function () {
     }
   });
   $(document).on('click', '.toggle-category', function () {
+    if (!confirm("Are you sure you want to toggle this category?"))
+      return;
+
     const categoryId = $(this).data('id');
 
     const category = allCategories.find(category => category.id == categoryId);
