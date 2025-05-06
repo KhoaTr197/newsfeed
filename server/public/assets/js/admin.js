@@ -140,7 +140,7 @@ $(document).ready(function () {
       (contact) => contact.status === "pending"
     );
     //
-    if (!pendingContacts) {
+    if (pendingContacts.length) {
       pendingContacts.forEach((contact) => {
         contactTableBody_pending.append(`
             <tr>
@@ -180,7 +180,7 @@ $(document).ready(function () {
     const inProgressContacts = allContacts.filter(
       (contact) => contact.status === "in_progress"
     );
-    if (!inProgressContacts) {
+    if (inProgressContacts.length) {
       inProgressContacts.forEach((contact) => {
         contactTableBody_in_progress.append(`
             <tr>
@@ -213,7 +213,7 @@ $(document).ready(function () {
     const resolvedContacts = allContacts.filter(
       (contact) => contact.status === "resolved"
     );
-    if (!resolvedContacts) {
+    if (resolvedContacts.length) {
       resolvedContacts.forEach((contact) => {
         contactTableBody_resolved.append(`
               <tr>
@@ -240,7 +240,7 @@ $(document).ready(function () {
     const rejectedContacts = allContacts.filter(
       (contact) => contact.status === "rejected"
     );
-    if (!rejectedContacts) {
+    if (rejectedContacts.length) {
       rejectedContacts.forEach((contact) => {
         contactTableBody_rejected.append(`
               <tr>

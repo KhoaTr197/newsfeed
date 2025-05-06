@@ -10,7 +10,7 @@ const getAllContacts = async () => {
 //add
 const addContact = async (name, email, phone, title, content) => {
   const queryStr =
-    "INSERT INTO contact (name, email, phone, title, content, status) VALUES (?, ?, ?, ?, 'pending')";
+    "INSERT INTO contact (name, email, phone, title, content, status) VALUES (?, ?, ?, ?, ?, 'pending')";
   const [result] = await connection.query(queryStr, [
     name,
     email,
