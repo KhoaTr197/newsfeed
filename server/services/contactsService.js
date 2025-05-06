@@ -8,10 +8,16 @@ const getAllContacts = async () => {
 };
 
 //add
-const addContact = async (name, email, message) => {
+const addContact = async (name, email, phone, title, content) => {
   const queryStr =
-    "INSERT INTO contact (name, email, message) VALUES (?, ?, ?)";
-  const [result] = await connection.query(queryStr, [name, email, message]);
+    "INSERT INTO contact (name, email, phone, title, content) VALUES (?, ?, ?, ?,)";
+  const [result] = await connection.query(queryStr, [
+    name,
+    email,
+    phone,
+    title,
+    content,
+  ]);
   return result.affectedRows > 0;
 };
 
