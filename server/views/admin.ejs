@@ -234,20 +234,138 @@
                 <span>Contact</span>
               </div>
               <div class="admin-card-body">
-                <div class="table-responsive">
-                  <table class="table table-hover">
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Message</th>
-                      </tr>
-                    </thead>
-                    <tbody id="contactTableBody">
-                      <!-- TODO: Loop through contact data -->
-                    </tbody>
-                  </table>
+                <!-- Tab Navigation -->
+                <ul class="nav nav-tabs" role="tablist">
+                  <li role="presentation" class="active">
+                    <a
+                      href="#pending"
+                      aria-controls="pending"
+                      role="tab"
+                      data-toggle="tab"
+                      >Đang chờ xử lý</a
+                    >
+                  </li>
+                  <li role="presentation">
+                    <a
+                      href="#in_progress"
+                      aria-controls="in_progress"
+                      role="tab"
+                      data-toggle="tab"
+                      >Đang xử lý</a
+                    >
+                  </li>
+                  <li role="presentation">
+                    <a
+                      href="#resolved"
+                      aria-controls="resolved"
+                      role="tab"
+                      data-toggle="tab"
+                      >Đã xử lý</a
+                    >
+                  </li>
+                  <li role="presentation">
+                    <a
+                      href="#rejected"
+                      aria-controls="rejected"
+                      role="tab"
+                      data-toggle="tab"
+                      >Từ chối</a
+                    >
+                  </li>
+                </ul>
+
+                <!-- Tab Content -->
+                <div class="tab-content">
+                  
+                  <!-- Pending Tab -->
+                  <div role="tabpanel" class="tab-pane active" id="pending">
+                    <div class="table-responsive">
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Telephone</th>
+                            <th>Title</th>
+                            <th>Content</th>
+                            <th>Created at</th>
+                            <th>Status</th>
+                            <th colspan="2">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody id="contactTableBody_pending">
+                          <!-- TODO: Loop through contact data -->
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <!-- In_process Tab -->
+                  <div role="tabpanel" class="tab-pane" id="in_progress">
+                    <div class="table-responsive">
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Telephone</th>
+                            <th>Title</th>
+                            <th>Content</th>
+                            <th>Created at</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody id="contactTableBody_in_progress">
+                          <!-- TODO: Loop through contact data -->
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <!-- Rejected Tab -->
+                <div role="tabpanel" class="tab-pane" id="resolved">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Telephone</th>
+                          <th>Title</th>
+                          <th>Content</th>
+                          <th>Created at</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody id="contactTableBody_resolved">
+                        <!-- TODO: Loop through contact data -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- Rejected Tab -->
+                <div role="tabpanel" class="tab-pane" id="rejected">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Telephone</th>
+                          <th>Title</th>
+                          <th>Content</th>
+                          <th>Created at</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody id="contactTableBody_rejected">
+                        <!-- TODO: Loop through contact data -->
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>

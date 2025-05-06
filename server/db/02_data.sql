@@ -61,12 +61,17 @@ INSERT INTO `articles` (`title`, `content`, `thumbnail`, `original_image`, `publ
 -- Bài 20: Photography
 ('Chụp ảnh kỳ quan thế giới', 'Các kỳ quan thế giới là niềm tự hào của nhân loại. Kim tự tháp Giza là công trình cổ đại kỳ vĩ. Vạn Lý Trường Thành thể hiện sự kiên trì của con người. Taj Mahal là biểu tượng của tình yêu vĩnh cửu. Machu Picchu ẩn mình giữa núi rừng Peru. Petra ở Jordan mang vẻ đẹp huyền bí. Tháp Eiffel là biểu tượng của nước Pháp. Mỗi kỳ quan kể một câu chuyện lịch sử. Du khách từ khắp nơi đến chiêm ngưỡng chúng. Việc bảo tồn các kỳ quan rất quan trọng. Công nghệ giúp tái hiện vẻ đẹp xưa cũ. Một số kỳ quan đã bị hư hại theo thời gian. UNESCO công nhận và bảo vệ những di sản này. Việt Nam cũng có Vịnh Hạ Long trong danh sách. Khám phá kỳ quan là ước mơ của nhiều người. Chúng là minh chứng cho sự sáng tạo của con người. Mỗi địa điểm mang một nét độc đáo riêng. Hãy lên kế hoạch để thăm ít nhất một kỳ quan. Trải nghiệm này sẽ để lại ấn tượng mãi mãi. Thế giới còn nhiều điều kỳ diệu để khám phá.', 'images/thumbnail/thumb_2.jpeg', 'images/image_2.jpeg', '2025-04-20 12:30:00', 183, 2, 7, 1);
 
-INSERT INTO `contact` (`name`, `email`, `phone`, `title`, `content`) VALUES
-('Nguyen Van A', 'nguyenvana@example.com', '0123456789', 'Tôi muốn hỏi về dịch vụ của bạn.', 'Tôi muốn hỏi về dịch vụ của bạn.'),
-('Tran Thi B', 'tranthib@example.com', '0123456789', 'Vui lòng liên hệ lại với tôi để tư vấn.', 'Vui lòng liên hệ lại với tôi để tư vấn.'),
-('Le Van C', 'levanc@example.com', '0123456789', 'Tôi cần hỗ trợ kỹ thuật ngay lập tức.', 'Tôi cần hỗ trợ kỹ thuật ngay lập tức.'),
-('Pham Thi D', 'phamthid@example.com', '0123456789', 'Có chương trình khuyến mãi nào không?', 'Có chương trình khuyến mãi nào không?'),
-('Hoang Van E', 'hoangvane@example.com', '0123456789', 'Gửi tôi thông tin chi tiết về sản phẩm.', 'Gửi tôi thông tin chi tiết về sản phẩm.');
+INSERT INTO `contact` (`name`, `email`, `phone`, `title`, `content`, `created_at`, `status`) VALUES
+('Nguyễn Văn An', 'an.nguyen@example.com', '0912345678', 'Hỏi về bài viết', 'Tôi muốn biết thêm thông tin về bài viết gần đây trên trang của bạn.', '2025-05-01 08:30:00', 'pending'),
+('Trần Thị Bình', 'binh.tran@example.com', '0923456789', 'Phản hồi chậm', 'Tôi đã gửi liên hệ trước đó nhưng chưa nhận được phản hồi.', '2025-05-02 09:15:00', 'pending'),
+('Lê Minh Châu', 'chau.le@example.com', '0934567890', 'Đề xuất cải thiện', 'Trang web nên có thêm tính năng tìm kiếm nâng cao.', '2025-05-02 14:20:00', 'in_progress'),
+('Phạm Quốc Đạt', 'dat.pham@example.com', '0945678901', 'Lỗi hiển thị', 'Trang tin tức hiển thị lỗi trên thiết bị di động.', '2025-05-03 10:00:00', 'resolved'),
+('Hoàng Thị Em', 'em.hoang@example.com', '0956789012', 'Hợp tác quảng cáo', 'Công ty chúng tôi muốn hợp tác quảng cáo trên trang của bạn.', '2025-05-03 16:45:00', 'resolved'),
+('Vũ Văn Phong', 'phong.vu@example.com', '0967890123', 'Yêu cầu xóa bài viết', 'Vui lòng xóa bài viết có thông tin không chính xác.', '2025-05-04 11:30:00', 'rejected'),
+('Đỗ Thị Giang', 'giang.do@example.com', '0978901234', 'Câu hỏi về sự kiện', 'Sự kiện sắp tới được tổ chức ở đâu?', '2025-05-04 13:00:00', 'pending'),
+('Bùi Quang Huy', 'huy.bui@example.com', '0989012345', 'Góp ý nội dung', 'Bài viết về công nghệ cần cập nhật thêm thông tin mới.', '2025-05-05 07:50:00', 'in_progress'),
+('Mai Thị Kim', 'kim.mai@example.com', '0990123456', 'Hỗ trợ kỹ thuật', 'Tôi không thể đăng nhập vào tài khoản trên trang.', '2025-05-05 15:25:00', 'resolved'),
+('Ngô Văn Long', 'long.ngo@example.com', '0901234567', 'Liên hệ quảng cáo', 'Tôi muốn thảo luận về gói quảng cáo trên trang tin tức.', '2025-05-06 09:10:00', 'in_progress');
 
 INSERT INTO `newsletterSubscribers` (`email`)VALUES
 ('subscriber1@example.com'),

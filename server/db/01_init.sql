@@ -44,7 +44,9 @@ CREATE TABLE `contact` (
   `email` text,
   `phone` text,
   `title` text,
-  `content` text
+  `content` text,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `status` ENUM('pending', 'in_progress', 'resolved', 'rejected') NOT NULL
 );
 
 CREATE TABLE `newsletterSubscribers` (
