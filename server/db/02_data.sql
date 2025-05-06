@@ -2,14 +2,14 @@ SET NAMES utf8mb4;
 SET CHARACTER SET utf8mb4;
 SET COLLATION_CONNECTION = 'utf8mb4_unicode_ci';
 
-INSERT INTO `categories` (`cate_name`, `status`) VALUES
-('sports', 1),
-('fashion', 1),
-('Business', 1),
-('Technology', 1),
-('Games', 1),
-('Life & Style', 1),
-('Photography', 1);
+INSERT INTO `categories` (`cate_name`, `is_featured`, `status`) VALUES
+('sports', 1, 1),
+('fashion', 1, 1),
+('Business', 1, 1),
+('Technology', 1, 1),
+('Games', 1, 1),
+('Life & Style', 1, 0),
+('Photography', 1, 0);
 
 INSERT INTO `users` (`username`, `password`, `email`, `role`, `status`) VALUES
 ('admin', MD5('admin123'), 'admin@example.com', 1, 1),
@@ -73,6 +73,7 @@ INSERT INTO `contact` (`name`, `email`, `phone`, `title`, `content`, `created_at
 ('Mai Thị Kim', 'kim.mai@example.com', '0990123456', 'Hỗ trợ kỹ thuật', 'Tôi không thể đăng nhập vào tài khoản trên trang.', '2025-05-05 15:25:00', 'resolved'),
 ('Ngô Văn Long', 'long.ngo@example.com', '0901234567', 'Liên hệ quảng cáo', 'Tôi muốn thảo luận về gói quảng cáo trên trang tin tức.', '2025-05-06 09:10:00', 'in_progress');
 
+INSERT INTO `newsletterSubscribers` (`email`) VALUES
 INSERT INTO `newsletterSubscribers` (`email`) VALUES
 ('subscriber1@example.com'),
 ('subscriber2@example.com'),

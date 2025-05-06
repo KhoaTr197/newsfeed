@@ -16,7 +16,7 @@ a:hover{color:#646464; text-decoration:none}
 a:focus{outline:none; text-decoration:none}
 h1, h2, h3, h4, h5, h6{font-family:'Oswald',sans-serif}
 h2{line-height:23px}
-img{border:none}
+img{border:none;width:100%}
 img:hover{opacity:0.75}
 .img-center{display:block; margin-left:auto; margin-right:auto; text-align:center}
 .img-right{display:block; margin-left:auto}
@@ -132,9 +132,10 @@ img:hover{opacity:0.75}
 .single_post_content > h2{background:none repeat scroll 0 0 #151515; color:#fff; font-family:'Oswald',sans-serif; font-size:18px; font-weight:400; margin-bottom:10px; margin-left:0; margin-top:5px; padding:0; position:relative; text-align:center; text-transform:uppercase; margin-bottom:20px}
 .single_post_content > h2 span{padding:4px 10px}
 .single_post_content_left{float:left; display:inline; width:49%}
-.business_catgnav{}
-.business_catgnav li{float:left; display:block; width:100%}
-.bsbig_fig{width:100%}
+.business_catgnav {display:flex; flex-direction:row; justify-content:space-between; flex-wrap:wrap}
+.business_catgnav li{float:left; display: block; width:49%}
+.bsbig_fig{width:100%; display: flex; flex-direction:column; align-items:center;}
+.bs_fig > * {display:block; width: 100%}
 .bsbig_fig > a{display:block}
 .bsbig_fig > a img{width:100%}
 .bsbig_fig figcaption{color:#333; font-family:"Oswald",sans-serif; font-size:23px; font-weight:300; margin-top:10px; margin-bottom:10px}
@@ -384,7 +385,32 @@ li.pagination-btn {
   color: #666;
 }
 
+/* Article meta information styling */
 .article-meta {
   display: flex;
-  margin-bottom: 20px;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 15px;
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+.article-meta p {
+  margin-bottom: 0;
+  margin-right: 15px;
+}
+
+.article-meta p:last-child {
+  margin-right: 0;
+}
+
+.article-meta i {
+  margin-right: 4px;
+}
+
+.article-excerpt {
+  max-width: 50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

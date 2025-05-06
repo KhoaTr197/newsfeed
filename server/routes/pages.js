@@ -8,20 +8,31 @@ const auth = require("../middlewares/authMiddleware");
 
 router.get(["/", "/index", "/homepage"], async (req, res) => {
   try {
-    const [allCategories, allArticles, websiteInfo] = [
-      await categoriesService.getAllActiveCategories(),
-      await articlesService.getAllActiveArticles(),
-      await websiteInfoService.getWebsiteInfo(),
-    ];
+    const [
+      featuredCategories,
+      latestArticles,
+      mostViewedArticles,
+      websiteInfo
+    ] = [
+        await categoriesService.getFeaturedCategories(5),
+        await articlesService.getLatestArticles(5),
+        await articlesService.getMostViewedArticles(5),
+        await websiteInfoService.getWebsiteInfo()
+      ];
 
-    if (!allCategories || !allArticles) {
+    // Get articles for each featured category
+    const featuredArticles = await articlesService.getAllActiveArticles(featuredCategories.map(category => category.id), featuredCategories * 4);
+
+    if (!featuredCategories || !latestArticles || !mostViewedArticles || !featuredArticles) {
       return res.status(404).render("404");
     }
 
     res.render("index", {
-      categories: allCategories,
-      articles: allArticles,
-      websiteInfo: websiteInfo,
+      featuredCategories,
+      featuredArticles,
+      latestArticles,
+      mostViewedArticles,
+      websiteInfo
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -32,9 +43,10 @@ router.get("/detail/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    const [article, , websiteInfo] = [
+    const [article, websiteInfo, mostViewedArticles] = [
       await articlesService.getArticleById(id),
       await websiteInfoService.getWebsiteInfo(),
+      await articlesService.getMostViewedArticles(5)
     ];
     const relatedArticles = await articlesService.getRelatedArticles(
       article,
@@ -42,10 +54,15 @@ router.get("/detail/:id", async (req, res) => {
     );
 
     if (!article || !relatedArticles) {
-      return res.status(404).render("404");
+      return res.status(404).render("404", { websiteInfo, mostViewedArticles });
     }
 
-    res.render("detail", { ...article, relatedArticles, websiteInfo });
+    res.render("detail", {
+      ...article,
+      relatedArticles,
+      websiteInfo,
+      mostViewedArticles
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -182,8 +199,11 @@ router.get(
 // 404 route
 router.get("*", async (req, res) => {
   try {
-    const websiteInfo = await websiteInfoService.getWebsiteInfo();
-    res.render("404", { websiteInfo });
+    const [websiteInfo, mostViewedArticles] = [
+      await websiteInfoService.getWebsiteInfo(),
+      await articlesService.getMostViewedArticles(5)
+    ];
+    res.render("404", { websiteInfo, mostViewedArticles });
   } catch (err) {
     res.render("404");
   }

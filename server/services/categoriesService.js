@@ -37,6 +37,22 @@ const countArticlesByCategory = async () => {
   }
 };
 
+// get featured categories
+const getFeaturedCategories = async (limit) => {
+  try {
+    const queryStr = `
+      SELECT *
+      FROM categories
+      WHERE is_featured = 1 AND status = 1
+      LIMIT ?
+    `;
+    const [data] = await connection.query(queryStr, [limit]);
+    return data;
+  } catch (err) {
+    throw err;
+  }
+}
+
 // add category
 const addCategory = async (name, status) => {
   try {
@@ -104,6 +120,7 @@ module.exports = {
   getAllCategories,
   getAllActiveCategories,
   countArticlesByCategory,
+  getFeaturedCategories,
   updateCategory,
   addCategory,
   activeCategory,

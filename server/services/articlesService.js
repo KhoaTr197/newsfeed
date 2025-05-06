@@ -17,14 +17,22 @@ const getAllArticles = async () => {
   }
 };
 
-const getAllActiveArticles = async () => {
+const getAllActiveArticles = async (cate_ids, limit) => {
   try {
+    let whereClause = "articles.status = 1";
+    let limitClause = limit ? `LIMIT ${limit}` : "";
+
+    if (cate_ids && cate_ids.length > 0) {
+      whereClause += ` AND articles.cate_id IN (${cate_ids.join(',')})`;
+    }
+
     const queryStr = `
       SELECT articles.*, categories.cate_name, users.username
       FROM articles
       JOIN categories ON articles.cate_id = categories.id
       JOIN users ON articles.user_id = users.id
-      WHERE articles.status = 1
+      WHERE ${whereClause}
+      ${limitClause}
     `;
     const [data] = await connection.query(queryStr);
     return data;
@@ -164,10 +172,29 @@ const getRelatedArticles = async (article, limit) => {
 const getLatestArticles = async (limit) => {
   try {
     const queryStr = `
-      SELECT id, title, thumbnail, published_date
+      SELECT articles.*, categories.cate_name
       FROM articles
-      WHERE status = 1
+      JOIN categories ON articles.cate_id = categories.id
+      WHERE articles.status = 1
       ORDER BY published_date DESC
+      LIMIT ?
+    `;
+    const [data] = await connection.query(queryStr, [limit]);
+    return data;
+  } catch (err) {
+    throw err;
+  }
+};
+
+// get most viewed articles
+const getMostViewedArticles = async (limit) => {
+  try {
+    const queryStr = `
+      SELECT articles.*, categories.cate_name
+      FROM articles
+      JOIN categories ON articles.cate_id = categories.id
+      WHERE articles.status = 1
+      ORDER BY views DESC
       LIMIT ?
     `;
     const [data] = await connection.query(queryStr, [limit]);
@@ -255,6 +282,7 @@ module.exports = {
   searchArticlesByKeyword,
   getRelatedArticles,
   getLatestArticles,
+  getMostViewedArticles,
   addArticle,
   addComment,
   updateArticle,
