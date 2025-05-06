@@ -84,13 +84,8 @@ const getArticlesByCategoryId = async (cate_id) => {
   }
 };
 
-<<<<<<< Updated upstream
-// search articles by title
-const searchArticlesByTitle = async (title) => {
-=======
 // search articles by keyword
 const searchArticlesByKeyword = async (keyword, page, limit, category, sort = 'newest') => {
->>>>>>> Stashed changes
   try {
     // Build the WHERE clause
     let whereClause = "articles.title LIKE ? OR articles.content LIKE ? AND articles.status = 1";
@@ -130,14 +125,6 @@ const searchArticlesByKeyword = async (keyword, page, limit, category, sort = 'n
       FROM articles
       JOIN categories ON articles.cate_id = categories.id
       JOIN users ON articles.user_id = users.id
-<<<<<<< Updated upstream
-      WHERE articles.title LIKE ? and articles.status = 1
-    `;
-    const [data] = await connection.query(queryStr, [`%${keyword}%`, `%${keyword}%`]);
-    return data;
-  } catch (err) {
-    throw err;
-=======
       WHERE ${whereClause}
       ORDER BY ${orderBy}
       LIMIT ? OFFSET ?
@@ -151,7 +138,6 @@ const searchArticlesByKeyword = async (keyword, page, limit, category, sort = 'n
     return [articles, countData[0].resultCount];
   } catch (error) {
     throw error;
->>>>>>> Stashed changes
   }
 };
 
