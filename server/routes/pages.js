@@ -1,19 +1,26 @@
 const router = require('express').Router();
 const categoriesService = require('../services/categoriesService');
 const articlesService = require('../services/articlesService');
+const websiteInfoService = require('../services/websiteInfo');
 const auth = require('../middlewares/authMiddleware');
 // -----------------------------------
 
 router.get(["/", "/index", "/homepage"], async (req, res) => {
   try {
-    const [allCategories, allArticles] = [
+    const [allCategories, allArticles, websiteInfo] = [
       await categoriesService.getAllActiveCategories(),
-      await articlesService.getAllActiveArticles()
+      await articlesService.getAllActiveArticles(),
+      await websiteInfoService.getWebsiteInfo()
     ];
+
+    if (!allCategories || !allArticles) {
+      return res.status(404).render("404");
+    }
 
     res.render("index", {
       categories: allCategories,
-      articles: allArticles
+      articles: allArticles,
+      websiteInfo: websiteInfo
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -24,10 +31,17 @@ router.get("/detail/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    const article = await articlesService.getArticleById(id);
+    const [article, , websiteInfo] = [
+      await articlesService.getArticleById(id),
+      await websiteInfoService.getWebsiteInfo()
+    ];
     const relatedArticles = await articlesService.getRelatedArticles(article, 3);
 
-    res.render("detail", { ...article, relatedArticles });
+    if (!article || !relatedArticles) {
+      return res.status(404).render("404");
+    }
+
+    res.render("detail", { ...article, relatedArticles, websiteInfo });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -37,21 +51,33 @@ router.get("/contact", (req, res) => {
   res.redirect("/#contact");
 })
 
-router.get("/login", (req, res) => {
-  res.render("login");
+router.get("/login", async (req, res) => {
+  try {
+    const websiteInfo = await websiteInfoService.getWebsiteInfo();
+    res.render("login", { websiteInfo });
+  } catch (err) {
+    res.render("login");
+  }
 })
 
-router.get("/signup", (req, res) => {
-  res.render("signup");
+router.get("/signup", async (req, res) => {
+  try {
+    const websiteInfo = await websiteInfoService.getWebsiteInfo();
+    res.render("signup", { websiteInfo });
+  } catch (err) {
+    res.render("signup");
+  }
 })
 
 // Categories page - show all categories
 router.get("/categories", async (req, res) => {
   try {
-    const categories = await categoriesService.getAllActiveCategories();
-
-    // Get count of articles for each category
-    const categoryCounts = await categoriesService.countArticlesByCategory();
+    const [categories, categoryCounts, latestArticles, websiteInfo] = [
+      await categoriesService.getAllActiveCategories(),
+      await categoriesService.countArticlesByCategory(),
+      await articlesService.getLatestArticles(5),
+      await websiteInfoService.getWebsiteInfo()
+    ]
 
     // Convert array to object with category id as key
     const categoryCountsObj = {};
@@ -59,17 +85,15 @@ router.get("/categories", async (req, res) => {
       categoryCountsObj[item.cate_id] = item.count;
     });
 
-    // Get latest articles for sidebar
-    const latestArticles = await articlesService.getLatestArticles(5);
-
-    if (!categories || !latestArticles) {
+    if (!categories || !latestArticles || !categoryCounts) {
       return res.status(404).render("404");
     }
 
     res.render("categories", {
       categories: categories,
       categoryCounts: categoryCountsObj,
-      latestArticles: latestArticles
+      latestArticles: latestArticles,
+      websiteInfo: websiteInfo
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -80,17 +104,20 @@ router.get("/categories", async (req, res) => {
 router.get("/category/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const category = await categoriesService.getCategoryById(id);
+    const [category, articles, websiteInfo] = [
+      await categoriesService.getCategoryById(id),
+      await articlesService.getArticlesByCategoryId(id),
+      await websiteInfoService.getWebsiteInfo()
+    ];
 
-    if (!category) {
+    if (!category || !articles) {
       return res.status(404).render("404");
     }
 
-    const articles = await articlesService.getArticlesByCategoryId(id);
-
     res.render("category", {
       category: category,
-      articles: articles
+      articles: articles,
+      websiteInfo: websiteInfo
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -142,17 +169,32 @@ router.get("/search", async (req, res) => {
 })
 
 // protected routes (route need to be authenticated, role checked before access)
-router.get("/admin", auth.verifyToken("/login"), auth.checkRole(['admin']), (req, res) => {
-  res.render("admin");
+router.get("/admin", auth.verifyToken("/login"), auth.checkRole(['admin']), async (req, res) => {
+  try {
+    const websiteInfo = await websiteInfoService.getWebsiteInfo();
+    res.render("admin", { websiteInfo });
+  } catch (err) {
+    res.render("admin");
+  }
 })
 
-router.get("/author", auth.verifyToken("/login"), auth.checkRole(['author']), (req, res) => {
-  res.render("author");
+router.get("/author", auth.verifyToken("/login"), auth.checkRole(['author']), async (req, res) => {
+  try {
+    const websiteInfo = await websiteInfoService.getWebsiteInfo();
+    res.render("author", { websiteInfo });
+  } catch (err) {
+    res.render("author");
+  }
 })
 
 // 404 route
-router.get("*", (req, res) => {
-  res.render("404");
+router.get("*", async (req, res) => {
+  try {
+    const websiteInfo = await websiteInfoService.getWebsiteInfo();
+    res.render("404", { websiteInfo });
+  } catch (err) {
+    res.render("404");
+  }
 });
 
 module.exports = router;

@@ -19,7 +19,7 @@
                         <div class="post_commentbox"> <a href="#"><i class="fa fa-user"></i>
                             <%= username %>
                           </a> <span><i class="fa fa-calendar"></i>
-                            <%= publishedDate %>
+                            <%= published_date %>
                           </span> <a href="#"><i class="fa fa-tags"></i>
                             <%= cate_name %>
                           </a> </div>
@@ -29,6 +29,36 @@
                           </p>
                         </div>
                         <%- include('partials/social-links') %>
+                          <!-- Comment Section -->
+                          <div class="comment-section">
+                            <h3>Comments (<span id="commentCount">0</span>)</h3>
+
+                            <!-- Comment Form -->
+                            <div class="comment-form">
+                              <form id="commentForm">
+                                <input type="hidden" id="articleId" value="<%= id %>">
+                                <div class="form-group">
+                                  <label for="commentEmail">Email</label>
+                                  <input type="email" id="commentEmail" placeholder="Your email address" required>
+                                </div>
+                                <div class="form-group">
+                                  <label for="commentContent">Comment</label>
+                                  <textarea id="commentContent" placeholder="Write your comment here..."
+                                    required></textarea>
+                                </div>
+                                <button type="submit">Post Comment</button>
+                              </form>
+                            </div>
+
+                            <!-- Comments List -->
+                            <div class="comments-list">
+                              <!-- Comments will be loaded here -->
+                              <div class="no-comments">
+                                <p>No comments yet. Be the first to comment!</p>
+                              </div>
+                            </div>
+                          </div>
+
                           <div class="related_post">
                             <h2>Related Post <i class="fa fa-thumbs-o-up"></i></h2>
                             <ul class="spost_nav wow fadeInDown animated">
@@ -66,8 +96,9 @@
                 </div>
               </div>
             </section>
-            <%- include('partials/footer') %>
+            <%- include('partials/footer', { websiteInfo: websiteInfo }) %>
       </div>
+      <script src="/assets/js/validator.js"></script>
       <%- include('partials/scripts') %>
   </body>
 

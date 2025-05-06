@@ -133,7 +133,7 @@ const searchArticlesByKeyword = async (keyword, page, limit, category, sort = 'n
 <<<<<<< Updated upstream
       WHERE articles.title LIKE ? and articles.status = 1
     `;
-    const [data] = await connection.query(queryStr, [`%${title}%`]);
+    const [data] = await connection.query(queryStr, [`%${keyword}%`, `%${keyword}%`]);
     return data;
   } catch (err) {
     throw err;
@@ -174,6 +174,7 @@ const getRelatedArticles = async (article, limit) => {
   }
 };
 
+// get latest articles
 const getLatestArticles = async (limit) => {
   try {
     const queryStr = `
@@ -190,11 +191,37 @@ const getLatestArticles = async (limit) => {
   }
 };
 
+// get comments by article id
+const getCommentsByArticleId = async (id) => {
+  try {
+    const queryStr = `
+      SELECT *
+      FROM comments
+      WHERE article_id = ?
+    `;
+    const [data] = await connection.query(queryStr, [id]);
+    return data;
+  } catch (err) {
+    throw err;
+  }
+};
+
 // add new aricle
 const addArticle = async (title, content, thumbnail, publishedDate, user_id, cate_id, status) => {
   try {
     const queryStr = "INSERT INTO articles (title, content, thumbnail, publishedDate, user_id, cate_id, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
     await connection.query(queryStr, [title, content, thumbnail, publishedDate, user_id, cate_id, status]);
+    return true;
+  } catch (err) {
+    throw err;
+  }
+};
+
+// add comment
+const addComment = async (email, content, article_id, created_at) => {
+  try {
+    const queryStr = "INSERT INTO comments (email, content, article_id, created_at) VALUES (?, ?, ?, ?)";
+    await connection.query(queryStr, [email, content, article_id, created_at]);
     return true;
   } catch (err) {
     throw err;
@@ -236,11 +263,14 @@ module.exports = {
   getAllArticles,
   getAllActiveArticles,
   getArticleById,
+  getCommentsByArticleId,
   getArticlesByUser_id,
   getArticlesByCategoryId,
-  searchArticlesByTitle,
+  searchArticlesByKeyword,
   getRelatedArticles,
+  getLatestArticles,
   addArticle,
+  addComment,
   updateArticle,
   activeArticle,
   disableArticle,

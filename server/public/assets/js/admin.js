@@ -4,6 +4,7 @@ $(document).ready(function () {
   let allCategories = [];
   let allUsers = [];
   let allContacts = [];
+  let allNewsletters = [];
   // Function to format date
   function formatDate(dateString) {
     if (!dateString) return 'N/A';
@@ -110,7 +111,9 @@ $(document).ready(function () {
               <td>${contact.id}</td>
               <td>${contact.name}</td>
               <td>${contact.email}</td>
-              <td>${contact.message}</td>
+              <td>${contact.phone}</td>
+              <td>${contact.title}</td>
+              <td>${contact.content}</td>
             </tr>
           `);
     });
@@ -143,7 +146,7 @@ $(document).ready(function () {
               <td>${article.title}</td>
               <td>${allCategories.find(category => category.id == article.cate_id)?.cate_name || 'N/A'}</td>
               <td>${allUsers.find(user => user.id == article.user_id)?.username || 'N/A'}</td>
-              <td>${formatDate(article.publishedDate)}</td>
+              <td>${formatDate(article.published_date)}</td>
               <td>
                 ${article.status ?
           `<span class="badge article-status status-published" data-articlestatus=${article.id}>Published</span>` :
@@ -162,6 +165,33 @@ $(document).ready(function () {
           `);
     });
   }
+  // Function to get newsletter
+  function getNewsletters() {
+    $.ajax({
+      url: '/api/newsletter',
+      type: 'GET',
+      success: function (newsletter) {
+        allNewsletters = newsletter;
+      },
+      error: function (xhr, status, error) {
+        console.error('Error loading newsletter:', error);
+      }
+    });
+  }
+  // Function to load newsletter
+  function loadNewsletters() {
+    const newsletterTableBody = $('#newsletterTableBody');
+    newsletterTableBody.empty();
+
+    allNewsletters.forEach(newsletter => {
+      newsletterTableBody.append(`
+            <tr>
+              <td>${newsletter.id}</td>
+              <td>${newsletter.email}</td>
+            </tr>
+          `);
+    });
+  }
   // -----------------------------------------
   // Get Categories
   getCategories();
@@ -171,6 +201,8 @@ $(document).ready(function () {
   getUsers();
   // Get contacts
   getContacts();
+  // Get newsletter
+  getNewsletters();
   // Ensure dashboard tab is active on page load
   $('#dashboard').addClass('show active in');
   $('.admin-sidebar .nav-link[href="#dashboard"]').addClass('active');
@@ -229,7 +261,7 @@ $(document).ready(function () {
       });
 
       $('#editStatus').val(article.status);
-      $('#editPublishedDate').val(article.publishedDate ? article.publishedDate.slice(0, 16) : ''); // Set published date
+      $('#editPublishedDate').val(article.published_date ? article.published_date.slice(0, 16) : ''); // Set published date
 
       $('#editArticleModal').modal('show');
     } else {
@@ -244,7 +276,7 @@ $(document).ready(function () {
     const cate_id = $('#addCategory').val();
     const user_id = $('#addAuthor').val();
     const status = $('#status').val();
-    const publishedDate = $('#publishedDate').val();
+    const published_date = $('#publishedDate').val();
 
     // Validate form
     if (!title || !content) {
@@ -266,7 +298,7 @@ $(document).ready(function () {
     $.ajax({
       url: '/api/articles',
       type: 'POST',
-      data: JSON.stringify({ title, content, thumbnail, cate_id, user_id, status, publishedDate }),
+      data: JSON.stringify({ title, content, thumbnail, cate_id, user_id, status, published_date }),
       contentType: 'application/json',
       success: function (response) {
         $('#addArticleModal').modal('hide');
@@ -290,7 +322,7 @@ $(document).ready(function () {
       cate_id: $('#editCategory').val(),
       user_id: $('#editAuthor').val(),
       status: $('#editArticleStatus').val(),
-      publishedDate: $('#editPublishedDate').val()
+      published_date: $('#editPublishedDate').val()
     };
 
     // Validate form
@@ -686,6 +718,9 @@ $(document).ready(function () {
     }
     else if (targetTab === '#contacts') {
       loadContacts();
+    }
+    else if (targetTab === '#newsletters') {
+      loadNewsletters();
     }
   });
   // Handle logout button

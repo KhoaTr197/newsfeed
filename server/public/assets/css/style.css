@@ -9,7 +9,7 @@ License: GPL
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
-body{background:#f5f5f5}
+body{background:#f5f5f5; font-size: 16px}
 ul{padding:0; margin:0; list-style:none}
 a{text-decoration:none; color:#2f2f2f}
 a:hover{color:#646464; text-decoration:none}
@@ -84,10 +84,10 @@ img:hover{opacity:0.75}
 #newsSection{float:left; display:inline; width:100%; padding:0 30px; background-color:#fff; padding-bottom:20px}
 .latest_newsarea{float:left; display:inline; width:100%; background-color:#000; position:relative}
 .latest_newsarea span{ color:#fff; font-family:Oswald,sans-serif; font-size:15px; left:0; line-height:1.8em; margin-right:20px; overflow:hidden; padding:2px 18px 1px 19px; position:absolute; z-index:15}
-.social_area{ position:absolute; right:0; top:0; background:#fff; border-top:1px solid #ccc; border-bottom:1px solid #ccc; border-right:1px solid #ccc; height:31px}
+.social_area{ position:absolute; right:0; top:0; height:31px}
 .social_nav{ text-align:right}
 .social_nav li{ display:block; float:left}
-.social_nav li a{ display:block; float:left; height:30px; text-indent:-9999px; width:30px; border-left:1px solid #ccc; -webkit-transition:all 0.5s; -moz-transition:all 0.5s; -ms-transition:all 0.5s;  -o-transition:all 0.5s; transition:all 0.5s}
+.social_nav li a{ display:block; float:left; height:30px; text-indent:-9999px; width:30px; -webkit-transition:all 0.5s; -moz-transition:all 0.5s; -ms-transition:all 0.5s;  -o-transition:all 0.5s; transition:all 0.5s}
 .social_nav li.facebook a{ background-image:url("images/socials.png"); background-position:0 -30px; background-size:270px 60px}
 .social_nav li.facebook a:hover{ background-position:0 0px; background-size:270px 60px; background-color:#436eac}
 .social_nav li.twitter a{ background-image:url("images/socials.png"); background-position:-30px -30px; background-size:270px 60px}
@@ -144,7 +144,7 @@ img:hover{opacity:0.75}
 .spost_nav li{float:left; display:block; width:100%; margin-bottom:10px}
 .spost_nav .media-left{width:100px; height:80px}
 .media-left > img{height:70px; width:90px}
-.spost_nav .media-body > a{font-family:"Oswald",sans-serif}
+.spost_nav .media-body > a{font-family:"Oswald",sans-serif; font-size:16px}
 .featured_img{position:relative}
 .overlay:hover{ background:none repeat scroll 0 0 rgba(0,0,0,0.4)}
 .overlay{ bottom:0; display:block; left:0; position:absolute; width:100%; z-index:2; height:100%; -webkit-transition:all 0.5s; -mz-transition:all 0.5s; -ms-transition:all 0.5s; -o-transition:all 0.5s; transition:all 0.5s}
@@ -269,11 +269,11 @@ li.pagination-btn {
 .single_page{float:left; display:inline; width:100%}
 .single_page > h1{color:#333; font-family:Oswald,arial,Georgia,serif; font-size:30px; line-height:1.4em; margin:10px 0 -10px; padding:0 0 4px; text-transform:uppercase}
 .post_commentbox{display:inline; float:left; width:100%; border-top:1px solid #ddd; border-bottom:1px solid #ddd; margin-top:20px; padding:5px 0px}
-.post_commentbox a, .post_commentbox span{color:#798992; font-size:11px; margin-right:5px}
+.post_commentbox a, .post_commentbox span{color:#798992; font-size:14px; margin-right:5px}
 .post_commentbox a > i, .post_commentbox span > i{margin-right:5px}
 .breadcrumb{background-color:#303030; border-radius:0}
 .breadcrumb li a{color:#fff}
-.single_page_content{display:inline; float:left; padding-top:20px; width:100%; border-bottom:1px solid #ddd; padding-bottom:20px}
+.single_page_content{display:inline; float:left; padding-top:20px; width:100%; border-bottom:1px solid #ddd; padding-bottom:20px; font-size:16px; line-height:1.6}
 .single_page_content > img{max-width:100%; width:320px; height:213px; margin-bottom:15px}
 .single_page_content ul{position:relative; padding-left:25px}
 .single_page_content ul li{line-height:25px}

@@ -7,19 +7,13 @@ $(document).ready(function () {
   $("#submitContactForm").on("click", function () {
     const name = $("#name").val();
     const email = $("#email").val();
+    const tel = $("#tel").val();
+    const title = $("#title").val();
     const message = $("#message").val();
 
     // Validate form fields
-    if (!name) {
-      alert("Please fill in name field!");
-      return;
-    }
-    if (!email) {
-      alert("Please fill in email field!");
-      return;
-    }
-    if (!message) {
-      alert("Please fill in message field!");
+    if (!name || !email || !message || !title || !tel) {
+      alert("Please fill in all required fields!");
       return;
     }
 
@@ -31,6 +25,8 @@ $(document).ready(function () {
       data: JSON.stringify({
         name,
         email,
+        tel,
+        title,
         message,
       }),
       success: function () {
@@ -38,6 +34,8 @@ $(document).ready(function () {
         alert("Message sent successfully!");
         $("#name").val("");
         $("#email").val("");
+        $("#tel").val("");
+        $("#title").val("");
         $("#message").val("");
         // Close the modal
         $("#contactModal").modal("hide");
