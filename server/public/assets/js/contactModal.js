@@ -26,6 +26,19 @@ $(document).ready(function () {
       alert("Please fill in all required fields!");
       return;
     }
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert("Please enter a valid email address!");
+      return;
+    }
+
+    // Validate phone number
+    const phoneRegex = /^0[0-9]{9}$/;
+    if (!phoneRegex.test(tel)) {
+      alert("Please enter a valid phone number!");
+      return;
+    }
 
     // Submit form via AJAX
     $.ajax({
