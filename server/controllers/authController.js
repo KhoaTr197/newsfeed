@@ -60,6 +60,7 @@ const login = async (req, res) => {
   const token = auth.generateToken({ username, password, role: isAdmin ? "admin" : "author" });
 
   res.cookie('token', token, {
+    path: '/',
     httpOnly: true, // Prevents JavaScript access
     sameSite: 'strict', // Prevents cross-site cookie
     maxAge: 3600000 * 24 // 1 hour in milliseconds
@@ -116,7 +117,20 @@ const signup = async (req, res) => {
 // Logout controller
 const logout = async (req, res) => {
   // Clear cookie
-  res.clearCookie('token');
+  res.clearCookie('token', {
+    path: '/',
+    httpOnly: true, // Prevents JavaScript access
+    sameSite: 'strict', // Prevents cross-site cookie
+  });
+
+  // Set cache control headers to prevent caching
+  res.set({
+    'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+    'Pragma': 'no-cache',
+    'Expires': '0',
+    'Surrogate-Control': 'no-store'
+  });
+
   res.json({
     success: true,
     message: "Logged out successfully!"
