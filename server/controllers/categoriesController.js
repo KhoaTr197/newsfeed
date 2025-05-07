@@ -5,9 +5,7 @@ const categoriesService = require("../services/categoriesService");
 const getAllCategories = async (req, res) => {
   try {
     const categories = await categoriesService.getAllCategories();
-    res
-      .set('Content-Type', 'application/json; charset=utf-8')
-      .json(categories);
+    res.set("Content-Type", "application/json; charset=utf-8").json(categories);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -21,10 +19,9 @@ const updateCategory = async (req, res) => {
     console.log(req.body);
     await categoriesService.updateCategory(id, name);
 
-    res.json({ message: 'Category updated successfully' });
+    res.json({ message: "Category updated successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
-
   }
 };
 
@@ -32,9 +29,12 @@ const updateCategory = async (req, res) => {
 const addCategory = async (req, res) => {
   try {
     const { name, status } = req.body;
-    await categoriesService.addCategory(name, status);
+    const newCategory = await categoriesService.addCategory(name, status);
 
-    res.json({ message: "Category added successfully" });
+    res.json({
+      newCategory: newCategory,
+      message: "Category added successfully",
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -50,7 +50,7 @@ const activeCategory = async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-}
+};
 
 // disable category
 const disableCategory = async (req, res) => {
@@ -62,7 +62,7 @@ const disableCategory = async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-}
+};
 
 module.exports = {
   getAllCategories,

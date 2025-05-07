@@ -1,4 +1,4 @@
-const connection = require('../db/database');
+const connection = require("../db/database");
 // ---------------------------------------------
 
 // get all articles
@@ -24,7 +24,7 @@ const getAllActiveArticles = async (cate_ids, limit) => {
     let limitClause = limit ? `LIMIT ${limit}` : "";
 
     if (cate_ids && cate_ids.length > 0) {
-      whereClause += ` AND articles.cate_id IN (${cate_ids.join(',')})`;
+      whereClause += ` AND articles.cate_id IN (${cate_ids.join(",")})`;
     }
 
     const queryStr = `
@@ -94,21 +94,31 @@ const getArticlesByCategoryId = async (cate_id) => {
 };
 
 // search articles by keyword
-const searchArticlesByKeyword = async (keyword, page, limit, category, sort = 'newest') => {
+const searchArticlesByKeyword = async (
+  keyword,
+  page,
+  limit,
+  category,
+  sort = "newest"
+) => {
   try {
     // Build the WHERE clause
-    let whereClause = keyword ? `AND articles.title LIKE '%${keyword}%' OR articles.content LIKE '%${keyword}%'` : "";
+    let whereClause = keyword
+      ? `AND articles.title LIKE '%${keyword}%' OR articles.content LIKE '%${keyword}%'`
+      : "";
 
     // Add category filter if provided
-    whereClause += category ? `AND articles.cate_id = ${parseInt(category)}` : "";
+    whereClause += category
+      ? `AND articles.cate_id = ${parseInt(category)}`
+      : "";
 
     // Determine sort order
     let orderBy;
     switch (sort) {
-      case 'oldest':
+      case "oldest":
         orderBy = "articles.published_date ASC";
         break;
-      case 'newest':
+      case "newest":
       default:
         orderBy = "articles.published_date DESC";
         break;
@@ -135,9 +145,10 @@ const searchArticlesByKeyword = async (keyword, page, limit, category, sort = 'n
       LIMIT ? OFFSET ?
     `;
 
-
-
-    const [articles] = await connection.query(queryStr, [parseInt(limit), parseInt(offset)]);
+    const [articles] = await connection.query(queryStr, [
+      parseInt(limit),
+      parseInt(offset),
+    ]);
 
     return [articles, countData[0].resultCount];
   } catch (error) {
@@ -157,7 +168,13 @@ const getRelatedArticles = async (article, limit) => {
       WHERE articles.id != ? and (articles.title LIKE ? or articles.user_id = ? or articles.cate_id = ?) and articles.status = 1
       LIMIT ?
     `;
-    const [data] = await connection.query(queryStr, [id, `%${title}%`, user_id, cate_id, limit]);
+    const [data] = await connection.query(queryStr, [
+      id,
+      `%${title}%`,
+      user_id,
+      cate_id,
+      limit,
+    ]);
     return data;
   } catch (err) {
     throw err;
@@ -216,13 +233,36 @@ const getCommentsByArticleId = async (id) => {
 };
 
 // add new aricle
-const addArticle = async (title, content, published_date, user_id, cate_id, status) => {
+const addArticle = async (
+  title,
+  content,
+  published_date,
+  user_id,
+  cate_id,
+  status
+) => {
   try {
-    const queryStr = "INSERT INTO articles (title, content, published_date, user_id, cate_id, status) VALUES (?, ?, ?, ?, ?, ?)";
-    const [result] = await connection.query(queryStr, [title, content, published_date, user_id, cate_id, status]);
-    return result.insertId; // Return the ID of the newly inserted article
+    const queryStr =
+      "INSERT INTO articles (title, content, published_date, user_id, cate_id, status) VALUES (?, ?, ?, ?, ?, ?)";
+    const [result] = await connection.query(queryStr, [
+      title,
+      content,
+      published_date,
+      user_id,
+      cate_id,
+      status,
+    ]);
+    return {
+      id: result.insertId,
+      title,
+      content,
+      published_date,
+      user_id,
+      cate_id,
+      status,
+    }; // Return newly inserted article
   } catch (err) {
-    console.error('Error in articlesService.addArticle:', err);
+    console.error("Error in articlesService.addArticle:", err);
     throw err;
   }
 };
@@ -230,7 +270,8 @@ const addArticle = async (title, content, published_date, user_id, cate_id, stat
 // add comment
 const addComment = async (email, content, article_id, created_at) => {
   try {
-    const queryStr = "INSERT INTO comments (email, content, article_id, created_at) VALUES (?, ?, ?, ?)";
+    const queryStr =
+      "INSERT INTO comments (email, content, article_id, created_at) VALUES (?, ?, ?, ?)";
     await connection.query(queryStr, [email, content, article_id, created_at]);
     return true;
   } catch (err) {
@@ -239,10 +280,29 @@ const addComment = async (email, content, article_id, created_at) => {
 };
 
 // update article
-const updateArticle = async (id, title, content, thumbnail, published_date, user_id, cate_id, status) => {
+const updateArticle = async (
+  id,
+  title,
+  content,
+  thumbnail,
+  published_date,
+  user_id,
+  cate_id,
+  status
+) => {
   try {
-    const queryStr = "UPDATE articles SET title = ?, content = ?, thumbnail = ?, published_date = ?, user_id = ?, cate_id = ?, status = ? WHERE id = ?";
-    await connection.query(queryStr, [title, content, thumbnail, published_date, user_id, cate_id, status, id]);
+    const queryStr =
+      "UPDATE articles SET title = ?, content = ?, thumbnail = ?, published_date = ?, user_id = ?, cate_id = ?, status = ? WHERE id = ?";
+    await connection.query(queryStr, [
+      title,
+      content,
+      thumbnail,
+      published_date,
+      user_id,
+      cate_id,
+      status,
+      id,
+    ]);
   } catch (err) {
     throw err;
   }
@@ -267,7 +327,6 @@ const disableArticle = async (id) => {
     throw err;
   }
 };
-
 
 module.exports = {
   getAllArticles,

@@ -298,9 +298,11 @@ $(document).ready(function () {
     $.ajax({
       url: "/api/categories",
       type: "GET",
+      cache: false,
       success: function (categories) {
         allCategories = categories;
         $("#categoryCount").text(allCategories.length);
+        PaginationCategories();
       },
       error: function (xhr, status, error) {
         console.error("Error loading categories:", error);
@@ -313,9 +315,11 @@ $(document).ready(function () {
     $.ajax({
       url: "/api/users",
       type: "GET",
+      cache: false,
       success: function (users) {
         allUsers = users;
         $("#userCount").text(allUsers.length);
+        PaginationUsers();
       },
       error: function (xhr, status, error) {
         console.error("Error loading users:", error);
@@ -393,9 +397,12 @@ $(document).ready(function () {
     $.ajax({
       url: "/api/articles",
       type: "GET",
+      cache: false,
       success: function (articles) {
+        console.log("Articles fetched:", articles);
         allArticles = articles;
         $("#articleCount").text(allArticles.length);
+        PaginationArticles();
       },
       error: function (xhr, status, error) {
         console.error("Error loading articles:", error);
@@ -561,8 +568,9 @@ $(document).ready(function () {
       }),
       contentType: "application/json",
       success: function (response) {
-        const articleId = response.id;
-
+        const newArticle = response.newArticle;
+        const articleId = newArticle.id;
+        console.log("new id:" + articleId);
         // If we have an image file, upload it
         if (image) {
           // Create FormData object to send the file
@@ -580,15 +588,14 @@ $(document).ready(function () {
             success: function (imageResponse) {
               console.log("Image uploaded successfully:", imageResponse);
               $("#addArticleModal").modal("hide");
+              allArticles.push(newArticle);
               getArticles();
-              PaginationArticles();
               alert("Article added successfully with image!");
             },
             error: function (error) {
               console.error("Error uploading image:", error);
               $("#addArticleModal").modal("hide");
               getArticles();
-              PaginationArticles();
               alert(
                 "Article added but image upload failed. Please try upload later."
               );
@@ -687,8 +694,8 @@ $(document).ready(function () {
         success: function (response) {
           alert("Article activated successfully!");
           article.status = 0;
-          //getArticles();
-          PaginationArticles();
+          getArticles();
+          //PaginationArticles();
 
           $(`.article-status[data-articlestatus="${articleId}"]`)
             .removeClass("status-pending")
@@ -714,8 +721,8 @@ $(document).ready(function () {
         success: function (response) {
           alert("Article deactivated successfully!");
           article.status = 1;
-          //getArticles();
-          PaginationArticles();
+          getArticles();
+          //PaginationArticles();
 
           $(`.article-status[data-articlestatus="${articleId}"]`)
             .removeClass("status-published")
@@ -787,8 +794,9 @@ $(document).ready(function () {
       contentType: "application/json",
       success: function (response) {
         $("#addUserModal").modal("hide");
+        allUsers.push(response.newUser);
+        $("#userCount").text(allUsers.length);
         getUsers();
-        PaginationUsers();
         alert("Author added successfully!");
       },
       error: function (xhr, status, error) {
@@ -841,6 +849,7 @@ $(document).ready(function () {
       contentType: "application/json",
       success: function (response) {
         alert("Password reset successfully!");
+        getUsers();
       },
       error: function (error) {
         alert(`Error resetting password: ${error}`);
@@ -884,8 +893,8 @@ $(document).ready(function () {
         success: function (response) {
           alert("User activated successfully!");
           user.status = 1;
-          //getUsers();
-          PaginationUsers();
+          getUsers();
+          //PaginationUsers();
 
           $(`.user-status[data-userstatus="${user_id}"]`)
             .removeClass("status-inactive")
@@ -911,7 +920,8 @@ $(document).ready(function () {
         success: function (response) {
           alert("User deactivated successfully!");
           user.status = 0;
-          PaginationUsers();
+          getUsers();
+          //PaginationUsers();
           $(`.user-status[data-userstatus="${user_id}"]`)
             .removeClass("status-active")
             .addClass("status-inactive")
@@ -942,7 +952,9 @@ $(document).ready(function () {
       contentType: "application/json",
       success: function (response) {
         $("#addCategoryModal").modal("hide");
-        PaginationCategories();
+        allCategories.push(response.newCategory);
+        $("#categoryCount").text(allCategories.length);
+        getCategories();
         alert("Category added successfully!");
       },
       error: function (error) {
@@ -1010,7 +1022,8 @@ $(document).ready(function () {
         success: function (response) {
           alert("Category activated successfully!");
           category.status = 1;
-          PaginationCategories();
+          getCategories();
+          //PaginationCategories();
 
           $(`.category-status[data-categorystatus="${categoryId}"]`)
             .removeClass("status-inactive")
@@ -1036,7 +1049,8 @@ $(document).ready(function () {
         success: function (response) {
           alert("Category deactivated successfully!");
           category.status = 0;
-          PaginationCategories();
+          getCategories();
+          //PaginationCategories();
 
           $(`.category-status[data-categorystatus="${categoryId}"]`)
             .removeClass("status-active")
@@ -1072,11 +1086,11 @@ $(document).ready(function () {
     if (targetTab === "#articles") {
       getCategories();
       getUsers();
-      PaginationArticles();
+      getArticles();
     } else if (targetTab === "#users") {
-      PaginationUsers();
+      getUsers();
     } else if (targetTab === "#categories") {
-      PaginationCategories();
+      getCategories();
     } else if (targetTab === "#contacts") {
       PaginationContacts();
       $("#pending").addClass("active");
@@ -1093,7 +1107,6 @@ $(document).ready(function () {
         if (response.success) {
           window.location.href = "/";
           window.localStorage.removeItem("id");
-
         }
       },
       error: function (xhr, status, error) {

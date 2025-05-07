@@ -52,13 +52,14 @@ const getFeaturedCategories = async (limit) => {
   } catch (err) {
     throw err;
   }
-}
+};
 
 // add category
 const addCategory = async (name, status) => {
   try {
     const queryStr = "INSERT INTO categories (cate_name, status) VALUES (?, ?)";
-    await connection.query(queryStr, [name, status]);
+    const [result] = await connection.query(queryStr, [name, status]);
+    return { id: result.insertId, cate_name: name, status };
   } catch (err) {
     throw err;
   }
@@ -84,7 +85,6 @@ const activeCategory = async (id) => {
     if (data.affectedRows != 0) {
       await connection.query(articleQuery, [id]);
     }
-
   } catch (err) {
     throw err;
   }
@@ -100,7 +100,6 @@ const disableCategory = async (id) => {
     if (data.affectedRows != 0) {
       await connection.query(articleQuery, [id]);
     }
-
   } catch (err) {
     throw err;
   }

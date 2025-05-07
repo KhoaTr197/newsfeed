@@ -1,4 +1,4 @@
-const userService = require('../services/usersService');
+const userService = require("../services/usersService");
 // ---------------------------------------------
 
 // get all authors
@@ -48,7 +48,7 @@ const addAuthor = async (req, res) => {
   try {
     const { username, password, email, status } = req.body;
     await userService.addUser(username, password, email, 0, Number(status));
-    res.json({ message: 'Author added successfully' });
+    res.json({ message: "Author added successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -59,7 +59,7 @@ const updateAuthor = async (req, res) => {
   try {
     const { username, password, email, status } = req.body;
     await userService.updateUser(username, password, email, 0, Number(status));
-    res.json({ message: 'Author updated successfully' });
+    res.json({ message: "Author updated successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -69,9 +69,16 @@ const updateAuthor = async (req, res) => {
 const addUser = async (req, res) => {
   try {
     const { username, password, email, role, status } = req.body;
-    await userService.addUser(username, password, email, Number(role), Number(status));
-    res.json({ message: 'User added successfully' });
+    const newUser = await userService.addUser(
+      username,
+      password,
+      email,
+      Number(role),
+      Number(status)
+    );
+    res.json({ newUser: newUser, message: "User added successfully" });
   } catch (err) {
+    console.log(err);
     res.status(500).json({ error: err.message });
   }
 };
@@ -81,7 +88,7 @@ const updateUser = async (req, res) => {
   try {
     const { username, password, email, role } = req.body;
     await userService.updateUser(username, password, email, Number(role));
-    res.json({ message: 'User updated successfully' });
+    res.json({ message: "User updated successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -92,7 +99,7 @@ const activeUser = async (req, res) => {
   try {
     const { id } = req.body;
     await userService.activeUser(id);
-    res.json({ message: 'User activated successfully' });
+    res.json({ message: "User activated successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -103,7 +110,7 @@ const disableUser = async (req, res) => {
   try {
     const { id } = req.body;
     await userService.disableUser(id);
-    res.json({ message: 'User disabled successfully' });
+    res.json({ message: "User disabled successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -114,7 +121,7 @@ const updatePassword = async (req, res) => {
   try {
     const { username, password, newPassword } = req.body;
     await userService.updatePassword(username, password, newPassword);
-    res.json({ message: 'Password updated successfully' });
+    res.json({ message: "Password updated successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -125,7 +132,7 @@ const resetPassword = async (req, res) => {
   try {
     const { username } = req.body;
     await userService.resetPassword(username);
-    res.json({ message: 'Password reset successfully' });
+    res.json({ message: "Password reset successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -143,5 +150,5 @@ module.exports = {
   activeUser,
   disableUser,
   updatePassword,
-  resetPassword
+  resetPassword,
 };

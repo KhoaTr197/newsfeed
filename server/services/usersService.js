@@ -1,4 +1,4 @@
-const connection = require('../db/database');
+const connection = require("../db/database");
 // ---------------------------------------------
 
 // User-related database functions
@@ -8,7 +8,6 @@ const getAllAuthors = async () => {
     const queryStr = "SELECT * FROM users WHERE role = 0";
     const [data] = await connection.query(queryStr);
     return data;
-
   } catch (err) {
     throw err;
   }
@@ -20,7 +19,6 @@ const getAllUsers = async () => {
     const queryStr = "SELECT * FROM users";
     const [data] = await connection.query(queryStr);
     return data;
-
   } catch (err) {
     throw err;
   }
@@ -40,46 +38,66 @@ const getUserById = async (id) => {
 // add user
 const addUser = async (username, password, email, role, status) => {
   try {
-    const queryStr = "INSERT INTO users (username, password, email, role, status) VALUES (?, MD5(?), ?, ?, ?)";
-    await connection.query(queryStr, [username, password, email, role, status]);
+    const queryStr =
+      "INSERT INTO users (username, password, email, role, status) VALUES (?, MD5(?), ?, ?, ?)";
+    const [result] = await connection.query(queryStr, [
+      username,
+      password,
+      email,
+      role,
+      status,
+    ]);
 
-    return true;
+    return { id: result.insertId, username, password: "", email, role, status };
   } catch (err) {
     // Handle other database errors with custom messages
-    if (err.code === 'ER_DUP_ENTRY') {
-      if (err.message.includes('username')) {
-        throw new Error("Username is already taken. Please choose a different username.");
-      } else if (err.message.includes('email')) {
-        throw new Error("Email address is already registered. Please use a different email or try to login.");
+    if (err.code === "ER_DUP_ENTRY") {
+      if (err.message.includes("username")) {
+        throw new Error(
+          "Username is already taken. Please choose a different username."
+        );
+      } else if (err.message.includes("email")) {
+        throw new Error(
+          "Email address is already registered. Please use a different email or try to login."
+        );
       } else {
         throw new Error("This account already exists. Please try to login.");
       }
     }
 
-    throw new Error("An error occurred while creating your account. Please try again later.");
+    throw new Error(
+      "An error occurred while creating your account. Please try again later."
+    );
   }
 };
 
 // update user
 const updateUser = async (username, password, email, role) => {
   try {
-    const queryStr = "UPDATE users SET password = MD5(?), email = ?, role = ? WHERE username = ?";
+    const queryStr =
+      "UPDATE users SET password = MD5(?), email = ?, role = ? WHERE username = ?";
     await connection.query(queryStr, [password, email, role, username]);
 
     return true;
   } catch (err) {
     // Handle other database errors with custom messages
-    if (err.code === 'ER_DUP_ENTRY') {
-      if (err.message.includes('username')) {
-        throw new Error("Username is already taken. Please choose a different username.");
-      } else if (err.message.includes('email')) {
-        throw new Error("Email address is already registered. Please use a different email or try to login.");
+    if (err.code === "ER_DUP_ENTRY") {
+      if (err.message.includes("username")) {
+        throw new Error(
+          "Username is already taken. Please choose a different username."
+        );
+      } else if (err.message.includes("email")) {
+        throw new Error(
+          "Email address is already registered. Please use a different email or try to login."
+        );
       } else {
         throw new Error("This account already exists. Please try to login.");
       }
     }
 
-    throw new Error("An error occurred while creating your account. Please try again later.");
+    throw new Error(
+      "An error occurred while creating your account. Please try again later."
+    );
   }
 };
 
@@ -106,12 +124,14 @@ const disableUser = async (id) => {
 //update password
 const updatePassword = async (username, password, newPassword) => {
   try {
-    const checkQueryStr = "SELECT * FROM users WHERE username = ? AND password = MD5(?)";
+    const checkQueryStr =
+      "SELECT * FROM users WHERE username = ? AND password = MD5(?)";
     const [data] = await connection.query(checkQueryStr, [username, password]);
     if (data.length === 0) {
       throw new Error("Current password is incorrect.");
     }
-    const queryStr = "UPDATE users SET password = MD5(?) WHERE username = ? AND password = MD5(?)";
+    const queryStr =
+      "UPDATE users SET password = MD5(?) WHERE username = ? AND password = MD5(?)";
     await connection.query(queryStr, [newPassword, username, password]);
   } catch (err) {
     throw err;
@@ -132,7 +152,8 @@ const resetPassword = async (username) => {
 // check user exist
 const checkUserExist = async (username, password) => {
   try {
-    const queryStr = "SELECT * FROM users WHERE username = ? AND password = MD5(?)";
+    const queryStr =
+      "SELECT * FROM users WHERE username = ? AND password = MD5(?)";
     const [data] = await connection.query(queryStr, [username, password]);
     return data.length > 0 ? data[0] : null;
   } catch (err) {
@@ -150,5 +171,5 @@ module.exports = {
   activeUser,
   disableUser,
   updatePassword,
-  resetPassword
+  resetPassword,
 };
