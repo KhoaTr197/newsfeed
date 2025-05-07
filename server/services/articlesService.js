@@ -140,7 +140,7 @@ const searchArticlesByKeyword = async (
       FROM articles
       JOIN categories ON articles.cate_id = categories.id
       JOIN users ON articles.user_id = users.id
-      WHERE articles.status = 1 ${whereClause}
+      WHERE articles.status = 1 AND categories.status = 1 ${whereClause}
       ORDER BY ${orderBy}
       LIMIT ? OFFSET ?
     `;
@@ -165,7 +165,7 @@ const getRelatedArticles = async (article, limit) => {
       FROM articles
       JOIN categories ON articles.cate_id = categories.id
       JOIN users ON articles.user_id = users.id
-      WHERE articles.id != ? and (articles.title LIKE ? or articles.user_id = ? or articles.cate_id = ?) and articles.status = 1
+      WHERE articles.id != ? and (articles.title LIKE ? or articles.user_id = ? or articles.cate_id = ?) and articles.status = 1 AND categories.status = 1
       LIMIT ?
     `;
     const [data] = await connection.query(queryStr, [
@@ -188,7 +188,7 @@ const getLatestArticles = async (limit) => {
       SELECT articles.*, categories.cate_name
       FROM articles
       JOIN categories ON articles.cate_id = categories.id
-      WHERE articles.status = 1
+      WHERE articles.status = 1 AND categories.status = 1
       ORDER BY published_date DESC
       LIMIT ?
     `;
@@ -206,7 +206,7 @@ const getMostViewedArticles = async (limit) => {
       SELECT articles.*, categories.cate_name
       FROM articles
       JOIN categories ON articles.cate_id = categories.id
-      WHERE articles.status = 1
+      WHERE articles.status = 1 AND categories.status = 1
       ORDER BY views DESC
       LIMIT ?
     `;
