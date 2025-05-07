@@ -1092,6 +1092,8 @@ $(document).ready(function () {
       success: function (response) {
         if (response.success) {
           window.location.href = "/";
+          window.localStorage.removeItem("id");
+
         }
       },
       error: function (xhr, status, error) {

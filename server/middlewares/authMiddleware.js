@@ -22,6 +22,14 @@ auth.generateToken = (userData) => {
 // Verify JWT token
 auth.verifyToken = (redirectRoute) => {
   return (req, res, next) => {
+    // Set cache control headers to prevent caching of protected pages
+    res.set({
+      'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0',
+      'Surrogate-Control': 'no-store'
+    });
+
     // Check for token in cookies, headers, or query params
     const token = req.cookies?.token || req.headers['authorization'] || req.query?.token;
 
