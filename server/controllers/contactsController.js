@@ -11,8 +11,19 @@ const getAllContacts = async (req, res) => {
 
 const addContact = async (req, res) => {
   try {
-    const { name, email, message } = req.body;
-    await contactService.addContact(name, email, message);
+    const { name, email, tel, title, message } = req.body;
+    const result = await contactService.addContact(
+      name,
+      email,
+      tel,
+      title,
+      message
+    );
+    res.status(200).json({
+      success: true,
+      message: "Message sent successfully!",
+      data: result,
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -30,7 +41,7 @@ const updateContactStatus = async (req, res) => {
     }
 
     const result = await contactService.updateContactStatus(status, id);
-    console.log(result);
+
     res.status(200).json({
       success: true,
       message: "Status updated successfully",
