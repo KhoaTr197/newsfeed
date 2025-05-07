@@ -694,7 +694,6 @@ $(document).ready(function () {
       $("#editArticleId").val(article.id);
       $("#editTitle").val(article.title);
       $("#editContent").val(article.content);
-      $("#editThumbnail").val(article.thumbnail);
 
       // Clear existing options
       $("#editCategory, #editAuthor").empty();
@@ -760,7 +759,6 @@ $(document).ready(function () {
       data: JSON.stringify({
         title,
         content,
-        thumbnail: "", // Will be updated after image upload
         cate_id,
         user_id,
         status,
@@ -779,7 +777,7 @@ $(document).ready(function () {
 
           // Upload the image
           $.ajax({
-            url: "/api/image",
+            url: "/api/images",
             type: "POST",
             data: formData,
             processData: false, // Don't process the data
@@ -848,7 +846,7 @@ $(document).ready(function () {
 
           // Upload the image
           $.ajax({
-            url: "/api/image",
+            url: "/api/images",
             type: "PUT",
             data: formData,
             processData: false, // Don't process the data

@@ -118,14 +118,13 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="articlePublished_date">Published Date</label>
-                        <input type="datetime-local" class="form-control" id="articlePublished_date"
-                          placeholder="Enter thumbnail URL">
+                        <input type="datetime-local" class="form-control" id="articlePublished_date">
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label for="articleThumbnail">Thumbnail URL</label>
-                        <input type="text" class="form-control" id="articleThumbnail" placeholder="Enter thumbnail URL">
+                        <label for="articleImage">Article's Image</label>
+                        <input required type="file" accept="image/*" class="form-control" id="articleImage">
                       </div>
                     </div>
                   </div>
@@ -136,8 +135,7 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="articleContent">Content</label>
-                        <textarea class="editor-content" id="articleContent">
-                        </textarea>
+                        <textarea class="editor-content" id="articleContent"></textarea>
                       </div>
                     </div>
 
@@ -249,6 +247,63 @@
                     <button type="button" class="btn btn-primary" id="update">Update</button>
                   </div>
                 </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Edit Article Modal -->
+        <div class="modal fade" id="editArticleModal" tabindex="-1" role="dialog"
+          aria-labelledby="editArticleModalLabel">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="editArticleModalLabel">Edit Article</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form id="editArticleForm">
+                  <input type="hidden" id="editArticleId" />
+                  <div class="form-group">
+                    <label for="editTitle">Title</label>
+                    <input type="text" class="form-control" id="editTitle" placeholder="Enter article title" />
+                  </div>
+                  <div class="form-group">
+                    <label for="editContent">Content</label>
+                    <textarea class="form-control" id="editContent" rows="10"
+                      placeholder="Enter article content"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="image">Article's Image</label>
+                    <input required type="file" accept="image/*" class="form-control" id="editImage" />
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="editCategory">Category</label>
+                        <select class="form-control" id="editCategory">
+                          <!-- TODO: Loop through categories -->
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="editPublished_date">Published Date</label>
+                        <input type="datetime-local" class="form-control" id="editPublished_date" />
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                  Close
+                </button>
+                <button type="button" class="btn btn-primary" id="editArticleBtn">
+                  Save Changes
+                </button>
               </div>
             </div>
           </div>

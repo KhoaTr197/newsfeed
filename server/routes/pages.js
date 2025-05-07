@@ -48,7 +48,7 @@ router.get("/detail/:id", async (req, res) => {
 
     const [article, categoriesMenu, websiteInfo, mostViewedArticles] = [
       await articlesService.getArticleById(id),
-      await categoriesService.getAllActive(5),
+      await categoriesService.getAllActiveCategories(5),
       await websiteInfoService.getWebsiteInfo(),
       await articlesService.getMostViewedArticles(5)
     ];

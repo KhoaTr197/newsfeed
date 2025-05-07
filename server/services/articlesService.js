@@ -216,10 +216,10 @@ const getCommentsByArticleId = async (id) => {
 };
 
 // add new aricle
-const addArticle = async (title, content, thumbnail, published_date, user_id, cate_id, status) => {
+const addArticle = async (title, content, published_date, user_id, cate_id, status) => {
   try {
-    const queryStr = "INSERT INTO articles (title, content, thumbnail, published_date, user_id, cate_id, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    const [result] = await connection.query(queryStr, [title, content, thumbnail, published_date, user_id, cate_id, status]);
+    const queryStr = "INSERT INTO articles (title, content, published_date, user_id, cate_id, status) VALUES (?, ?, ?, ?, ?, ?)";
+    const [result] = await connection.query(queryStr, [title, content, published_date, user_id, cate_id, status]);
     return result.insertId; // Return the ID of the newly inserted article
   } catch (err) {
     console.error('Error in articlesService.addArticle:', err);

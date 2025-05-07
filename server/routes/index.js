@@ -9,7 +9,7 @@ router.use('/api/articles', require('./api/articles'));
 router.use('/api/categories', require('./api/categories'));
 router.use('/api/contacts', require('./api/contacts'));
 router.use('/api/newsletter', require('./api/newsletter'));
-router.use('/api/image', require('./api/image'));
+router.use('/api/images', require('./api/images'));
 
 //html pages route
 router.use('/', require('./pages'))
