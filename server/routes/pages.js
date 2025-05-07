@@ -10,11 +10,13 @@ router.get(["/", "/index", "/homepage"], async (req, res) => {
   try {
     const [
       featuredCategories,
+      categoriesMenu,
       latestArticles,
       mostViewedArticles,
       websiteInfo
     ] = [
         await categoriesService.getFeaturedCategories(5),
+        await categoriesService.getAllActiveCategories(5),
         await articlesService.getLatestArticles(5),
         await articlesService.getMostViewedArticles(5),
         await websiteInfoService.getWebsiteInfo()
@@ -29,6 +31,7 @@ router.get(["/", "/index", "/homepage"], async (req, res) => {
 
     res.render("index", {
       featuredCategories,
+      categoriesMenu,
       featuredArticles,
       latestArticles,
       mostViewedArticles,
@@ -43,8 +46,9 @@ router.get("/detail/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    const [article, websiteInfo, mostViewedArticles] = [
+    const [article, categoriesMenu, websiteInfo, mostViewedArticles] = [
       await articlesService.getArticleById(id),
+      await categoriesService.getAllActive(5),
       await websiteInfoService.getWebsiteInfo(),
       await articlesService.getMostViewedArticles(5)
     ];
@@ -59,6 +63,7 @@ router.get("/detail/:id", async (req, res) => {
 
     res.render("detail", {
       ...article,
+      categoriesMenu,
       relatedArticles,
       websiteInfo,
       mostViewedArticles
@@ -93,8 +98,9 @@ router.get("/signup", async (req, res) => {
 // Categories page - show all categories
 router.get("/categories", async (req, res) => {
   try {
-    const [categories, categoryCounts, latestArticles, websiteInfo] = [
+    const [categories, categoriesMenu, categoryCounts, latestArticles, websiteInfo] = [
       await categoriesService.getAllActiveCategories(),
+      await categoriesService.getAllActiveCategories(5),
       await categoriesService.countArticlesByCategory(),
       await articlesService.getLatestArticles(5),
       await websiteInfoService.getWebsiteInfo(),
@@ -111,10 +117,11 @@ router.get("/categories", async (req, res) => {
     }
 
     res.render("categories", {
-      categories: categories,
+      categories,
+      categoriesMenu,
       categoryCounts: categoryCountsObj,
-      latestArticles: latestArticles,
-      websiteInfo: websiteInfo,
+      latestArticles,
+      websiteInfo,
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -129,6 +136,7 @@ router.get("/search", async (req, res) => {
     const [
       allCategories,
       [articles, resultCount],
+      mostViewedArticles,
       websiteInfo
     ] = [
         await categoriesService.getAllActiveCategories(),
@@ -139,10 +147,12 @@ router.get("/search", async (req, res) => {
           category,
           sort
         ),
+        await articlesService.getMostViewedArticles(5),
         await websiteInfoService.getWebsiteInfo()
       ];
 
     res.render("search", {
+      allCategories,
       articles,
       searchTerm: keyword,
       resultCount,
@@ -151,7 +161,7 @@ router.get("/search", async (req, res) => {
       itemsPerPage: limit,
       category,
       sort,
-      allCategories,
+      mostViewedArticles,
       websiteInfo,
     });
   } catch (err) {
@@ -199,11 +209,12 @@ router.get(
 // 404 route
 router.get("*", async (req, res) => {
   try {
-    const [websiteInfo, mostViewedArticles] = [
+    const [categoriesMenu, websiteInfo, mostViewedArticles] = [
+      await categoriesService.getAllActiveCategories(5),
       await websiteInfoService.getWebsiteInfo(),
       await articlesService.getMostViewedArticles(5)
     ];
-    res.render("404", { websiteInfo, mostViewedArticles });
+    res.render("404", { categoriesMenu, websiteInfo, mostViewedArticles });
   } catch (err) {
     res.render("404");
   }

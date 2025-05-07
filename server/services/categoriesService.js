@@ -12,9 +12,10 @@ const getAllCategories = async () => {
   }
 };
 
-const getAllActiveCategories = async () => {
+const getAllActiveCategories = async (limit) => {
   try {
-    const queryStr = "SELECT * FROM categories WHERE status = 1";
+    const limitClause = limit ? `LIMIT ${limit}` : "";
+    const queryStr = `SELECT * FROM categories WHERE status = 1 ${limitClause}`;
     const [data] = await connection.query(queryStr);
     return data;
   } catch (err) {

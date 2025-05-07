@@ -5,7 +5,7 @@
   <body>
     <%- include('partials/preloader') %>
       <div class="container">
-        <%- include('partials/header') %>
+        <%- include('partials/header', { categoriesMenu: allCategories.slice(0, 5) }) %>
           <%- include('partials/news-ticker') %>
             <section id="contentSection">
               <div class="row">
@@ -13,8 +13,7 @@
                   <div class="left_content">
                     <div class="single_post_content">
                       <h2><span>
-                          <%= resultCount %> search results for: "<%= searchTerm %>" in <%= category ? category
-                                : 'all categories' %>
+                          <%= resultCount %> search results
                         </span></h2>
 
                       <!-- Filter and Sort Options -->

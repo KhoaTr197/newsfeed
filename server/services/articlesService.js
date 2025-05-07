@@ -96,14 +96,10 @@ const getArticlesByCategoryId = async (cate_id) => {
 const searchArticlesByKeyword = async (keyword, page, limit, category, sort = 'newest') => {
   try {
     // Build the WHERE clause
-    let whereClause = "articles.title LIKE ? OR articles.content LIKE ? AND articles.status = 1";
-    const queryParams = [`%${keyword}%`, `%${keyword}%`];
+    let whereClause = keyword ? `AND articles.title LIKE '%${keyword}%' OR articles.content LIKE '%${keyword}%'` : "";
 
     // Add category filter if provided
-    if (category) {
-      whereClause += " AND articles.cate_id = ?";
-      queryParams.push(category);
-    }
+    whereClause += category ? `AND articles.cate_id = ${parseInt(category)}` : "";
 
     // Determine sort order
     let orderBy;
@@ -121,10 +117,10 @@ const searchArticlesByKeyword = async (keyword, page, limit, category, sort = 'n
     const countQueryStr = `
       SELECT COUNT(*) as resultCount
       FROM articles
-      WHERE ${whereClause}
+      WHERE articles.status = 1 ${whereClause}
     `;
 
-    const [countData] = await connection.query(countQueryStr, queryParams);
+    const [countData] = await connection.query(countQueryStr);
 
     // Main query with pagination
     const offset = (page - 1) * limit;
@@ -133,15 +129,14 @@ const searchArticlesByKeyword = async (keyword, page, limit, category, sort = 'n
       FROM articles
       JOIN categories ON articles.cate_id = categories.id
       JOIN users ON articles.user_id = users.id
-      WHERE ${whereClause}
+      WHERE articles.status = 1 ${whereClause}
       ORDER BY ${orderBy}
       LIMIT ? OFFSET ?
     `;
 
-    // Add pagination parameters
-    const mainQueryParams = [...queryParams, parseInt(limit), parseInt(offset)];
 
-    const [articles] = await connection.query(queryStr, mainQueryParams);
+
+    const [articles] = await connection.query(queryStr, [parseInt(limit), parseInt(offset)]);
 
     return [articles, countData[0].resultCount];
   } catch (error) {

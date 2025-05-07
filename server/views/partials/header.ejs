@@ -50,17 +50,14 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categories
             <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <% if (typeof categories !=='undefined' && categories.length> 0) { %>
-              <% categories.forEach(category=> { %>
-                <li><a href="/category/<%= category.id %>">
+            <% if (categoriesMenu) { %>
+              <% categoriesMenu.forEach(category=> { %>
+                <li><a href="/search?category=<%= category.id %>">
                     <%= category.cate_name %>
                   </a></li>
                 <% }); %>
-                  <% } else { %>
+                  <% } %>
                     <li><a href="/categories">View All Categories</a></li>
-                    <% } %>
-                      <li class="divider"></li>
-                      <li><a href="/categories"><strong>See All Categories</strong></a></li>
           </ul>
         </li>
         <!-- Other menu items can go here -->
