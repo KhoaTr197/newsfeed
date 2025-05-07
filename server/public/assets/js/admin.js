@@ -56,8 +56,9 @@ $(document).ready(function () {
       // Nút Previous
       $(`#${paginationId}`).append(`
         <li class="page-item ${currentPage === 1 ? "disabled" : ""}">
-          <a class="page-link" href="#" aria-label="Previous" data-page="${currentPage - 1
-        }">
+          <a class="page-link" href="#" aria-label="Previous" data-page="${
+            currentPage - 1
+          }">
             <span aria-hidden="true">«</span>
           </a>
         </li>
@@ -75,8 +76,9 @@ $(document).ready(function () {
       // Nút Next
       $(`#${paginationId}`).append(`
         <li class="page-item ${currentPage === pageCount ? "disabled" : ""}">
-          <a class="page-link" href="#" aria-label="Next" data-page="${currentPage + 1
-        }">
+          <a class="page-link" href="#" aria-label="Next" data-page="${
+            currentPage + 1
+          }">
             <span aria-hidden="true">»</span>
           </a>
         </li>
@@ -111,21 +113,25 @@ $(document).ready(function () {
               <td>${user.id}</td>
               <td>${user.username}</td>
               <td>${user.email}</td>
-              <td>${user.role
-          ? '<span class="badge status-info">Admin</span>'
-          : '<span class="badge">User</span>'
-        }</td>
-              <td>${user.status
-          ? `<span class="badge user-status status-active" data-userstatus=${user.id}>Active</span>`
-          : `<span class="badge user-status status-inactive" data-userstatus=${user.id}>Inactive</span>`
-        }</td>
+              <td>${
+                user.role
+                  ? '<span class="badge status-info">Admin</span>'
+                  : '<span class="badge">User</span>'
+              }</td>
+              <td>${
+                user.status
+                  ? `<span class="badge user-status status-active" data-userstatus=${user.id}>Active</span>`
+                  : `<span class="badge user-status status-inactive" data-userstatus=${user.id}>Inactive</span>`
+              }</td>
               <td>
-                <button class="btn btn-sm btn-info edit-user" data-id="${user.id
-        }">
+                <button class="btn btn-sm btn-info edit-user" data-id="${
+                  user.id
+                }">
                   <i class="fa fa-edit"></i>
                 </button>
-                <button class="btn btn-sm ${user.status ? "btn-danger" : "btn-success"
-        } toggle-user" data-id="${user.id}">
+                <button class="btn btn-sm ${
+                  user.status ? "btn-danger" : "btn-success"
+                } toggle-user" data-id="${user.id}">
                   <i class="fa ${user.status ? "fa-ban" : "fa-check"}"></i>
                 </button>
               </td>
@@ -144,26 +150,31 @@ $(document).ready(function () {
       <tr>
               <td>${article.id}</td>
               <td>${article.title}</td>
-              <td>${allCategories.find((category) => category.id == article.cate_id)
-          ?.cate_name || "N/A"
-        }</td>
-              <td>${allUsers.find((user) => user.id == article.user_id)?.username ||
-        "N/A"
-        }</td>
+              <td>${
+                allCategories.find((category) => category.id == article.cate_id)
+                  ?.cate_name || "N/A"
+              }</td>
+              <td>${
+                allUsers.find((user) => user.id == article.user_id)?.username ||
+                "N/A"
+              }</td>
               <td>${formatDate(article.published_date)}</td>
               <td>
-                ${article.status
-          ? `<span class="badge article-status status-published" data-articlestatus=${article.id}>Published</span>`
-          : `<span class="badge article-status status-pending" data-articlestatus=${article.id}>Pending</span>`
-        }
+                ${
+                  article.status
+                    ? `<span class="badge article-status status-published" data-articlestatus=${article.id}>Published</span>`
+                    : `<span class="badge article-status status-pending" data-articlestatus=${article.id}>Pending</span>`
+                }
               </td>
               <td>
-                <button class="btn btn-sm btn-info edit-article" data-id="${article.id
-        }">
+                <button class="btn btn-sm btn-info edit-article" data-id="${
+                  article.id
+                }">
                   <i class="fa fa-edit"></i>
                 </button>
-                <button class="btn btn-sm ${article.status ? "btn-danger" : "btn-success"
-        } toggle-article" data-id="${article.id}">
+                <button class="btn btn-sm ${
+                  article.status ? "btn-danger" : "btn-success"
+                } toggle-article" data-id="${article.id}">
                   <i class="fa ${article.status ? "fa-ban" : "fa-check"}"></i>
                 </button>
               </td>
@@ -173,27 +184,30 @@ $(document).ready(function () {
     });
   }
   //
-  function PaginationCategroties() {
+  function PaginationCategories() {
     setupPagination({
       paginationId: "categoryPagination",
       tableBodyId: "categoryTableBody",
-      data: allArticles,
+      data: allCategories,
       itemsPerPage: 5,
       renderRow: (category) => `
       <tr>
               <td>${category.id}</td>
               <td>${category.cate_name}</td>
-              <td>${category.status
-          ? `<span class="badge category-status status-active" data-categorystatus=${category.id}>Active</span>`
-          : `<span class="badge category-status status-inactive" data-categorystatus=${category.id}>Inactive</span>`
-        }</td>
+              <td>${
+                category.status
+                  ? `<span class="badge category-status status-active" data-categorystatus=${category.id}>Active</span>`
+                  : `<span class="badge category-status status-inactive" data-categorystatus=${category.id}>Inactive</span>`
+              }</td>
               <td>
-                <button class="btn btn-sm btn-info edit-category" data-id="${category.id
-        }">
+                <button class="btn btn-sm btn-info edit-category" data-id="${
+                  category.id
+                }">
                   <i class="fa fa-edit"></i>
                 </button>
-                <button class="btn btn-sm ${category.status ? "btn-danger" : "btn-success"
-        } toggle-category" data-id="${category.id}">
+                <button class="btn btn-sm ${
+                  category.status ? "btn-danger" : "btn-success"
+                } toggle-category" data-id="${category.id}">
                   <i class="fa ${category.status ? "fa-ban" : "fa-check"}"></i>
                 </button>
               </td>
@@ -232,13 +246,15 @@ $(document).ready(function () {
               <td>${formatDate(contact.created_at)}</td>
               <td>${contactStatus[contact.status]}</td>
               <td><button
-            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${contact.id
-          }"
+            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${
+              contact.id
+            }"
         data-new-status='in_progress'
           >Process
           </button></td><td><button
-            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${contact.id
-          }"
+            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${
+              contact.id
+            }"
         data-new-status='rejected'
           >Reject
           </button></td>
@@ -257,8 +273,9 @@ $(document).ready(function () {
             <td>${contact.content}</td>
             <td>${formatDate(contact.created_at)}</td>
             <td>${contactStatus[contact.status]}</td><td><button
-            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${contact.id
-          }"
+            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${
+              contact.id
+            }"
               data-new-status='resolved'
               >Done
               </button></td>
@@ -300,17 +317,20 @@ $(document).ready(function () {
             <tr>
               <td>${category.id}</td>
               <td>${category.cate_name}</td>
-              <td>${category.status
-          ? `<span class="badge category-status status-active" data-categorystatus=${category.id}>Active</span>`
-          : `<span class="badge category-status status-inactive" data-categorystatus=${category.id}>Inactive</span>`
-        }</td>
+              <td>${
+                category.status
+                  ? `<span class="badge category-status status-active" data-categorystatus=${category.id}>Active</span>`
+                  : `<span class="badge category-status status-inactive" data-categorystatus=${category.id}>Inactive</span>`
+              }</td>
               <td>
-                <button class="btn btn-sm btn-info edit-category" data-id="${category.id
-        }">
+                <button class="btn btn-sm btn-info edit-category" data-id="${
+                  category.id
+                }">
                   <i class="fa fa-edit"></i>
                 </button>
-                <button class="btn btn-sm ${category.status ? "btn-danger" : "btn-success"
-        } toggle-category" data-id="${category.id}">
+                <button class="btn btn-sm ${
+                  category.status ? "btn-danger" : "btn-success"
+                } toggle-category" data-id="${category.id}">
                   <i class="fa ${category.status ? "fa-ban" : "fa-check"}"></i>
                 </button>
               </td>
@@ -343,21 +363,25 @@ $(document).ready(function () {
               <td>${user.id}</td>
               <td>${user.username}</td>
               <td>${user.email}</td>
-              <td>${user.role
-          ? '<span class="badge status-info">Admin</span>'
-          : '<span class="badge">User</span>'
-        }</td>
-              <td>${user.status
-          ? `<span class="badge user-status status-active" data-userstatus=${user.id}>Active</span>`
-          : `<span class="badge user-status status-inactive" data-userstatus=${user.id}>Inactive</span>`
-        }</td>
+              <td>${
+                user.role
+                  ? '<span class="badge status-info">Admin</span>'
+                  : '<span class="badge">User</span>'
+              }</td>
+              <td>${
+                user.status
+                  ? `<span class="badge user-status status-active" data-userstatus=${user.id}>Active</span>`
+                  : `<span class="badge user-status status-inactive" data-userstatus=${user.id}>Inactive</span>`
+              }</td>
               <td>
-                <button class="btn btn-sm btn-info edit-user" data-id="${user.id
-        }">
+                <button class="btn btn-sm btn-info edit-user" data-id="${
+                  user.id
+                }">
                   <i class="fa fa-edit"></i>
                 </button>
-                <button class="btn btn-sm ${user.status ? "btn-danger" : "btn-success"
-        } toggle-user" data-id="${user.id}">
+                <button class="btn btn-sm ${
+                  user.status ? "btn-danger" : "btn-success"
+                } toggle-user" data-id="${user.id}">
                   <i class="fa ${user.status ? "fa-ban" : "fa-check"}"></i>
                 </button>
               </td>
@@ -400,13 +424,15 @@ $(document).ready(function () {
               <td>${formatDate(contact.created_at)}</td>
               <td>${contactStatus[contact.status]}</td>
               <td><button
-            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${contact.id
-          }"
+            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${
+              contact.id
+            }"
         data-new-status='in_progress'
           >Process
           </button></td><td><button
-            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${contact.id
-          }"
+            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${
+              contact.id
+            }"
         data-new-status='rejected'
           >Reject
           </button></td>
@@ -437,8 +463,9 @@ $(document).ready(function () {
             <td>${contact.content}</td>
             <td>${formatDate(contact.created_at)}</td>
             <td>${contactStatus[contact.status]}</td><td><button
-            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${contact.id
-          }"
+            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${
+              contact.id
+            }"
               data-new-status='resolved'
               >Done
               </button></td>
@@ -583,26 +610,31 @@ $(document).ready(function () {
             <tr>
               <td>${article.id}</td>
               <td>${article.title}</td>
-              <td>${allCategories.find((category) => category.id == article.cate_id)
-          ?.cate_name || "N/A"
-        }</td>
-              <td>${allUsers.find((user) => user.id == article.user_id)?.username ||
-        "N/A"
-        }</td>
+              <td>${
+                allCategories.find((category) => category.id == article.cate_id)
+                  ?.cate_name || "N/A"
+              }</td>
+              <td>${
+                allUsers.find((user) => user.id == article.user_id)?.username ||
+                "N/A"
+              }</td>
               <td>${formatDate(article.published_date)}</td>
               <td>
-                ${article.status
-          ? `<span class="badge article-status status-published" data-articlestatus=${article.id}>Published</span>`
-          : `<span class="badge article-status status-pending" data-articlestatus=${article.id}>Pending</span>`
-        }
+                ${
+                  article.status
+                    ? `<span class="badge article-status status-published" data-articlestatus=${article.id}>Published</span>`
+                    : `<span class="badge article-status status-pending" data-articlestatus=${article.id}>Pending</span>`
+                }
               </td>
               <td>
-                <button class="btn btn-sm btn-info edit-article" data-id="${article.id
-        }">
+                <button class="btn btn-sm btn-info edit-article" data-id="${
+                  article.id
+                }">
                   <i class="fa fa-edit"></i>
                 </button>
-                <button class="btn btn-sm ${article.status ? "btn-danger" : "btn-success"
-        } toggle-article" data-id="${article.id}">
+                <button class="btn btn-sm ${
+                  article.status ? "btn-danger" : "btn-success"
+                } toggle-article" data-id="${article.id}">
                   <i class="fa ${article.status ? "fa-ban" : "fa-check"}"></i>
                 </button>
               </td>
@@ -772,8 +804,8 @@ $(document).ready(function () {
         if (image) {
           // Create FormData object to send the file
           const formData = new FormData();
-          formData.append('id', articleId);
-          formData.append('image', image);
+          formData.append("id", articleId);
+          formData.append("image", image);
 
           // Upload the image
           $.ajax({
@@ -794,8 +826,10 @@ $(document).ready(function () {
               $("#addArticleModal").modal("hide");
               getArticles();
               PaginationArticles();
-              alert("Article added but image upload failed. Please try upload later.");
-            }
+              alert(
+                "Article added but image upload failed. Please try upload later."
+              );
+            },
           });
         } else {
           // No image to upload
@@ -807,7 +841,7 @@ $(document).ready(function () {
       error: function (error) {
         console.error("Error adding article:", error);
         alert("Error adding article. Please try again.");
-      }
+      },
     });
   });
   // Handle save edit article button
@@ -836,13 +870,12 @@ $(document).ready(function () {
       data: JSON.stringify(article),
       contentType: "application/json",
       success: function (response) {
-
         // If we have an image file, upload it
         if (image) {
           // Create FormData object to send the file
           const formData = new FormData();
-          formData.append('id', article.id);
-          formData.append('image', article.image);
+          formData.append("id", article.id);
+          formData.append("image", article.image);
 
           // Upload the image
           $.ajax({
@@ -863,8 +896,10 @@ $(document).ready(function () {
               $("#editArticleModal").modal("hide");
               getArticles();
               PaginationArticles();
-              alert("Article updated but image upload failed. Please try upload later.");
-            }
+              alert(
+                "Article updated but image upload failed. Please try upload later."
+              );
+            },
           });
         }
       },
@@ -1147,7 +1182,7 @@ $(document).ready(function () {
         $("#addCategoryModal").modal("hide");
         getCategories();
         //loadCategories();
-        PaginationCategroties();
+        PaginationCategories();
         alert("Category added successfully!");
       },
       error: function (error) {
@@ -1170,7 +1205,7 @@ $(document).ready(function () {
         $("#editCategoryModal").modal("hide");
         getCategories();
         //loadCategories();
-        PaginationCategroties();
+        PaginationCategories();
         alert("Category updated successfully!");
       },
       error: function (error) {
@@ -1218,7 +1253,7 @@ $(document).ready(function () {
           alert("Category activated successfully!");
           getCategories();
           //loadCategories();
-          PaginationCategroties();
+          PaginationCategories();
 
           $(`.category-status[data-categorystatus="${categoryId}"]`)
             .removeClass("status-inactive")
@@ -1245,7 +1280,7 @@ $(document).ready(function () {
           alert("Category deactivated successfully!");
           getCategories();
           //loadCategories();
-          PaginationCategroties();
+          PaginationCategories();
 
           $(`.category-status[data-categorystatus="${categoryId}"]`)
             .removeClass("status-active")
@@ -1280,7 +1315,7 @@ $(document).ready(function () {
     // Load data based on which tab is clicked
     if (targetTab === "#articles") {
       //loadCategories();
-      PaginationCategroties();
+      PaginationCategories();
       loadUsers();
       //loadArticles();
       PaginationArticles();
@@ -1289,7 +1324,7 @@ $(document).ready(function () {
       PaginationUsers();
     } else if (targetTab === "#categories") {
       //loadCategories();
-      PaginationCategroties();
+      PaginationCategories();
     } else if (targetTab === "#contacts") {
       //loadContacts();
       PaginationContacts();
