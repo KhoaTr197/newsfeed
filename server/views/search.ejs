@@ -61,7 +61,8 @@
                                 <li class="business_catgnav_item">
                                   <figure class="bsbig_fig">
                                     <a href="/detail/<%= article.id %>" class="featured_img">
-                                      <img alt="" src="/<%= article.thumbnail %>" />
+                                      <img alt="" 
+                                      src="/<%= article.thumbnail ? article.thumbnail : 'images/thumbnail/default_thumbnail.jpg'%>" />
                                       <span class="overlay"></span>
                                     </a>
                                     <figcaption>
