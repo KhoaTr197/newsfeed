@@ -307,37 +307,7 @@ $(document).ready(function () {
       },
     });
   }
-  // Function to load categories
-  function loadCategories() {
-    const categoryTableBody = $("#categoryTableBody");
-    categoryTableBody.empty();
 
-    allCategories.forEach((category) => {
-      categoryTableBody.append(`
-            <tr>
-              <td>${category.id}</td>
-              <td>${category.cate_name}</td>
-              <td>${
-                category.status
-                  ? `<span class="badge category-status status-active" data-categorystatus=${category.id}>Active</span>`
-                  : `<span class="badge category-status status-inactive" data-categorystatus=${category.id}>Inactive</span>`
-              }</td>
-              <td>
-                <button class="btn btn-sm btn-info edit-category" data-id="${
-                  category.id
-                }">
-                  <i class="fa fa-edit"></i>
-                </button>
-                <button class="btn btn-sm ${
-                  category.status ? "btn-danger" : "btn-success"
-                } toggle-category" data-id="${category.id}">
-                  <i class="fa ${category.status ? "fa-ban" : "fa-check"}"></i>
-                </button>
-              </td>
-            </tr>
-          `);
-    });
-  }
   // Function to get users
   function getUsers() {
     $.ajax({
@@ -352,43 +322,7 @@ $(document).ready(function () {
       },
     });
   }
-  // Function to load users
-  function loadUsers() {
-    const userTableBody = $("#userTableBody");
-    userTableBody.empty();
 
-    allUsers.forEach((user) => {
-      userTableBody.append(`
-            <tr>
-              <td>${user.id}</td>
-              <td>${user.username}</td>
-              <td>${user.email}</td>
-              <td>${
-                user.role
-                  ? '<span class="badge status-info">Admin</span>'
-                  : '<span class="badge">User</span>'
-              }</td>
-              <td>${
-                user.status
-                  ? `<span class="badge user-status status-active" data-userstatus=${user.id}>Active</span>`
-                  : `<span class="badge user-status status-inactive" data-userstatus=${user.id}>Inactive</span>`
-              }</td>
-              <td>
-                <button class="btn btn-sm btn-info edit-user" data-id="${
-                  user.id
-                }">
-                  <i class="fa fa-edit"></i>
-                </button>
-                <button class="btn btn-sm ${
-                  user.status ? "btn-danger" : "btn-success"
-                } toggle-user" data-id="${user.id}">
-                  <i class="fa ${user.status ? "fa-ban" : "fa-check"}"></i>
-                </button>
-              </td>
-            </tr>
-          `);
-    });
-  }
   // Function to get contacts
   function getContacts() {
     $.ajax({
@@ -402,136 +336,7 @@ $(document).ready(function () {
       },
     });
   }
-  // Function to load contacts
-  function loadContacts() {
-    const contactTableBody_pending = $("#contactTableBody_pending");
-    contactTableBody_pending.empty();
 
-    const pendingContacts = allContacts.filter(
-      (contact) => contact.status === "pending"
-    );
-
-    if (pendingContacts) {
-      pendingContacts.forEach((contact) => {
-        contactTableBody_pending.append(`
-            <tr>
-              <td>${contact.id}</td>
-              <td>${contact.name}</td>
-              <td>${contact.email}</td>
-              <td>${contact.phone}</td>
-              <td>${contact.title}</td>
-              <td>${contact.content}</td>
-              <td>${formatDate(contact.created_at)}</td>
-              <td>${contactStatus[contact.status]}</td>
-              <td><button
-            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${
-              contact.id
-            }"
-        data-new-status='in_progress'
-          >Process
-          </button></td><td><button
-            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${
-              contact.id
-            }"
-        data-new-status='rejected'
-          >Reject
-          </button></td>
-            </tr>
-          `);
-      });
-    } else {
-      contactTableBody_pending.append(`<tr>
-        <td colspan="10">No contacts</td>
-        </tr>`);
-    }
-
-    const contactTableBody_in_progress = $("#contactTableBody_in_progress");
-    contactTableBody_in_progress.empty();
-
-    const inProgressContacts = allContacts.filter(
-      (contact) => contact.status === "in_progress"
-    );
-    if (inProgressContacts) {
-      inProgressContacts.forEach((contact) => {
-        contactTableBody_in_progress.append(`
-            <tr>
-            <td>${contact.id}</td>
-            <td>${contact.name}</td>
-            <td>${contact.email}</td>
-            <td>${contact.phone}</td>
-            <td>${contact.title}</td>
-            <td>${contact.content}</td>
-            <td>${formatDate(contact.created_at)}</td>
-            <td>${contactStatus[contact.status]}</td><td><button
-            class="btn btn-sm btn-primary mx-1 btnUpdateContactStatus" data-contact-id="${
-              contact.id
-            }"
-              data-new-status='resolved'
-              >Done
-              </button></td>
-              </tr>
-              `);
-      });
-    } else {
-      contactTableBody_in_progress.append(`<tr>
-              <td colspan="10">No contacts</td>
-              </tr>`);
-    }
-
-    const contactTableBody_resolved = $("#contactTableBody_resolved");
-    contactTableBody_resolved.empty();
-
-    const resolvedContacts = allContacts.filter(
-      (contact) => contact.status === "resolved"
-    );
-    if (resolvedContacts) {
-      resolvedContacts.forEach((contact) => {
-        contactTableBody_resolved.append(`
-              <tr>
-                <td>${contact.id}</td>
-                <td>${contact.name}</td>
-                <td>${contact.email}</td>
-                <td>${contact.phone}</td>
-                <td>${contact.title}</td>
-                <td>${contact.content}</td>
-                <td>${formatDate(contact.created_at)}</td>
-                <td>${contactStatus[contact.status]}</td>
-              </tr>
-            `);
-      });
-    } else {
-      contactTableBody_resolved.append(`<tr>
-              <td colspan="10">No contacts</td>
-              </tr>`);
-    }
-
-    const contactTableBody_rejected = $("#contactTableBody_rejected");
-    contactTableBody_rejected.empty();
-
-    const rejectedContacts = allContacts.filter(
-      (contact) => contact.status === "rejected"
-    );
-    if (rejectedContacts) {
-      rejectedContacts.forEach((contact) => {
-        contactTableBody_rejected.append(`
-              <tr>
-                <td>${contact.id}</td>
-                <td>${contact.name}</td>
-                <td>${contact.email}</td>
-                <td>${contact.phone}</td>
-                <td>${contact.title}</td>
-                <td>${contact.content}</td>
-                <td>${formatDate(contact.created_at)}</td>
-                <td>${contactStatus[contact.status]}</td>
-              </tr>
-            `);
-      });
-    } else {
-      contactTableBody_rejected.append(`<tr>
-        <td colspan="10">No contacts</td>
-        </tr>`);
-    }
-  }
   // Event delegation for dynamically created buttons
   $(document).on("click", ".btnUpdateContactStatus", function (e) {
     const contactId = $(this).data("contact-id");
@@ -554,7 +359,6 @@ $(document).ready(function () {
           cache: false, // Ngăn caching để lấy dữ liệu mới nhất
           success: function (contacts) {
             allContacts = contacts;
-            //loadContacts(); // Tải lại bảng
             ["pending", "in_progress", "resolved", "rejected"].forEach(
               (status) => {
                 PaginationContacts(status);
@@ -598,50 +402,7 @@ $(document).ready(function () {
       },
     });
   }
-  // Function to load articles
-  function loadArticles() {
-    const articleTableBody = $("#articleTableBody");
-    articleTableBody.empty();
 
-    allArticles.sort((a, b) => a.id - b.id);
-
-    allArticles.forEach((article) => {
-      articleTableBody.append(`
-            <tr>
-              <td>${article.id}</td>
-              <td>${article.title}</td>
-              <td>${
-                allCategories.find((category) => category.id == article.cate_id)
-                  ?.cate_name || "N/A"
-              }</td>
-              <td>${
-                allUsers.find((user) => user.id == article.user_id)?.username ||
-                "N/A"
-              }</td>
-              <td>${formatDate(article.published_date)}</td>
-              <td>
-                ${
-                  article.status
-                    ? `<span class="badge article-status status-published" data-articlestatus=${article.id}>Published</span>`
-                    : `<span class="badge article-status status-pending" data-articlestatus=${article.id}>Pending</span>`
-                }
-              </td>
-              <td>
-                <button class="btn btn-sm btn-info edit-article" data-id="${
-                  article.id
-                }">
-                  <i class="fa fa-edit"></i>
-                </button>
-                <button class="btn btn-sm ${
-                  article.status ? "btn-danger" : "btn-success"
-                } toggle-article" data-id="${article.id}">
-                  <i class="fa ${article.status ? "fa-ban" : "fa-check"}"></i>
-                </button>
-              </td>
-            </tr>
-          `);
-    });
-  }
   // Function to get newsletter
   function getNewsletters() {
     $.ajax({
@@ -655,18 +416,20 @@ $(document).ready(function () {
       },
     });
   }
-  // Function to load newsletter
-  function loadNewsletters() {
-    const newsletterTableBody = $("#newsletterTableBody");
-    newsletterTableBody.empty();
 
-    allNewsletters.forEach((newsletter) => {
-      newsletterTableBody.append(`
-            <tr>
-              <td>${newsletter.id}</td>
-              <td>${newsletter.email}</td>
-            </tr>
-          `);
+  //Function to pagination newsletters
+  function PaginationNewsletters() {
+    setupPagination({
+      paginationId: "newsletterPagination",
+      tableBodyId: "newsletterTableBody",
+      data: allNewsletters,
+      itemsPerPage: 5,
+      renderRow: (newsletter) => `
+      <tr>
+        <td>${newsletter.id}</td>
+        <td>${newsletter.email}</td>
+      </tr>
+    `,
     });
   }
   // -----------------------------------------
@@ -923,8 +686,8 @@ $(document).ready(function () {
         contentType: "application/json",
         success: function (response) {
           alert("Article activated successfully!");
-          getArticles();
-          //loadArticles();
+          article.status = 0;
+          //getArticles();
           PaginationArticles();
 
           $(`.article-status[data-articlestatus="${articleId}"]`)
@@ -950,8 +713,8 @@ $(document).ready(function () {
         contentType: "application/json",
         success: function (response) {
           alert("Article deactivated successfully!");
-          getArticles();
-          //loadArticles();
+          article.status = 1;
+          //getArticles();
           PaginationArticles();
 
           $(`.article-status[data-articlestatus="${articleId}"]`)
@@ -1025,7 +788,6 @@ $(document).ready(function () {
       success: function (response) {
         $("#addUserModal").modal("hide");
         getUsers();
-        //loadUsers();
         PaginationUsers();
         alert("Author added successfully!");
       },
@@ -1061,7 +823,7 @@ $(document).ready(function () {
       success: function (response) {
         $("#editUserModal").modal("hide");
         getUsers();
-        loadUsers();
+        PaginationUsers();
         alert("Author updated successfully!");
       },
       error: function (error) {
@@ -1121,8 +883,9 @@ $(document).ready(function () {
         contentType: "application/json",
         success: function (response) {
           alert("User activated successfully!");
-          getUsers();
-          loadUsers();
+          user.status = 1;
+          //getUsers();
+          PaginationUsers();
 
           $(`.user-status[data-userstatus="${user_id}"]`)
             .removeClass("status-inactive")
@@ -1147,9 +910,8 @@ $(document).ready(function () {
         contentType: "application/json",
         success: function (response) {
           alert("User deactivated successfully!");
-          getUsers();
-          loadUsers();
-
+          user.status = 0;
+          PaginationUsers();
           $(`.user-status[data-userstatus="${user_id}"]`)
             .removeClass("status-active")
             .addClass("status-inactive")
@@ -1180,8 +942,6 @@ $(document).ready(function () {
       contentType: "application/json",
       success: function (response) {
         $("#addCategoryModal").modal("hide");
-        getCategories();
-        //loadCategories();
         PaginationCategories();
         alert("Category added successfully!");
       },
@@ -1203,8 +963,6 @@ $(document).ready(function () {
       contentType: "application/json",
       success: function (response) {
         $("#editCategoryModal").modal("hide");
-        getCategories();
-        //loadCategories();
         PaginationCategories();
         alert("Category updated successfully!");
       },
@@ -1251,8 +1009,7 @@ $(document).ready(function () {
         contentType: "application/json",
         success: function (response) {
           alert("Category activated successfully!");
-          getCategories();
-          //loadCategories();
+          category.status = 1;
           PaginationCategories();
 
           $(`.category-status[data-categorystatus="${categoryId}"]`)
@@ -1278,8 +1035,7 @@ $(document).ready(function () {
         contentType: "application/json",
         success: function (response) {
           alert("Category deactivated successfully!");
-          getCategories();
-          //loadCategories();
+          category.status = 0;
           PaginationCategories();
 
           $(`.category-status[data-categorystatus="${categoryId}"]`)
@@ -1314,23 +1070,18 @@ $(document).ready(function () {
 
     // Load data based on which tab is clicked
     if (targetTab === "#articles") {
-      //loadCategories();
-      PaginationCategories();
-      loadUsers();
-      //loadArticles();
+      getCategories();
+      getUsers();
       PaginationArticles();
     } else if (targetTab === "#users") {
-      //loadUsers();
       PaginationUsers();
     } else if (targetTab === "#categories") {
-      //loadCategories();
       PaginationCategories();
     } else if (targetTab === "#contacts") {
-      //loadContacts();
       PaginationContacts();
       $("#pending").addClass("active");
     } else if (targetTab === "#newsletters") {
-      loadNewsletters();
+      PaginationNewsletters();
     }
   });
   // Handle logout button
