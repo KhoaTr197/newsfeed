@@ -1,105 +1,125 @@
 <!DOCTYPE html>
 <html>
-<%- include('partials/head') %>
+  <%- include('partials/head') %>
 
   <body>
     <%- include('partials/preloader') %>
-      <div class="container">
-        <%- include('partials/header', { categoriesMenu }) %>
-          <%- include('partials/news-ticker') %>
-            <section id="contentSection">
-              <div class="row">
-                <div class="col-lg-8 col-md-8 col-sm-8">
-                  <div class="left_content">
-                    <div class="single_page">
-                      <%- include('partials/breadcrumb') %>
-                        <h1>
-                          <%= title %>
-                        </h1>
-                        <div class="post_commentbox"> <a href="#"><i class="fa fa-user"></i>
-                            <%= username %>
-                          </a> <span><i class="fa fa-calendar"></i>
-                            <%= published_date %>
-                          </span> <a href="#"><i class="fa fa-tags"></i>
-                            <%= cate_name %>
-                          </a> </div>
-                        <div class="single_page_content"> <img class="img-center" src="/<%= original_image %>" alt="">
-                          <p>
-                            <%= content %>
-                          </p>
-                        </div>
-                        <%- include('partials/social-links') %>
-                          <!-- Comment Section -->
-                          <div class="comment-section">
-                            <h3>Comments (<span id="commentCount">0</span>)</h3>
+    <div class="container">
+      <%- include('partials/header', { categoriesMenu }) %> <%-
+      include('partials/news-ticker') %>
+      <section id="contentSection">
+        <div class="row">
+          <div class="col-lg-8 col-md-8 col-sm-8">
+            <div class="left_content">
+              <div class="single_page">
+                <%- include('partials/breadcrumb') %>
+                <h1><%= title %></h1>
+                <div class="post_commentbox">
+                  <a href="#"
+                    ><i class="fa fa-user"></i>
+                    <%= username %>
+                  </a>
+                  <span
+                    ><i class="fa fa-calendar"></i>
+                    <%= published_date %>
+                  </span>
+                  <a href="#"
+                    ><i class="fa fa-tags"></i>
+                    <%= cate_name %>
+                  </a>
+                </div>
+                <div class="single_page_content">
+                  <img class="img-center" src="/<%= original_image %>" alt="" />
+                  <p><%= content %></p>
+                </div>
+                <%- include('partials/social-links') %>
+                <!-- Comment Section -->
+                <div class="comment-section">
+                  <h3>Comments (<span id="commentCount">0</span>)</h3>
 
-                            <!-- Comment Form -->
-                            <div class="comment-form">
-                              <form id="commentForm">
-                                <input type="hidden" id="articleId" value="<%= id %>">
-                                <div class="form-group">
-                                  <label for="commentEmail">Email</label>
-                                  <input type="email" id="commentEmail" placeholder="Your email address" required>
-                                </div>
-                                <div class="form-group">
-                                  <label for="commentContent">Comment</label>
-                                  <textarea id="commentContent" placeholder="Write your comment here..."
-                                    required></textarea>
-                                </div>
-                                <button type="submit">Post Comment</button>
-                              </form>
-                            </div>
+                  <!-- Comment Form -->
+                  <div class="comment-form">
+                    <form id="commentForm">
+                      <input type="hidden" id="articleId" value="<%= id %>" />
+                      <div class="form-group">
+                        <label for="commentEmail">Email</label>
+                        <input
+                          type="email"
+                          id="commentEmail"
+                          placeholder="Your email address"
+                          required
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="commentContent">Comment</label>
+                        <textarea
+                          id="commentContent"
+                          placeholder="Write your comment here..."
+                          required
+                        ></textarea>
+                      </div>
+                      <button type="submit">Post Comment</button>
+                    </form>
+                  </div>
 
-                            <!-- Comments List -->
-                            <div class="comments-list">
-                              <!-- Comments will be loaded here -->
-                              <div class="no-comments">
-                                <p>No comments yet. Be the first to comment!</p>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="related_post">
-                            <h2>Related Post <i class="fa fa-thumbs-o-up"></i></h2>
-                            <ul class="spost_nav wow fadeInDown animated">
-                              <% for (const article of relatedArticles) { %>
-                                <li>
-                                  <div class="media"> <a class="media-left" href="detail/<%= article.id %>">
-                                      <img src="../<%= article.thumbnail %>" alt=""> </a>
-                                    <div class="media-body">
-                                      <a class="catg_title" href="detail/<%= article.id %>">
-                                        <%= article.title %>
-                                      </a>
-                                    </div>
-                                  </div>
-                                </li>
-                                <% } %>
-                            </ul>
-                          </div>
+                  <!-- Comments List -->
+                  <div class="comments-list">
+                    <!-- Comments will be loaded here -->
+                    <div class="no-comments">
+                      <p>No comments yet. Be the first to comment!</p>
                     </div>
                   </div>
                 </div>
-                <nav class="nav-slit"> <a class="prev" href="#"> <span class="icon-wrap"><i
-                        class="fa fa-angle-left"></i></span>
-                    <div>
-                      <h3>City Lights</h3>
-                      <img src="../images/post_img1.jpg" alt="" />
-                    </div>
-                  </a> <a class="next" href="#"> <span class="icon-wrap"><i class="fa fa-angle-right"></i></span>
-                    <div>
-                      <h3>Street Hills</h3>
-                      <img src="../images/post_img1.jpg" alt="" />
-                    </div>
-                  </a> </nav>
-                <div class="col-lg-4 col-md-4 col-sm-4">
-                  <%- include('partials/right-sidebar', { mostViewedArticles }) %>
+
+                <div class="related_post">
+                  <h2>Related Post <i class="fa fa-thumbs-o-up"></i></h2>
+                  <ul class="spost_nav wow fadeInDown animated">
+                    <% for (const article of relatedArticles) { %>
+                    <li>
+                      <div class="media">
+                        <a class="media-left" href="/detail/<%= article.id %>">
+                          <img src="../<%= article.thumbnail %>" alt="" />
+                        </a>
+                        <div class="media-body">
+                          <a
+                            class="catg_title"
+                            href="/detail/<%= article.id %>"
+                          >
+                            <%= article.title %>
+                          </a>
+                        </div>
+                      </div>
+                    </li>
+                    <% } %>
+                  </ul>
                 </div>
               </div>
-            </section>
-            <%- include('partials/footer', { websiteInfo: websiteInfo }) %>
-      </div>
-      <script src="/assets/js/validator.js"></script>
-      <%- include('partials/scripts') %>
+            </div>
+          </div>
+          <nav class="nav-slit">
+            <a class="prev" href="#">
+              <span class="icon-wrap"><i class="fa fa-angle-left"></i></span>
+              <div>
+                <h3>City Lights</h3>
+                <img src="../images/post_img1.jpg" alt="" />
+              </div>
+            </a>
+            <a class="next" href="#">
+              <span class="icon-wrap"><i class="fa fa-angle-right"></i></span>
+              <div>
+                <h3>Street Hills</h3>
+                <img src="../images/post_img1.jpg" alt="" />
+              </div>
+            </a>
+          </nav>
+          <div class="col-lg-4 col-md-4 col-sm-4">
+            <%- include('partials/right-sidebar', { mostViewedArticles }) %>
+          </div>
+        </div>
+      </section>
+      <%- include('partials/footer', { websiteInfo: websiteInfo }) %>
+    </div>
+    <script src="/assets/js/validator.js"></script>
+    <%- include('partials/scripts') %>
   </body>
-
 </html>
