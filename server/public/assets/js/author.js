@@ -135,6 +135,7 @@ $(document).ready(function () {
     }
     else if (targetTab === '#write') {
       loadCategoriesToSelectMenu();
+      $('#articlePublished_date').val(new Date().toISOString().slice(0, 16));
     }
     else if (targetTab === '#profile') {
       loadProfile();
@@ -156,7 +157,7 @@ $(document).ready(function () {
       }
     });
   });
-  // Add Article button redirects to Write tab and load categories to select menu
+  // Add Article button redirects to Write tab
   $('#addArticleBtn').on('click', function () {
     $('.author-sidebar .nav-link[href="#write"]').click();
   });
