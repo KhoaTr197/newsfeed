@@ -502,7 +502,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form id="addArticleForm">
+            <form id="addArticleForm" enctype="multipart/form-data">
               <div class="form-group">
                 <label for="title">Title</label>
                 <input required type="text" class="form-control" id="title" placeholder="Enter article title" />
@@ -513,8 +513,8 @@
                   placeholder="Enter article content"></textarea>
               </div>
               <div class="form-group">
-                <label for="thumbnail">Thumbnail URL</label>
-                <input required type="text" class="form-control" id="thumbnail" placeholder="Enter thumbnail URL" />
+                <label for="image">Article's Image</label>
+                <input required type="file" accept="image/*" class="form-control" id="image" />
               </div>
               <div class="row">
                 <div class="col-md-6">
@@ -546,8 +546,8 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="publishedDate">Published Date</label>
-                    <input required type="datetime-local" class="form-control" id="publishedDate" />
+                    <label for="published_date">Published Date</label>
+                    <input required type="datetime-local" class="form-control" id="published_date" />
                   </div>
                 </div>
               </div>
@@ -660,8 +660,8 @@
                   placeholder="Enter article content"></textarea>
               </div>
               <div class="form-group">
-                <label for="editThumbnail">Thumbnail URL</label>
-                <input type="text" class="form-control" id="editThumbnail" placeholder="Enter thumbnail URL" />
+                <label for="image">Article's Image</label>
+                <input required type="file" accept="image/*" class="form-control" id="editImage" />
               </div>
               <div class="row">
                 <div class="col-md-6">
@@ -684,8 +684,8 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="editPublishedDate">Published Date</label>
-                    <input type="datetime-local" class="form-control" id="editPublishedDate" />
+                    <label for="editPublished_date">Published Date</label>
+                    <input type="datetime-local" class="form-control" id="editPublished_date" />
                   </div>
                 </div>
               </div>

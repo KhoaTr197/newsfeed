@@ -3,6 +3,7 @@ const logger = require("./server/middlewares/logger");
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const multer = require('multer');
 const routes = require("./server/routes");
 require("dotenv").config({
   path: "config/.env.dev",
@@ -41,6 +42,30 @@ const config = {
     },
   },
 };
+
+// Configure multer for file uploads
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, 'server', 'public', 'images'));
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const ext = path.extname(file.originalname);
+    cb(null, 'image_' + uniqueSuffix + ext);
+  }
+});
+
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+  fileFilter: function (req, file, cb) {
+    // Accept images only
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif|avif)$/)) {
+      return cb(new Error('Only image files are allowed!'), false);
+    }
+    cb(null, true);
+  }
+});
 
 const app = express();
 const log = logger();
@@ -87,25 +112,3 @@ async function setupApp() {
     );
   });
 }
-
-// const compressor = require('./server/utils/ImageCompressor')();
-
-// (async () => {
-//   try {
-//     const images = [
-//       ['images/image_1.avif', 'images/thumbnail/thumb_1.jpeg'],
-//       ['images/image_2.jpg', 'images/thumbnail/thumb_2.jpeg'],
-//       ['images/image_3.jpg', 'images/thumbnail/thumb_3.jpeg'],
-//       ['images/image_4.avif', 'images/thumbnail/thumb_4.jpeg'],
-//       ['images/image_5.avif', 'images/thumbnail/thumb_5.jpeg'],
-//       ['images/image_6.avif', 'images/thumbnail/thumb_6.jpeg'],
-//     ]
-//     images.forEach(async (image) => {
-//       const [original, thumbnail] = image;
-//       const result = await compressor.compressImage(`server/public/${original}`, `server/public/${thumbnail}`, 'jpeg');
-//       console.log('Original image path:', result);
-//     })
-//   } catch (error) {
-//     console.error('Error during processing:', error);
-//   }
-// })();

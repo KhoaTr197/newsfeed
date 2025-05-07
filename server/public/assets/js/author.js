@@ -53,7 +53,7 @@ $(document).ready(function () {
             <tr>
               <td>${article.title}</td>
               <td>${allCategories.find(category => category.id == article.cate_id)?.cate_name || 'N/A'}</td>
-              <td>${formatDate(article.publishedDate)}</td>
+              <td>${formatDate(article.published_date)}</td>
               <td>
                 ${article.status ?
           '<span class="badge status-published">Published</span>' :
@@ -176,7 +176,7 @@ $(document).ready(function () {
     const title = $('#articleTitle').val();
     const content = $('#articleContent').val();
     const thumbnail = $('#articleThumbnail').val();
-    const publishedDate = $('#articlePublishedDate').val();
+    const publishedDate = $('#articlePublished_date').val();
     const cate_id = $('#articleCategory').val();
     const user_id = window.localStorage.getItem("id");
 

@@ -9,6 +9,7 @@ const getAllArticles = async () => {
       FROM articles
       JOIN categories ON articles.cate_id = categories.id
       JOIN users ON articles.user_id = users.id
+      ORDER BY articles.id ASC
     `;
     const [data] = await connection.query(queryStr);
     return data;
@@ -215,12 +216,13 @@ const getCommentsByArticleId = async (id) => {
 };
 
 // add new aricle
-const addArticle = async (title, content, thumbnail, publishedDate, user_id, cate_id, status) => {
+const addArticle = async (title, content, thumbnail, published_date, user_id, cate_id, status) => {
   try {
-    const queryStr = "INSERT INTO articles (title, content, thumbnail, publishedDate, user_id, cate_id, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    await connection.query(queryStr, [title, content, thumbnail, publishedDate, user_id, cate_id, status]);
-    return true;
+    const queryStr = "INSERT INTO articles (title, content, thumbnail, published_date, user_id, cate_id, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    const [result] = await connection.query(queryStr, [title, content, thumbnail, published_date, user_id, cate_id, status]);
+    return result.insertId; // Return the ID of the newly inserted article
   } catch (err) {
+    console.error('Error in articlesService.addArticle:', err);
     throw err;
   }
 };
@@ -237,10 +239,10 @@ const addComment = async (email, content, article_id, created_at) => {
 };
 
 // update article
-const updateArticle = async (id, title, content, thumbnail, publishedDate, user_id, cate_id, status) => {
+const updateArticle = async (id, title, content, thumbnail, published_date, user_id, cate_id, status) => {
   try {
-    const queryStr = "UPDATE articles SET title = ?, content = ?, thumbnail = ?, publishedDate = ?, user_id = ?, cate_id = ?, status = ? WHERE id = ?";
-    await connection.query(queryStr, [title, content, thumbnail, publishedDate, user_id, cate_id, status, id]);
+    const queryStr = "UPDATE articles SET title = ?, content = ?, thumbnail = ?, published_date = ?, user_id = ?, cate_id = ?, status = ? WHERE id = ?";
+    await connection.query(queryStr, [title, content, thumbnail, published_date, user_id, cate_id, status, id]);
   } catch (err) {
     throw err;
   }

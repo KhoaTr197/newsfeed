@@ -183,7 +183,6 @@ router.get(
       if (!allContacts) {
         return res.status(404).render("404");
       }
-      console.log("test...");
       res.render("admin", { websiteInfo, contacts: allContacts });
     } catch (err) {
       console.log(err);

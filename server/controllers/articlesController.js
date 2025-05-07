@@ -95,9 +95,12 @@ const addComment = async (req, res) => {
 // add new aricle
 const addArticle = async (req, res) => {
   try {
-    const { title, content, thumbnail, publishedDate, user_id, cate_id, status } = req.body;
-    await articleService.addArticle(title, content, thumbnail, publishedDate, user_id, cate_id, status);
-    res.json({ message: 'Article added successfully' });
+    const { title, content, thumbnail, published_date, user_id, cate_id, status } = req.body;
+    const articleId = await articleService.addArticle(title, content, thumbnail, published_date, user_id, cate_id, status);
+    res.json({
+      message: 'Article added successfully',
+      id: articleId
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -106,8 +109,8 @@ const addArticle = async (req, res) => {
 // update article
 const updateArticle = async (req, res) => {
   try {
-    const { id, title, content, thumbnail, publishedDate, user_id, cate_id, status } = req.body;
-    await articleService.updateArticle(id, title, content, thumbnail, publishedDate, user_id, cate_id, status);
+    const { id, title, content, thumbnail, published_date, user_id, cate_id, status } = req.body;
+    await articleService.updateArticle(id, title, content, thumbnail, published_date, user_id, cate_id, status);
     res.json({ message: 'Article updated successfully' });
   } catch (err) {
     res.status(500).json({ error: err.message });
