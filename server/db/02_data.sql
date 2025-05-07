@@ -74,7 +74,6 @@ INSERT INTO `contact` (`name`, `email`, `phone`, `title`, `content`, `created_at
 ('Ngô Văn Long', 'long.ngo@example.com', '0901234567', 'Liên hệ quảng cáo', 'Tôi muốn thảo luận về gói quảng cáo trên trang tin tức.', '2025-05-06 09:10:00', 'in_progress');
 
 INSERT INTO `newsletterSubscribers` (`email`) VALUES
-INSERT INTO `newsletterSubscribers` (`email`) VALUES
 ('subscriber1@example.com'),
 ('subscriber2@example.com'),
 ('subscriber3@example.com');
