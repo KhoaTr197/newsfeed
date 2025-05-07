@@ -5,65 +5,194 @@ $(document).ready(function () {
   let currentUser = {};
   // Function to format date
   function formatDate(dateString) {
-    if (!dateString) return 'N/A';
+    if (!dateString) return "N/A";
     const date = new Date(dateString);
-    return date.toLocaleDateString('vi-VN', { year: 'numeric', month: 'short', day: 'numeric' });
+    return date.toLocaleDateString("vi-VN", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
   }
+  //Pagination func
+  function setupPagination(config) {
+    const {
+      paginationId, // ID của <ul class="pagination">
+      tableBodyId, // ID của <tbody>
+      data, // Mảng dữ liệu
+      itemsPerPage = 5, // Số bản ghi mỗi trang
+      renderRow, // Callback để render mỗi hàng
+    } = config;
+
+    let currentPage = 1; // Trang hiện tại
+
+    // Hàm hiển thị dữ liệu theo trang
+    function displayData(page) {
+      const start = (page - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      const paginatedData = data.slice(start, end);
+
+      // Xóa nội dung cũ
+      $(`#${tableBodyId}`).empty();
+
+      // Thêm dữ liệu mới
+      paginatedData.forEach((item) => {
+        $(`#${tableBodyId}`).append(renderRow(item));
+      });
+    }
+
+    // Hàm tạo các nút phân trang
+    function renderPagination() {
+      const pageCount = Math.ceil(data.length / itemsPerPage);
+      $(`#${paginationId}`).empty();
+
+      // Nút Previous
+      $(`#${paginationId}`).append(`
+      <li class="page-item ${currentPage === 1 ? "disabled" : ""}">
+        <a class="page-link" href="#" aria-label="Previous" data-page="${
+          currentPage - 1
+        }">
+          <span aria-hidden="true">«</span>
+        </a>
+      </li>
+    `);
+
+      // Các nút số trang
+      for (let i = 1; i <= pageCount; i++) {
+        $(`#${paginationId}`).append(`
+        <li class="page-item ${i === currentPage ? "active" : ""}">
+          <a class="page-link" href="#" data-page="${i}">${i}</a>
+        </li>
+      `);
+      }
+
+      // Nút Next
+      $(`#${paginationId}`).append(`
+      <li class="page-item ${currentPage === pageCount ? "disabled" : ""}">
+        <a class="page-link" href="#" aria-label="Next" data-page="${
+          currentPage + 1
+        }">
+          <span aria-hidden="true">»</span>
+        </a>
+      </li>
+    `);
+    }
+
+    // Xử lý sự kiện click vào nút phân trang
+    $(`#${paginationId}`).on("click", ".page-link", function (e) {
+      e.preventDefault();
+      const page = $(this).data("page");
+      if (page && page > 0 && page <= Math.ceil(data.length / itemsPerPage)) {
+        currentPage = page;
+        displayData(currentPage);
+        renderPagination();
+      }
+    });
+
+    // Khởi tạo
+    displayData(currentPage);
+    renderPagination();
+  }
+  //
+  function PaginationArticles() {
+    setupPagination({
+      paginationId: "articlePagination",
+      tableBodyId: "articleTableBody",
+      data: allArticles,
+      itemsPerPage: 5,
+      renderRow: (article) => `
+      <tr>
+        <td>${article.title}</td>
+        <td>${
+          allCategories.find((category) => category.id == article.cate_id)
+            ?.cate_name || "N/A"
+        }</td>
+        <td>${formatDate(article.published_date)}</td>
+        <td>
+          ${
+            article.status
+              ? '<span class="badge status-published">Published</span>'
+              : '<span class="badge status-pending">Pending</span>'
+          }
+        </td>
+        <td>
+          <button class="btn btn-sm btn-info edit-article" data-id="${
+            article.id
+          }">
+            <i class="fa fa-edit"></i>
+          </button>
+        </td>
+      </tr>
+    `,
+    });
+  }
+
   // Function to get categories
   function getCategories() {
     $.ajax({
-      url: '/api/categories',
-      type: 'GET',
+      url: "/api/categories",
+      type: "GET",
       success: function (categories) {
         allCategories = categories;
       },
-      error: function (_, __, error) {
-        console.error('Error loading categories:', error);
-      }
+      error: function (xhr, status, error) {
+        console.error("Error loading categories:", error);
+      },
     });
   }
   // Function to load categories to select menu
   function loadCategoriesToSelectMenu() {
-    let categorySelect = $("#articleCategory")
+    let categorySelect = $("#articleCategory");
     categorySelect.empty(); // Clear existing options
     categorySelect.append('<option value="">Select Category</option>'); // Add default option
 
-    allCategories.forEach(category => {
-      categorySelect.append(`<option value="${category.id}">${category.cate_name}</option>`);
-    });
+    allCategories
+      .filter((category) => category.status == 1)
+      .forEach((category) => {
+        categorySelect.append(
+          `<option value="${category.id}">${category.cate_name}</option>`
+        );
+      });
   }
   // Function to get articles
   function getArticles() {
     $.ajax({
       url: `/api/articles/user/${window.localStorage.getItem("id")}`,
-      type: 'GET',
+      type: "GET",
       success: function (articles) {
         allArticles = articles;
+        PaginationArticles();
       },
       error: function (_, __, error) {
-        console.error('Error loading articles:', error);
-      }
+        console.error("Error loading articles:", error);
+      },
     });
   }
+
   // Function to load articles to table
   function loadArticlesToTable(table) {
     const articleTableBody = $(table);
     articleTableBody.empty();
 
-    allArticles.forEach(article => {
+    allArticles.forEach((article) => {
       articleTableBody.append(`
             <tr>
               <td>${article.title}</td>
-              <td>${allCategories.find(category => category.id == article.cate_id)?.cate_name || 'N/A'}</td>
+              <td>${
+                allCategories.find((category) => category.id == article.cate_id)
+                  ?.cate_name || "N/A"
+              }</td>
               <td>${formatDate(article.published_date)}</td>
               <td>
-                ${article.status ?
-          '<span class="badge status-published">Published</span>' :
-          '<span class="badge status-pending">Pending</span>'
-        }
+                ${
+                  article.status
+                    ? '<span class="badge status-published">Published</span>'
+                    : '<span class="badge status-pending">Pending</span>'
+                }
               </td>
               <td>
-                <button class="btn btn-sm btn-info edit-article" data-id="${article.id}">
+                <button class="btn btn-sm btn-info edit-article" data-id="${
+                  article.id
+                }">
                   <i class="fa fa-edit"></i>
                 </button>
               </td>
@@ -75,35 +204,37 @@ $(document).ready(function () {
   function loadSummary() {
     $.ajax({
       url: `/api/articles/user/${window.localStorage.getItem("id")}`,
-      type: 'GET',
+      type: "GET",
       success: function (articles) {
-        const publishedCount = articles.filter(article => article.status).length;
+        const publishedCount = articles.filter(
+          (article) => article.status
+        ).length;
         const totalCount = articles.length;
-        $('#publishedCount').text(publishedCount);
-        $('#totalCount').text(totalCount);
+        $("#publishedCount").text(publishedCount);
+        $("#totalCount").text(totalCount);
       },
       error: function (_, __, error) {
-        console.error('Error loading articles:', error);
-      }
+        console.error("Error loading articles:", error);
+      },
     });
   }
   // Function to get profile
   function getProfile() {
     $.ajax({
       url: `/api/users/${window.localStorage.getItem("id")}`,
-      type: 'GET',
+      type: "GET",
       success: function (user) {
         currentUser = user;
       },
       error: function (_, __, error) {
-        console.error('Error loading user:', error);
-      }
+        console.error("Error loading user:", error);
+      },
     });
   }
   // Function to load profile
   function loadProfile() {
-    $('#profileUsername').val(currentUser.username);
-    $('#profileEmail').val(currentUser.email);
+    $("#profileUsername").val(currentUser.username);
+    $("#profileEmail").val(currentUser.email);
   }
   // -----------------------------------------------------------
   // Get Categories
@@ -115,146 +246,156 @@ $(document).ready(function () {
   // Load summary
   loadSummary();
   // Ensure dashboard tab is active on page load
-  $('#dashboard').addClass('show active in');
-  $('.author-sidebar .nav-link[href="#dashboard"]').addClass('active');
+  $("#dashboard").addClass("show active in");
+  $('.author-sidebar .nav-link[href="#dashboard"]').addClass("active");
   // Handle tab navigation
-  $('.author-sidebar .nav-link').on('click', function () {
-    $('.author-sidebar .nav-link').removeClass('active');
-    $(this).addClass('active');
+  $(".author-sidebar .nav-link").on("click", function () {
+    $(".author-sidebar .nav-link").removeClass("active");
+    $(this).addClass("active");
 
-    var targetTab = $(this).attr('href');
+    var targetTab = $(this).attr("href");
 
     // Hide all tab panes first
-    $('.tab-pane').removeClass('show active');
+    $(".tab-pane").removeClass("show active");
 
     // Show only the target tab pane
-    $(targetTab).addClass('show active');
+    $(targetTab).addClass("show active");
 
-    if (targetTab === '#articles') {
-      loadArticlesToTable('#articleTableBody');
-    }
-    else if (targetTab === '#write') {
+    if (targetTab === "#articles") {
+      getArticles();
+    } else if (targetTab === "#write") {
       loadCategoriesToSelectMenu();
-      $('#articlePublished_date').val(new Date().toISOString().slice(0, 16));
-    }
-    else if (targetTab === '#profile') {
+      $("#articlePublished_date").val(new Date().toISOString().slice(0, 16));
+    } else if (targetTab === "#profile") {
       loadProfile();
     }
   });
   // Handle logout button click
   $("#logout").on("click", function () {
     $.ajax({
-      url: '/api/auth/logout',
-      type: 'POST',
+      url: "/api/auth/logout",
+      type: "POST",
       success: function (response) {
         if (response.success) {
           window.localStorage.removeItem("id");
-          window.location.href = '/';
+          window.location.href = "/";
         }
       },
       error: function (xhr, status, error) {
-        console.log('Logout error:', error);
-      }
+        console.log("Logout error:", error);
+      },
     });
   });
   // Add Article button redirects to Write tab
-  $('#addArticleBtn').on('click', function () {
+  $("#addArticleBtn").on("click", function () {
     $('.author-sidebar .nav-link[href="#write"]').click();
   });
   // Live preview for article editor
-  $('#articleTitle').on('input', function () {
-    $('#previewTitle').text($(this).val() || 'Your Article Title');
+  $("#articleTitle").on("input", function () {
+    $("#previewTitle").text($(this).val() || "Your Article Title");
   });
-  $('#articleCategory').on('change', function () {
-    $('#previewCategory').text($(this).find('option:selected').text());
+  $("#articleCategory").on("change", function () {
+    $("#previewCategory").text($(this).find("option:selected").text());
   });
-  $('#articleContent').on('input', function () {
+  $("#articleContent").on("input", function () {
     if ($(this).val()) {
       // Replace the preview content with the editor content
-      $('#previewBody').text($(this).val());
+      $("#previewBody").text($(this).val());
     }
   });
   // Handle publish article button
-  $('#publishArticle').on('click', function () {
+  $("#publishArticle").on("click", function () {
     // Get form data
-    const title = $('#articleTitle').val();
-    const content = $('#articleContent').val();
-    const image = $('#articleImage')[0].files[0]; // Get the file input element
-    const publishedDate = $('#articlePublished_date').val();
-    const cate_id = $('#articleCategory').val();
+    const title = $("#articleTitle").val();
+    const content = $("#articleContent").val();
+    const image = $("#articleImage")[0].files[0]; // Get the file input element
+    const publishedDate = $("#articlePublished_date").val();
+    const cate_id = $("#articleCategory").val();
     const user_id = window.localStorage.getItem("id");
 
-    if (!title || !image || !content || !cate_id || publishedDate === undefined) {
-      alert('Please fill in all required fields');
+    if (
+      !title ||
+      !image ||
+      !content ||
+      !cate_id ||
+      publishedDate === undefined
+    ) {
+      alert("Please fill in all required fields");
       return;
     }
 
     $.ajax({
-      url: '/api/articles',
-      type: 'POST',
-      data: JSON.stringify({ title, content, publishedDate, user_id, cate_id, status: 1 }),
-      contentType: 'application/json',
+      url: "/api/articles",
+      type: "POST",
+      data: JSON.stringify({
+        title,
+        content,
+        publishedDate,
+        user_id,
+        cate_id,
+        status: 1,
+      }),
+      contentType: "application/json",
       success: function (response) {
-
-        alert('Article published successfully!');
+        alert("Article published successfully!");
 
         const formData = new FormData();
-        formData.append('id', response.id);
-        formData.append('image', image);
+        formData.append("id", response.id);
+        formData.append("image", image);
 
         $.ajax({
-          url: '/api/images',
-          type: 'POST',
+          url: "/api/images",
+          type: "POST",
           data: formData,
           processData: false,
           contentType: false,
           success: function (uploadResponse) {
-            alert('Image uploaded successfully:', uploadResponse);
+            alert("Image uploaded successfully:", uploadResponse);
           },
           error: function (error) {
-            console.error('Error uploading image:', error);
-            alert('Error uploading image. Please try again.');
-          }
+            console.error("Error uploading image:", error);
+            alert("Error uploading image. Please try again.");
+          },
         });
       },
       error: function (error) {
-        console.error('Error publishing article:', error);
-        alert('Error publishing article. Please try again.');
-      }
+        console.error("Error publishing article:", error);
+        alert("Error publishing article. Please try again.");
+      },
     });
   });
   // Handle update password button
-  $('#update').on('click', function () {
+  $("#update").on("click", function () {
     // Get form data
-    const currentPassword = $('#profileCurrentPassword').val();
-    const newPassword = $('#profileNewPassword').val();
-    const confirmNewPassword = $('#profileConfirmPassword').val();
+    const currentPassword = $("#profileCurrentPassword").val();
+    const newPassword = $("#profileNewPassword").val();
+    const confirmNewPassword = $("#profileConfirmPassword").val();
 
     if (!currentPassword || !newPassword || !confirmNewPassword) {
-      alert('Please fill in all required fields');
+      alert("Please fill in all required fields");
       return;
     }
 
     if (newPassword !== confirmNewPassword) {
-      alert('New password and confirm new password do not match');
+      alert("New password and confirm new password do not match");
       return;
     }
 
     $.ajax({
-      url: '/api/users/password',
-      type: 'PUT',
+      url: "/api/users/password",
+      type: "PUT",
       data: JSON.stringify({
         username: currentUser.username,
         password: currentPassword,
         newPassword: newPassword,
       }),
-      contentType: 'application/json',
+      contentType: "application/json",
       success: function (response) {
-        alert('Password updated successfully!');
+        alert("Password updated successfully!");
       },
       error: function (error) {
         alert(`Error updating password: ${error}`);
-      }
+      },
     });
   });
   // Handle edit article action button
@@ -302,53 +443,54 @@ $(document).ready(function () {
       published_date: $("#editPublished_date").val(),
     };
 
-        // Validate form
-        if (!article.title || !article.content) {
-          alert("Please fill in all required fields");
-          return;
+    // Validate form
+    if (!article.title || !article.content) {
+      alert("Please fill in all required fields");
+      return;
+    }
+
+    // Update article
+    $.ajax({
+      url: "/api/articles",
+      type: "PUT",
+      data: JSON.stringify(article),
+      contentType: "application/json",
+      success: function (response) {
+        // If we have an image file, upload it
+        if (article.image) {
+          // Create FormData object to send the file
+          const formData = new FormData();
+          formData.append("id", article.id);
+          formData.append("image", article.image);
+
+          // Upload the image
+          $.ajax({
+            url: "/api/images",
+            type: "PUT",
+            data: formData,
+            processData: false, // Don't process the data
+            contentType: false, // Let the browser set the content type
+            success: function (imageResponse) {
+              console.log("Image uploaded successfully:", imageResponse);
+              $("#editArticleModal").modal("hide");
+              getArticles();
+              alert("Article updated successfully with image!");
+            },
+            error: function (error) {
+              console.error("Error uploading image:", error);
+              $("#editArticleModal").modal("hide");
+              getArticles();
+              alert(
+                "Article updated but image upload failed. Please try upload later."
+              );
+            },
+          });
         }
-    
-        // Update article
-        $.ajax({
-          url: "/api/articles",
-          type: "PUT",
-          data: JSON.stringify(article),
-          contentType: "application/json",
-          success: function (response) {
-    
-            // If we have an image file, upload it
-            if (article.image) {
-              // Create FormData object to send the file
-              const formData = new FormData();
-              formData.append('id', article.id);
-              formData.append('image', article.image);
-    
-              // Upload the image
-              $.ajax({
-                url: "/api/images",
-                type: "PUT",
-                data: formData,
-                processData: false, // Don't process the data
-                contentType: false, // Let the browser set the content type
-                success: function (imageResponse) {
-                  console.log("Image uploaded successfully:", imageResponse);
-                  $("#editArticleModal").modal("hide");
-                  getArticles();
-                  alert("Article updated successfully with image!");
-                },
-                error: function (error) {
-                  console.error("Error uploading image:", error);
-                  $("#editArticleModal").modal("hide");
-                  getArticles();
-                  alert("Article updated but image upload failed. Please try upload later.");
-                }
-              });
-            }
-          },
-          error: function (error) {
-            console.error("Error updating article:", error);
-            alert("Error updating article. Please try again.");
-          },
-        });
+      },
+      error: function (error) {
+        console.error("Error updating article:", error);
+        alert("Error updating article. Please try again.");
+      },
+    });
   });
 });

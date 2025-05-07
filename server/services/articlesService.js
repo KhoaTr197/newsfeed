@@ -67,7 +67,7 @@ const getArticlesByUser_id = async (user_id) => {
       FROM articles
       JOIN categories ON articles.cate_id = categories.id
       JOIN users ON articles.user_id = users.id
-      WHERE articles.user_id = ? and articles.status = 1
+      WHERE articles.user_id = ?
     `;
     const [data] = await connection.query(queryStr, [user_id]);
     return data;
