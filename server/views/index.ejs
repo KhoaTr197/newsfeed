@@ -1,188 +1,209 @@
 <!DOCTYPE html>
 <html>
-<%- include('partials/head') %>
+  <%- include('partials/head') %>
 
   <body>
     <%- include('partials/preloader') %>
-      <div class="container">
-        <%- include('partials/header', { categoriesMenu }) %>
-          <%- include('partials/news-ticker') %>
-            <section id="sliderSection">
-              <div class="row">
-                <div class="col-lg-8 col-md-8 col-sm-8">
-                  <div class="slick_slider">
-                    <div class="single_iteam">
-                      <a href="pages/single_page.html">
-                        <img src="images/slider_img4.jpg" alt="" /></a>
-                      <div class="slider_article">
-                        <h2>
-                          <a class="slider_tittle" href="pages/single_page.html">Fusce eu nulla semper porttitor felis
-                            sit
-                            amet</a>
-                        </h2>
-                        <p>
-                          Nunc tincidunt, elit non cursus euismod, lacus augue ornare
-                          metus, egestas imperdiet nulla nisl quis mauris. Suspendisse
-                          a pharetra urna. Morbi dui...
-                        </p>
-                      </div>
-                    </div>
-                    <div class="single_iteam">
-                      <a href="pages/single_page.html">
-                        <img src="images/slider_img2.jpg" alt="" /></a>
-                      <div class="slider_article">
-                        <h2>
-                          <a class="slider_tittle" href="pages/single_page.html">Fusce eu nulla semper porttitor felis
-                            sit
-                            amet</a>
-                        </h2>
-                        <p>
-                          Nunc tincidunt, elit non cursus euismod, lacus augue ornare
-                          metus, egestas imperdiet nulla nisl quis mauris. Suspendisse
-                          a pharetra urna. Morbi dui...
-                        </p>
-                      </div>
-                    </div>
-                    <div class="single_iteam">
-                      <a href="pages/single_page.html">
-                        <img src="images/slider_img3.jpg" alt="" /></a>
-                      <div class="slider_article">
-                        <h2>
-                          <a class="slider_tittle" href="pages/single_page.html">Fusce eu nulla semper porttitor felis
-                            sit
-                            amet</a>
-                        </h2>
-                        <p>
-                          Nunc tincidunt, elit non cursus euismod, lacus augue ornare
-                          metus, egestas imperdiet nulla nisl quis mauris. Suspendisse
-                          a pharetra urna. Morbi dui...
-                        </p>
-                      </div>
-                    </div>
-                    <div class="single_iteam">
-                      <a href="pages/single_page.html">
-                        <img src="images/slider_img1.jpg" alt="" /></a>
-                      <div class="slider_article">
-                        <h2>
-                          <a class="slider_tittle" href="pages/single_page.html">Fusce eu nulla semper porttitor felis
-                            sit
-                            amet</a>
-                        </h2>
-                        <p>
-                          Nunc tincidunt, elit non cursus euismod, lacus augue ornare
-                          metus, egestas imperdiet nulla nisl quis mauris. Suspendisse
-                          a pharetra urna. Morbi dui...
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-4">
-                  <div class="latest_post">
-                    <h2><span>Latest post</span></h2>
-                    <div class="latest_post_container">
-                      <div id="prev-button"><i class="fa fa-chevron-up"></i></div>
-                      <ul class="latest_postnav">
-                        <% for (const article of latestArticles) { %>
-                          <li>
-                            <div class="media">
-                              <a href="detail/<%= article.id %>" class="media-left">
-                                <img alt="" src="<%= article.thumbnail %>">
-                              </a>
-                              <div class="media-body">
-                                <a href="detail/<%= article.id %>" class="catg_title">
-                                  <%= article.title %>
-                                </a>
-                                <div class="article-meta"
-                                  style="display: flex; gap: 16px; margin-top: 12px; font-size: 12px;">
-                                  <p class="text-secondary">
-                                    <i class="fa fa-calendar"></i>
-                                    <%= new Date(article.published_date).toLocaleDateString() %>
-                                  </p>
-                                  <p class="text-secondary">
-                                    <i class="fa fa-eye"></i>
-                                    <%= article.views %>
-                                  </p>
-                                  <p class="text-secondary">
-                                    <i class="fa fa-folder"></i>
-                                    <%= article.cate_name %>
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                          <% } %>
-                      </ul>
-                      <div id="next-button"><i class="fa fa-chevron-down"></i></div>
-                    </div>
-                  </div>
+    <div class="container">
+      <%- include('partials/header', { categoriesMenu }) %> <%-
+      include('partials/news-ticker') %>
+      <section id="sliderSection">
+        <div class="row">
+          <div class="col-lg-8 col-md-8 col-sm-8">
+            <div class="slick_slider">
+              <div class="single_iteam">
+                <a href="pages/single_page.html">
+                  <img src="images/slider_img4.jpg" alt=""
+                /></a>
+                <div class="slider_article">
+                  <h2>
+                    <a class="slider_tittle" href="pages/single_page.html"
+                      >Fusce eu nulla semper porttitor felis sit amet</a
+                    >
+                  </h2>
+                  <p>
+                    Nunc tincidunt, elit non cursus euismod, lacus augue ornare
+                    metus, egestas imperdiet nulla nisl quis mauris. Suspendisse
+                    a pharetra urna. Morbi dui...
+                  </p>
                 </div>
               </div>
-            </section>
-            <section id="contentSection">
-              <div class="row">
-                <div class="col-lg-8 col-md-8 col-sm-8">
-                  <div class="left_content">
-                    <% for (const category of featuredCategories) { const
-                      filteredArticles=featuredArticles.filter(article=>
-                      article.cate_id
-                      ==
-                      category.id);
-                      %>
-                      <div class="single_post_content">
-                        <h2><span>
-                            <%= category.cate_name %>
-                          </span></h2>
-                        <div class="single_post_content_span">
-                          <ul class="main business_catgnav wow fadeInDown">
-                            <% for (const article of filteredArticles) { %>
-                              <li>
-                                <figure class="bs_fig">
-                                  <a href="detail/<%= article.id %>" class="featured_img">
-                                    <img alt="" src="<%= article.thumbnail %>" />
-                                    <span class="overlay"></span>
-                                  </a>
-                                  <figcaption>
-                                    <a href="detail/<%= article.id %>" class="single_post_content_title">
-                                      <%= article.title %>
-                                    </a>
-                                    <div class="article-meta"
-                                      style="display: flex; margin-top: 16px; gap: 16px; font-size: 12px;">
-                                      <p class="text-secondary">
-                                        <i class="fa fa-calendar"></i>
-                                        <%= new Date(article.published_date).toLocaleDateString() %>
-                                      </p>
-                                      <p class="text-secondary">
-                                        <i class="fa fa-eye"></i>
-                                        <%= article.views %>
-                                      </p>
-                                      <p class="text-secondary">
-                                        <i class="fa fa-folder"></i>
-                                        <%= article.cate_name %>
-                                      </p>
-                                    </div>
-                                  </figcaption>
-                                  <p>
-                                    <%= article.content.slice(0, 100) + "..." %>
-                                  </p>
-                                </figure>
-                              </li>
-                              <% } %>
-                          </ul>
+              <div class="single_iteam">
+                <a href="pages/single_page.html">
+                  <img src="images/slider_img2.jpg" alt=""
+                /></a>
+                <div class="slider_article">
+                  <h2>
+                    <a class="slider_tittle" href="pages/single_page.html"
+                      >Fusce eu nulla semper porttitor felis sit amet</a
+                    >
+                  </h2>
+                  <p>
+                    Nunc tincidunt, elit non cursus euismod, lacus augue ornare
+                    metus, egestas imperdiet nulla nisl quis mauris. Suspendisse
+                    a pharetra urna. Morbi dui...
+                  </p>
+                </div>
+              </div>
+              <div class="single_iteam">
+                <a href="pages/single_page.html">
+                  <img src="images/slider_img3.jpg" alt=""
+                /></a>
+                <div class="slider_article">
+                  <h2>
+                    <a class="slider_tittle" href="pages/single_page.html"
+                      >Fusce eu nulla semper porttitor felis sit amet</a
+                    >
+                  </h2>
+                  <p>
+                    Nunc tincidunt, elit non cursus euismod, lacus augue ornare
+                    metus, egestas imperdiet nulla nisl quis mauris. Suspendisse
+                    a pharetra urna. Morbi dui...
+                  </p>
+                </div>
+              </div>
+              <div class="single_iteam">
+                <a href="pages/single_page.html">
+                  <img src="images/slider_img1.jpg" alt=""
+                /></a>
+                <div class="slider_article">
+                  <h2>
+                    <a class="slider_tittle" href="pages/single_page.html"
+                      >Fusce eu nulla semper porttitor felis sit amet</a
+                    >
+                  </h2>
+                  <p>
+                    Nunc tincidunt, elit non cursus euismod, lacus augue ornare
+                    metus, egestas imperdiet nulla nisl quis mauris. Suspendisse
+                    a pharetra urna. Morbi dui...
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4">
+            <div class="latest_post">
+              <h2><span>Latest post</span></h2>
+              <div class="latest_post_container">
+                <div id="prev-button"><i class="fa fa-chevron-up"></i></div>
+                <ul class="latest_postnav">
+                  <% for (const article of latestArticles) { %>
+                  <li>
+                    <div class="media">
+                      <a href="detail/<%= article.id %>" class="media-left">
+                        <img
+                          alt=""
+                          src="<%= article.thumbnail ? article.thumbnail : 'images/thumbnail/default_thumbnail.jpg'%>"
+                        />
+                      </a>
+                      <div class="media-body">
+                        <a href="detail/<%= article.id %>" class="catg_title">
+                          <%= article.title %>
+                        </a>
+                        <div
+                          class="article-meta"
+                          style="
+                            display: flex;
+                            gap: 16px;
+                            margin-top: 12px;
+                            font-size: 12px;
+                          "
+                        >
+                          <p class="text-secondary">
+                            <i class="fa fa-calendar"></i>
+                            <%= new
+                            Date(article.published_date).toLocaleDateString() %>
+                          </p>
+                          <p class="text-secondary">
+                            <i class="fa fa-eye"></i>
+                            <%= article.views %>
+                          </p>
+                          <p class="text-secondary">
+                            <i class="fa fa-folder"></i>
+                            <%= article.cate_name %>
+                          </p>
                         </div>
                       </div>
-                      <% } %>
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-4">
-                  <%- include('partials/right-sidebar', { mostViewedArticles }) %>
+                    </div>
+                  </li>
+                  <% } %>
+                </ul>
+                <div id="next-button"><i class="fa fa-chevron-down"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="contentSection">
+        <div class="row">
+          <div class="col-lg-8 col-md-8 col-sm-8">
+            <div class="left_content">
+              <% for (const category of featuredCategories) { const
+              filteredArticles=featuredArticles.filter(article=> article.cate_id
+              == category.id); %>
+              <div class="single_post_content">
+                <h2><span> <%= category.cate_name %> </span></h2>
+                <div class="single_post_content_span">
+                  <ul class="main business_catgnav wow fadeInDown">
+                    <% for (const article of filteredArticles) { %>
+                    <li>
+                      <figure class="bs_fig">
+                        <a href="detail/<%= article.id %>" class="featured_img">
+                          <img
+                            alt=""
+                            src="<%= article.thumbnail ? article.thumbnail : 'images/thumbnail/default_thumbnail.jpg'%>"
+                          />
+                          <span class="overlay"></span>
+                        </a>
+                        <figcaption>
+                          <a
+                            href="detail/<%= article.id %>"
+                            class="single_post_content_title"
+                          >
+                            <%= article.title %>
+                          </a>
+                          <div
+                            class="article-meta"
+                            style="
+                              display: flex;
+                              margin-top: 16px;
+                              gap: 16px;
+                              font-size: 12px;
+                            "
+                          >
+                            <p class="text-secondary">
+                              <i class="fa fa-calendar"></i>
+                              <%= new
+                              Date(article.published_date).toLocaleDateString()
+                              %>
+                            </p>
+                            <p class="text-secondary">
+                              <i class="fa fa-eye"></i>
+                              <%= article.views %>
+                            </p>
+                            <p class="text-secondary">
+                              <i class="fa fa-folder"></i>
+                              <%= article.cate_name %>
+                            </p>
+                          </div>
+                        </figcaption>
+                        <p><%= article.content.slice(0, 100) + "..." %></p>
+                      </figure>
+                    </li>
+                    <% } %>
+                  </ul>
                 </div>
               </div>
-            </section>
-            <%- include('partials/footer', { websiteInfo }) %>
-      </div>
-      <%- include('partials/modals') %>
-        <%- include('partials/scripts') %>
+              <% } %>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4">
+            <%- include('partials/right-sidebar', { mostViewedArticles }) %>
+          </div>
+        </div>
+      </section>
+      <%- include('partials/footer', { websiteInfo }) %>
+    </div>
+    <%- include('partials/modals') %> <%- include('partials/scripts') %>
   </body>
-
 </html>

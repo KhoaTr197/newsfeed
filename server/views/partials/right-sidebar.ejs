@@ -6,7 +6,10 @@
       <li>
         <div class="media">
           <a href="/detail/<%= article.id %>" class="media-left">
-            <img alt="" src="/<%= article.thumbnail %>" />
+            <img
+              alt=""
+              src="<%= article.thumbnail ? '/' + article.thumbnail : '/images/thumbnail/default_thumbnail.jpg'  %>"
+            />
           </a>
           <div
             class="media-body"

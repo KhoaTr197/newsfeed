@@ -29,7 +29,11 @@
                   </a>
                 </div>
                 <div class="single_page_content">
-                  <img class="img-center" src="/<%= original_image %>" alt="" />
+                  <img
+                    class="img-center"
+                    src="/<%= original_image ? original_image : 'images/default_img.jpg'%>"
+                    alt=""
+                  />
                   <p><%= content %></p>
                 </div>
                 <%- include('partials/social-links') %>
@@ -78,7 +82,10 @@
                     <li>
                       <div class="media">
                         <a class="media-left" href="/detail/<%= article.id %>">
-                          <img src="../<%= article.thumbnail %>" alt="" />
+                          <img
+                            src="<%= article.thumbnail ? '../' + article.thumbnail : '../images/thumbnail/default_thumbnail.jpg' %>"
+                            alt=""
+                          />
                         </a>
                         <div class="media-body">
                           <a
