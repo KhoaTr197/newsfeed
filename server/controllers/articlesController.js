@@ -83,12 +83,11 @@ const addComment = async (req, res) => {
 // add new aricle
 const addArticle = async (req, res) => {
   try {
-    const { title, content, published_date, user_id, cate_id, status } =
-      req.body;
+    const { title, content, user_id, cate_id, status } = req.body;
+
     const newArticle = await articleService.addArticle(
       title,
       content,
-      published_date,
       user_id,
       cate_id,
       status
@@ -105,18 +104,18 @@ const addArticle = async (req, res) => {
 // update article
 const updateArticle = async (req, res) => {
   try {
-    const { id, title, content, published_date, user_id, cate_id, status } =
-      req.body;
+    const { id, title, content, user_id, cate_id, status } = req.body;
+    console.log(cate_id);
+    console.log(status);
     await articleService.updateArticle(
       id,
       title,
       content,
-      published_date,
       user_id,
       cate_id,
-      status
+      Number(status)
     );
-    res.json({ message: "Article updated successfully" });
+    res.status(200).json({ message: "Article updated successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

@@ -233,21 +233,13 @@ const getCommentsByArticleId = async (id) => {
 };
 
 // add new aricle
-const addArticle = async (
-  title,
-  content,
-  published_date,
-  user_id,
-  cate_id,
-  status
-) => {
+const addArticle = async (title, content, user_id, cate_id, status) => {
   try {
     const queryStr =
-      "INSERT INTO articles (title, content, published_date, user_id, cate_id, status) VALUES (?, ?, ?, ?, ?, ?)";
+      "INSERT INTO articles (title, content, user_id, cate_id, status) VALUES (?, ?, ?, ?, ?)";
     const [result] = await connection.query(queryStr, [
       title,
       content,
-      published_date,
       user_id,
       cate_id,
       status,
@@ -256,7 +248,6 @@ const addArticle = async (
       id: result.insertId,
       title,
       content,
-      published_date,
       user_id,
       cate_id,
       status,
@@ -280,24 +271,13 @@ const addComment = async (email, content, article_id, created_at) => {
 };
 
 // update article
-const updateArticle = async (
-  id,
-  title,
-  content,
-  thumbnail,
-  published_date,
-  user_id,
-  cate_id,
-  status
-) => {
+const updateArticle = async (id, title, content, user_id, cate_id, status) => {
   try {
     const queryStr =
-      "UPDATE articles SET title = ?, content = ?, thumbnail = ?, published_date = ?, user_id = ?, cate_id = ?, status = ? WHERE id = ?";
+      "UPDATE articles SET title = ?, content = ?, user_id = ?, cate_id = ?, status = ? WHERE id = ?";
     await connection.query(queryStr, [
       title,
       content,
-      thumbnail,
-      published_date,
       user_id,
       cate_id,
       status,

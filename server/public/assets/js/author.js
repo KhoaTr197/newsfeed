@@ -158,6 +158,7 @@ $(document).ready(function () {
     $.ajax({
       url: `/api/articles/user/${window.localStorage.getItem("id")}`,
       type: "GET",
+      cache: false,
       success: function (articles) {
         allArticles = articles;
         PaginationArticles();
@@ -309,17 +310,11 @@ $(document).ready(function () {
     const title = $("#articleTitle").val();
     const content = $("#articleContent").val();
     const image = $("#articleImage")[0].files[0]; // Get the file input element
-    const publishedDate = $("#articlePublished_date").val();
+    //const publishedDate = $("#articlePublished_date").val();
     const cate_id = $("#articleCategory").val();
     const user_id = window.localStorage.getItem("id");
 
-    if (
-      !title ||
-      !image ||
-      !content ||
-      !cate_id ||
-      publishedDate === undefined
-    ) {
+    if (!title || !image || !content || !cate_id) {
       alert("Please fill in all required fields");
       return;
     }
@@ -330,33 +325,45 @@ $(document).ready(function () {
       data: JSON.stringify({
         title,
         content,
-        publishedDate,
         user_id,
         cate_id,
         status: 1,
       }),
       contentType: "application/json",
       success: function (response) {
-        alert("Article published successfully!");
+        const articleId = response.newArticle.id;
+        if (image) {
+          // Create FormData object to send the file
+          const formData = new FormData();
+          formData.append("id", articleId);
+          formData.append("image", image);
 
-        const formData = new FormData();
-        formData.append("id", response.id);
-        formData.append("image", image);
-
-        $.ajax({
-          url: "/api/images",
-          type: "POST",
-          data: formData,
-          processData: false,
-          contentType: false,
-          success: function (uploadResponse) {
-            alert("Image uploaded successfully:", uploadResponse);
-          },
-          error: function (error) {
-            console.error("Error uploading image:", error);
-            alert("Error uploading image. Please try again.");
-          },
-        });
+          // Upload the image
+          $.ajax({
+            url: "/api/images",
+            type: "POST",
+            data: formData,
+            processData: false, // Don't process the data
+            contentType: false, // Let the browser set the content type
+            success: function (imageResponse) {
+              console.log("Image uploaded successfully:", imageResponse);
+              getArticles();
+              alert("Article added successfully with image!");
+            },
+            error: function (error) {
+              console.error("Error uploading image:", error);
+              $("#addArticleModal").modal("hide");
+              getArticles();
+              alert(
+                "Article added but image upload failed. Please try upload later."
+              );
+            },
+          });
+        } else {
+          // No image to upload
+          getArticles();
+          alert("Article added successfully!");
+        }
       },
       error: function (error) {
         console.error("Error publishing article:", error);
@@ -432,6 +439,9 @@ $(document).ready(function () {
   });
   // Handle save edit article button
   $("#editArticleBtn").on("click", function () {
+    const id = $("#editArticleId").val();
+    const currentArticle = allArticles.find((article) => article.id == id);
+    const currentStatus = currentArticle && currentArticle.status;
     const article = {
       id: $("#editArticleId").val(),
       title: $("#editTitle").val(),
@@ -439,8 +449,8 @@ $(document).ready(function () {
       image: $("#editImage")[0].files[0],
       cate_id: $("#editCategory").val(),
       user_id: window.localStorage.getItem("id"),
-      status: $("#editArticleStatus").val(),
-      published_date: $("#editPublished_date").val(),
+      status: currentStatus,
+      //published_date: $("#editPublished_date").val(),
     };
 
     // Validate form
@@ -485,6 +495,10 @@ $(document).ready(function () {
               );
             },
           });
+        } else {
+          $("#editArticleModal").modal("hide");
+          getArticles();
+          alert("Article updated successfully with no image!");
         }
       },
       error: function (error) {

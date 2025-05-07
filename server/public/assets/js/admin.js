@@ -536,7 +536,7 @@ $(document).ready(function () {
     const cate_id = $("#addCategory").val();
     const user_id = $("#addAuthor").val();
     const status = $("#status").val();
-    const published_date = $("#published_date").val();
+    //const published_date = $("#published_date").val();
 
     // Validate form
     if (!title || !content) {
@@ -564,7 +564,6 @@ $(document).ready(function () {
         cate_id,
         user_id,
         status,
-        published_date,
       }),
       contentType: "application/json",
       success: function (response) {
@@ -624,7 +623,7 @@ $(document).ready(function () {
       cate_id: $("#editCategory").val(),
       user_id: $("#editAuthor").val(),
       status: $("#editArticleStatus").val(),
-      published_date: $("#editPublished_date").val(),
+      //published_date: $("#editPublished_date").val(),
     };
 
     // Validate form
@@ -671,6 +670,11 @@ $(document).ready(function () {
               );
             },
           });
+        } else {
+          $("#editArticleModal").modal("hide");
+          getArticles();
+          PaginationArticles();
+          alert("Article updated successfully with image!");
         }
       },
       error: function (error) {
