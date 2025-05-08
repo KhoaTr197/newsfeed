@@ -7,7 +7,11 @@
           <ul class="top_nav">
             <li><a href="/index">Home</a></li>
             <li><a href="#">About</a></li>
-            <li><a href="#" data-toggle="modal" data-target="#contactModal">Contact</a></li>
+            <li>
+              <a href="#" data-toggle="modal" data-target="#contactModal"
+                >Contact</a
+              >
+            </li>
           </ul>
         </div>
         <div class="header_top_right">
@@ -18,10 +22,12 @@
     <div class="col-lg-12 col-md-12 col-sm-12">
       <div class="header_bottom">
         <div class="logo_area">
-          <a href="/index" class="logo"><img src="/images/logo.jpg" alt=""></a>
+          <a href="/index" class="logo"
+            ><img src="/images/logo.jpg" alt=""
+          /></a>
         </div>
         <div class="add_banner">
-          <a href="#"><img src="/images/addbanner_728x90_V1.jpg" alt=""></a>
+          <a href="#"><img src="/images/addbanner_728x90_V1.jpg" alt="" /></a>
         </div>
       </div>
     </div>
@@ -32,8 +38,14 @@
 <section id="navArea">
   <nav class="navbar navbar-inverse" role="navigation">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-        aria-expanded="false" aria-controls="navbar">
+      <button
+        type="button"
+        class="navbar-toggle collapsed"
+        data-toggle="collapse"
+        data-target="#navbar"
+        aria-expanded="false"
+        aria-controls="navbar"
+      >
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -43,32 +55,54 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav main_nav">
         <li class="active">
-          <a href="/index"><span class="fa fa-home desktop-home"></span><span class="mobile-show">Home</span></a>
+          <a href="/index"
+            ><span class="fa fa-home desktop-home"></span
+            ><span class="mobile-show">Home</span></a
+          >
         </li>
         <!-- Categories Menu -->
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categories
-            <span class="caret"></span></a>
+          <a
+            href="#"
+            class="dropdown-toggle"
+            data-toggle="dropdown"
+            role="button"
+            aria-expanded="false"
+            >Categories <span class="caret"></span
+          ></a>
           <ul class="dropdown-menu" role="menu">
-            <% if (categoriesMenu) { %>
-              <% categoriesMenu.forEach(category=> { %>
-                <li><a href="/search?category=<%= category.id %>">
-                    <%= category.cate_name %>
-                  </a></li>
-                <% }); %>
-                  <% } %>
-                    <li><a href="/categories">View All Categories</a></li>
+            <% if (categoriesMenu) { %> <% categoriesMenu.forEach(category=> {
+            %>
+            <li>
+              <a href="/search?category=<%= category.id %>">
+                <%= category.cate_name %>
+              </a>
+            </li>
+            <% }); %> <% } %>
+            <li><a href="/categories">View All Categories</a></li>
           </ul>
         </li>
         <!-- Other menu items can go here -->
       </ul>
       <!-- Search Form -->
-      <form class="navbar-form navbar-right search-form" role="search" action="/search" method="GET"
-        style="margin: 8px 0;">
+      <form
+        class="navbar-form navbar-right search-form"
+        role="search"
+        action="/search"
+        method="GET"
+        style="margin: 8px 0"
+      >
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search..." name="keyword">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Search..."
+            name="keyword"
+          />
           <span class="input-group-btn">
-            <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+            <button class="btn btn-default" type="submit">
+              <span class="glyphicon glyphicon-search"></span>
+            </button>
           </span>
         </div>
       </form>

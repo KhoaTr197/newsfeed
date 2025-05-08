@@ -1,115 +1,116 @@
 <!DOCTYPE html>
 <html>
-<%- include('partials/head') %>
+  <%- include('partials/head') %>
 
   <body>
     <%- include('partials/preloader') %>
-      <div class="container">
-        <%- include('partials/header', { categoriesMenu }) %>
+    <div class="container">
+      <%- include('partials/header', { categoriesMenu }) %>
 
-          <section id="contentSection">
-            <div class="row">
-              <div class="col-lg-8 col-md-8">
-                <div class="left_content">
-                  <div class="single_post_content">
-                    <h2><span>All Categories</span></h2>
-                    <div class="categories-list">
-                      <% if (categories && categories.length> 0) { %>
-                        <ul class="cat-list">
-                          <% categories.forEach(category=> { %>
-                            <li>
-                              <a href="/search?category=<%= category.id %>">
-                                <%= category.cate_name %>
-                                  <% if (categoryCounts && categoryCounts[category.id]) { %>
-                                    <span class="count">(<%= categoryCounts[category.id] %>)</span>
-                                    <% } else { %>
-                                      <span class="count">(0)</span>
-                                      <% } %>
-                              </a>
-                            </li>
-                            <% }); %>
-                        </ul>
+      <section id="contentSection">
+        <div class="row">
+          <div class="col-lg-8 col-md-8">
+            <div class="left_content">
+              <div class="single_post_content">
+                <h2><span>All Categories</span></h2>
+                <div class="categories-list">
+                  <% if (categories && categories.length> 0) { %>
+                  <ul class="cat-list">
+                    <% categories.forEach(category=> { %>
+                    <li>
+                      <a href="/search?category=<%= category.id %>">
+                        <%= category.cate_name %> <% if (categoryCounts &&
+                        categoryCounts[category.id]) { %>
+                        <span class="count"
+                          >(<%= categoryCounts[category.id] %>)</span
+                        >
                         <% } else { %>
-                          <p>No categories found.</p>
-                          <% } %>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4 col-md-4">
-                <div class="latest_post">
-                  <h2><span>Latest Articles</span></h2>
-                  <div class="latest_post_container">
-                    <div id="prev-button"><i class="fa fa-chevron-up"></i></div>
-                    <ul class="latest_postnav">
-                      <% if (typeof latestArticles !=='undefined' && latestArticles.length> 0) { %>
-                        <% latestArticles.forEach(article=> { %>
-                          <li>
-                            <div class="media">
-                              <a href="/detail/<%= article.id %>" class="media-left">
-                                <img alt="" src="/<%= article.thumbnail %>">
-                              </a>
-                              <div class="media-body">
-                                <a href="/detail/<%= article.id %>" class="catg_title">
-                                  <%= article.title %>
-                                </a>
-                              </div>
-                            </div>
-                          </li>
-                          <% }); %>
-                            <% } else { %>
-                              <li>No articles found.</li>
-                              <% } %>
-                    </ul>
-                    <div id="next-button"><i class="fa fa-chevron-down"></i></div>
-                  </div>
+                        <span class="count">(0)</span>
+                        <% } %>
+                      </a>
+                    </li>
+                    <% }); %>
+                  </ul>
+                  <% } else { %>
+                  <p>No categories found.</p>
+                  <% } %>
                 </div>
               </div>
             </div>
-          </section>
+          </div>
+          <div class="col-lg-4 col-md-4">
+            <div class="latest_post">
+              <h2><span>Latest Articles</span></h2>
+              <div class="latest_post_container">
+                <div id="prev-button"><i class="fa fa-chevron-up"></i></div>
+                <ul class="latest_postnav">
+                  <% if (typeof latestArticles !=='undefined' &&
+                  latestArticles.length> 0) { %> <%
+                  latestArticles.forEach(article=> { %>
+                  <li>
+                    <div class="media">
+                      <a href="/detail/<%= article.id %>" class="media-left">
+                        <img alt="" src="/<%= article.thumbnail %>" />
+                      </a>
+                      <div class="media-body">
+                        <a href="/detail/<%= article.id %>" class="catg_title">
+                          <%= article.title %>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <% }); %> <% } else { %>
+                  <li>No articles found.</li>
+                  <% } %>
+                </ul>
+                <div id="next-button"><i class="fa fa-chevron-down"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-          <%- include('partials/footer', { websiteInfo: websiteInfo }) %>
-      </div>
-      <%- include('partials/scripts') %>
+      <%- include('partials/footer', { websiteInfo: websiteInfo }) %>
+    </div>
+    <%- include('partials/modals') %><%- include('partials/scripts') %>
 
-        <style>
-          .categories-list {
-            margin-top: 20px;
-          }
+    <style>
+      .categories-list {
+        margin-top: 20px;
+      }
 
-          .cat-list {
-            list-style: none;
-            padding: 0;
-          }
+      .cat-list {
+        list-style: none;
+        padding: 0;
+      }
 
-          .cat-list li {
-            border-bottom: 1px solid #eee;
-            padding: 10px 0;
-          }
+      .cat-list li {
+        border-bottom: 1px solid #eee;
+        padding: 10px 0;
+      }
 
-          .cat-list li:last-child {
-            border-bottom: none;
-          }
+      .cat-list li:last-child {
+        border-bottom: none;
+      }
 
-          .cat-list a {
-            color: #333;
-            font-size: 16px;
-            font-family: 'Oswald', sans-serif;
-            text-decoration: none;
-            display: block;
-            transition: color 0.3s ease;
-          }
+      .cat-list a {
+        color: #333;
+        font-size: 16px;
+        font-family: "Oswald", sans-serif;
+        text-decoration: none;
+        display: block;
+        transition: color 0.3s ease;
+      }
 
-          .cat-list a:hover {
-            color: #d083cf;
-          }
+      .cat-list a:hover {
+        color: #d083cf;
+      }
 
-          .count {
-            color: #777;
-            font-size: 14px;
-            margin-left: 5px;
-          }
-        </style>
+      .count {
+        color: #777;
+        font-size: 14px;
+        margin-left: 5px;
+      }
+    </style>
   </body>
-
 </html>
