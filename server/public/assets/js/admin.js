@@ -140,11 +140,11 @@ $(document).ready(function () {
     });
   }
   //
-  function PaginationArticles() {
+  function PaginationArticles(articles = allArticles) {
     setupPagination({
       paginationId: "articlePagination",
       tableBodyId: "articleTableBody",
-      data: allArticles,
+      data: articles,
       itemsPerPage: 5,
       renderRow: (article) => `
       <tr>
@@ -159,6 +159,7 @@ $(document).ready(function () {
                 "N/A"
               }</td>
               <td>${formatDate(article.published_date)}</td>
+              <td>${article.views}</td>
               <td>
                 ${
                   article.status
@@ -306,6 +307,7 @@ $(document).ready(function () {
       cache: false,
       success: function (categories) {
         allCategories = categories;
+
         $("#categoryCount").text(allCategories.length);
         PaginationCategories();
       },
@@ -1100,6 +1102,21 @@ $(document).ready(function () {
       getCategories();
       getUsers();
       getArticles();
+
+      const filterCategoryMenu = $("#filterCategory");
+      filterCategoryMenu.empty();
+
+      filterCategoryMenu.append(
+        `<option value="-1" selected>All category</option>`
+      );
+
+      allCategories.forEach((category) => {
+        filterCategoryMenu.append(`
+        <option value="${category.id}">
+          ${category.cate_name}
+        </option>
+      `);
+      });
     } else if (targetTab === "#users") {
       getUsers();
     } else if (targetTab === "#categories") {
@@ -1110,6 +1127,40 @@ $(document).ready(function () {
     } else if (targetTab === "#newsletters") {
       PaginationNewsletters();
     }
+  });
+  $("#searchBarBtn").on("click", () => {
+    let searchTerm = $("#searchBar").val();
+    const newArticles = allArticles.filter((article) => {
+      const title = article.title.toLowerCase();
+      const content = article.content.toLowerCase();
+
+      return title.includes(searchTerm) || content.includes(searchTerm);
+    });
+    PaginationArticles(newArticles);
+  });
+  $("#filterCategory").on("change", () => {
+    let filterCategory = $("#filterCategory").val();
+    if (filterCategory == -1) PaginationArticles();
+    else {
+      const newArticles = allArticles.filter((article) => {
+        return article.cate_id == filterCategory;
+      });
+      PaginationArticles(newArticles);
+    }
+  });
+  $("#sortByDate").on("change", () => {
+    let sortByDate = $("#sortByDate").val();
+
+    console.log(sortByDate);
+
+    const newArticles = allArticles.sort((a, b) => {
+      if (sortByDate === "newest")
+        return Date.parse(b.published_date) - Date.parse(a.published_date);
+      else if (sortByDate === "oldest")
+        return Date.parse(a.published_date) - Date.parse(b.published_date);
+      else if (sortByDate === "views") return b.views - a.views;
+    });
+    PaginationArticles(newArticles);
   });
   // Handle logout button
   $("#logout").on("click", function () {

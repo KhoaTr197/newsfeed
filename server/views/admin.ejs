@@ -152,6 +152,31 @@
                   id="addNewArticleBtn">
                   <i class="fa fa-plus"></i> Add New Article
                 </button>
+                <div class="navbar-form navbar-right search-form" style="margin: 8px 0;">
+                    <label for="filterCategory">Category:</label>
+                    <select name="filterCategory" id="filterCategory" class="form-control">
+                      <option value="">All Categories</option>
+                      <% if (typeof allCategories !=='undefined' && allCategories.length> 0) { %>
+                        <% allCategories.forEach(cat=> { %>
+                          <option value="<%= cat.id %>" <%=category==cat.id ? 'selected' : '' %>>
+                            <%= cat.cate_name %>
+                          </option>
+                          <% }); %>
+                            <% } %>
+                    </select>
+                    <label for="sortByDate">Sort By:</label>
+                    <select name="sortByDate" id="sortByDate" class="form-control">
+                      <option value="newest">Newest First</option>
+                      <option value="oldest">Oldest First</option>
+                      <option value="views">Most Viewed</option>
+                    </select>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search..." name="keyword" id="searchBar">
+                    <span class="input-group-btn">
+                      <button id="searchBarBtn" class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                    </span>
+                  </div>
+                </div>
               </div>
               <div class="admin-card-body">
                 <div class="table-responsive">
@@ -163,6 +188,7 @@
                         <th>Category</th>
                         <th>Author</th>
                         <th>Published Date</th>
+                        <th>Views</th>
                         <th>Status</th>
                         <th>Actions</th>
                       </tr>
