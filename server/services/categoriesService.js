@@ -66,10 +66,11 @@ const addCategory = async (name, status) => {
 };
 
 // update category
-const updateCategory = async (id, name) => {
+const updateCategory = async (id, name, is_featured = 0) => {
   try {
-    const queryStr = "UPDATE categories SET cate_name = ? WHERE id = ?";
-    await connection.query(queryStr, [name, id]);
+    const queryStr =
+      "UPDATE categories SET cate_name = ?, is_featured = ? WHERE id = ?";
+    await connection.query(queryStr, [name, is_featured, id]);
   } catch (err) {
     throw err;
   }

@@ -132,7 +132,7 @@ const resetPassword = async (req, res) => {
   try {
     const { username } = req.body;
     await userService.resetPassword(username);
-    res.json({ message: "Password reset successfully" });
+    res.status(200).json({ message: "Password reset successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

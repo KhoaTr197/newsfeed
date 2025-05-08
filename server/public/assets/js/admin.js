@@ -195,6 +195,11 @@ $(document).ready(function () {
               <td>${category.id}</td>
               <td>${category.cate_name}</td>
               <td>${
+                category.is_featured == 1
+                  ? `<span class="badge category-status status-active" data-categorystatus=${category.id}>Is Featured</span>`
+                  : `<span class="badge category-status status-inactive" data-categorystatus=${category.id}>Not Featured</span>`
+              }</td>
+              <td>${
                 category.status
                   ? `<span class="badge category-status status-active" data-categorystatus=${category.id}>Active</span>`
                   : `<span class="badge category-status status-inactive" data-categorystatus=${category.id}>Inactive</span>`
@@ -313,7 +318,7 @@ $(document).ready(function () {
   // Function to get users
   function getUsers() {
     $.ajax({
-      url: "/api/users",
+      url: "/api/authors",
       type: "GET",
       cache: false,
       success: function (users) {
@@ -853,6 +858,7 @@ $(document).ready(function () {
       contentType: "application/json",
       success: function (response) {
         alert("Password reset successfully!");
+        $("#editUserModal").modal("hide");
         getUsers();
       },
       error: function (error) {
@@ -971,11 +977,12 @@ $(document).ready(function () {
   $("#editCategoryBtn").on("click", function () {
     const id = $("#editCategoryId").val();
     const name = $("#editCategoryName").val();
+    const isFeatured = $("#isFeatured").val();
 
     $.ajax({
       url: `/api/categories/${id}`,
       type: "PUT",
-      data: JSON.stringify({ name }),
+      data: JSON.stringify({ name, isFeatured }),
       contentType: "application/json",
       success: function (response) {
         $("#editCategoryModal").modal("hide");
@@ -999,6 +1006,8 @@ $(document).ready(function () {
     if (category) {
       $("#editCategoryId").val(category.id);
       $("#editCategoryName").val(category.cate_name);
+      $("#isFeatured").val(category.is_featured);
+      console.log(category);
       $("#editCategoryStatus").val(category.status);
 
       $("#editCategoryModal").modal("show");

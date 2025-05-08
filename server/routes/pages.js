@@ -13,19 +13,27 @@ router.get(["/", "/index", "/homepage"], async (req, res) => {
       categoriesMenu,
       latestArticles,
       mostViewedArticles,
-      websiteInfo
+      websiteInfo,
     ] = [
-        await categoriesService.getFeaturedCategories(5),
-        await categoriesService.getAllActiveCategories(5),
-        await articlesService.getLatestArticles(5),
-        await articlesService.getMostViewedArticles(5),
-        await websiteInfoService.getWebsiteInfo()
-      ];
+      await categoriesService.getFeaturedCategories(5),
+      await categoriesService.getAllActiveCategories(5),
+      await articlesService.getLatestArticles(5),
+      await articlesService.getMostViewedArticles(5),
+      await websiteInfoService.getWebsiteInfo(),
+    ];
 
     // Get articles for each featured category
-    const featuredArticles = await articlesService.getAllActiveArticles(featuredCategories.map(category => category.id), featuredCategories * 4);
+    const featuredArticles = await articlesService.getAllActiveArticles(
+      featuredCategories.map((category) => category.id),
+      featuredCategories * 4
+    );
 
-    if (!featuredCategories || !latestArticles || !mostViewedArticles || !featuredArticles) {
+    if (
+      !featuredCategories ||
+      !latestArticles ||
+      !mostViewedArticles ||
+      !featuredArticles
+    ) {
       return res.status(404).render("404");
     }
 
@@ -35,7 +43,7 @@ router.get(["/", "/index", "/homepage"], async (req, res) => {
       featuredArticles,
       latestArticles,
       mostViewedArticles,
-      websiteInfo
+      websiteInfo,
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -50,12 +58,13 @@ router.get("/detail/:id", async (req, res) => {
       await articlesService.getArticleById(id),
       await categoriesService.getAllActiveCategories(5),
       await websiteInfoService.getWebsiteInfo(),
-      await articlesService.getMostViewedArticles(5)
+      await articlesService.getMostViewedArticles(5),
     ];
     const relatedArticles = await articlesService.getRelatedArticles(
       article,
       3
     );
+    await articlesService.increaseView(article.id);
 
     if (!article || !relatedArticles) {
       return res.status(404).render("404", { websiteInfo, mostViewedArticles });
@@ -66,7 +75,7 @@ router.get("/detail/:id", async (req, res) => {
       categoriesMenu,
       relatedArticles,
       websiteInfo,
-      mostViewedArticles
+      mostViewedArticles,
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -98,7 +107,13 @@ router.get("/signup", async (req, res) => {
 // Categories page - show all categories
 router.get("/categories", async (req, res) => {
   try {
-    const [categories, categoriesMenu, categoryCounts, latestArticles, websiteInfo] = [
+    const [
+      categories,
+      categoriesMenu,
+      categoryCounts,
+      latestArticles,
+      websiteInfo,
+    ] = [
       await categoriesService.getAllActiveCategories(),
       await categoriesService.getAllActiveCategories(5),
       await categoriesService.countArticlesByCategory(),
@@ -137,19 +152,19 @@ router.get("/search", async (req, res) => {
       allCategories,
       [articles, resultCount],
       mostViewedArticles,
-      websiteInfo
+      websiteInfo,
     ] = [
-        await categoriesService.getAllActiveCategories(),
-        await articlesService.searchArticlesByKeyword(
-          keyword,
-          page,
-          limit,
-          category,
-          sort
-        ),
-        await articlesService.getMostViewedArticles(5),
-        await websiteInfoService.getWebsiteInfo()
-      ];
+      await categoriesService.getAllActiveCategories(),
+      await articlesService.searchArticlesByKeyword(
+        keyword,
+        page,
+        limit,
+        category,
+        sort
+      ),
+      await articlesService.getMostViewedArticles(5),
+      await websiteInfoService.getWebsiteInfo(),
+    ];
 
     res.render("search", {
       allCategories,
@@ -211,7 +226,7 @@ router.get("*", async (req, res) => {
     const [categoriesMenu, websiteInfo, mostViewedArticles] = [
       await categoriesService.getAllActiveCategories(5),
       await websiteInfoService.getWebsiteInfo(),
-      await articlesService.getMostViewedArticles(5)
+      await articlesService.getMostViewedArticles(5),
     ];
     res.render("404", { categoriesMenu, websiteInfo, mostViewedArticles });
   } catch (err) {

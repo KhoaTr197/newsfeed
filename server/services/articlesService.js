@@ -308,6 +308,15 @@ const disableArticle = async (id) => {
   }
 };
 
+const increaseView = async (id) => {
+  try {
+    const queryStr = "UPDATE articles SET views = views + 1 WHERE id = ?";
+    await connection.query(queryStr, [id]);
+  } catch (err) {
+    throw err;
+  }
+};
+
 module.exports = {
   getAllArticles,
   getAllActiveArticles,
@@ -324,4 +333,5 @@ module.exports = {
   updateArticle,
   activeArticle,
   disableArticle,
+  increaseView,
 };

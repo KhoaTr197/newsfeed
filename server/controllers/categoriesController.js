@@ -15,9 +15,9 @@ const getAllCategories = async (req, res) => {
 const updateCategory = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name } = req.body;
+    const { name, isFeatured } = req.body;
     console.log(req.body);
-    await categoriesService.updateCategory(id, name);
+    await categoriesService.updateCategory(id, name, isFeatured);
 
     res.json({ message: "Category updated successfully" });
   } catch (err) {
