@@ -9,7 +9,7 @@ const getAllArticles = async () => {
       FROM articles
       JOIN categories ON articles.cate_id = categories.id
       JOIN users ON articles.user_id = users.id
-      ORDER BY articles.id ASC
+      ORDER BY articles.published_date desc
     `;
     const [data] = await connection.query(queryStr);
     return data;
