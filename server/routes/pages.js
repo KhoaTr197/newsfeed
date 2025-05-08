@@ -54,12 +54,19 @@ router.get("/detail/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    const [article, categoriesMenu, websiteInfo, mostViewedArticles] = [
-      await articlesService.getArticleById(id),
+    const [categoriesMenu, websiteInfo, mostViewedArticles] = [
       await categoriesService.getAllActiveCategories(5),
       await websiteInfoService.getWebsiteInfo(),
       await articlesService.getMostViewedArticles(5),
     ];
+
+    if (typeof parseInt(id) !== Number) {
+      return res
+        .status(404)
+        .render("404", { categoriesMenu, websiteInfo, mostViewedArticles });
+    }
+
+    const article = await articlesService.getArticleById(id);
     const relatedArticles = await articlesService.getRelatedArticles(
       article,
       3
@@ -67,7 +74,9 @@ router.get("/detail/:id", async (req, res) => {
     await articlesService.increaseView(article.id);
 
     if (!article || !relatedArticles) {
-      return res.status(404).render("404", { websiteInfo, mostViewedArticles });
+      return res
+        .status(404)
+        .render("404", { categoriesMenu, websiteInfo, mostViewedArticles });
     }
 
     res.render("detail", {
@@ -230,7 +239,7 @@ router.get("*", async (req, res) => {
     ];
     res.render("404", { categoriesMenu, websiteInfo, mostViewedArticles });
   } catch (err) {
-    res.render("404");
+    res.status("404");
   }
 });
 
